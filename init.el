@@ -28,7 +28,7 @@
 (add-to-list 'load-path "~/.emacs.d/elpa/tabbar-20141109.143")
 ;; tabbar-ruler
 (add-to-list 'load-path "~/.emacs.d/elpa/mode-icons-20160223.1128")
-(add-to-list 'load-path "~/.emacs.d/elpa/powerline-20151008.1449")
+(add-to-list 'load-path "~/.emacs.d/elpa/powerline-20160224.2052")
 (add-to-list 'load-path "~/.emacs.d/elpa/tabbar-ruler-20160216.1932")
 (setq tabbar-ruler-global-tabbar t)    ; get tabbar
 ;;(setq tabbar-ruler-global-ruler t)     ; get global ruler
