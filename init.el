@@ -36,4 +36,9 @@
 ;;(setq tabbar-ruler-popup-toolbar t)    ; get popup toolbar
 ;;(setq tabbar-ruler-popup-scrollbar t)  ; show scroll-bar on mouse-move
 (require 'tabbar-ruler)
+;; IDO
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
+(setq ido-use-filename-at-point 'guess)
 
