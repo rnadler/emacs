@@ -26,6 +26,18 @@
 (global-set-key [f8] 'neotree-toggle)
 (setq make-backup-files nil) ;; stop creating those backup~ files
 (add-to-list 'load-path "~/.emacs.d/elpa/tabbar-20141109.143")
+;; tabbar
+(require 'tabbar)
+(tabbar-mode)
+(setq tabbar-buffer-groups-function
+       (lambda ()
+         (list "All Buffers")))
+(setq tabbar-buffer-list-function
+       (lambda ()
+         (remove-if
+          (lambda(buffer)
+            (find (aref (buffer-name buffer) 0) " *"))
+          (buffer-list))))
 ;; tabbar-ruler
 (add-to-list 'load-path "~/.emacs.d/elpa/mode-icons-20160223.1128")
 (add-to-list 'load-path "~/.emacs.d/elpa/powerline-20160224.2052")
