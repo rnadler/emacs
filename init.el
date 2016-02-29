@@ -61,7 +61,7 @@
 	    (vertical-scroll-bars . nil)
 	    (menu-bar-lines . 0)
 	    (top . 200)	
-	    (left . 300)
+	    (left . 250)
 	    (height . 46)
 	    (width . 140)))
 
