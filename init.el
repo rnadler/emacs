@@ -78,3 +78,5 @@
   (lambda ()
     (highlight-parentheses-mode t)))
 (global-highlight-parentheses-mode t)
+(setq dired-listing-switches "-lXGh --group-directories-first")
+
