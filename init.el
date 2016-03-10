@@ -79,4 +79,8 @@
     (highlight-parentheses-mode t)))
 (global-highlight-parentheses-mode t)
 (setq dired-listing-switches "-lXGh --group-directories-first")
+;; YAML mode
+(add-to-list 'load-path "~/.emacs.d/elpa/yaml-mode-20160220.340")
+ (require 'yaml-mode)
+   (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
