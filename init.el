@@ -87,4 +87,8 @@
 (require 'dired-x)
     (setq-default dired-omit-files-p t) ; Buffer-local variable
 (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
+;; Dired+
+(add-to-list 'load-path "~/.emacs.d/elpa/dired+-20160124.1907")
+(setq diredp-hide-details-initially-flag nil)
+(require 'dired+)
 
