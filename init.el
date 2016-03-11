@@ -57,9 +57,6 @@
 (setq initial-frame-alist
 	  `((background-color . ,(face-background 'default))
 	    (foreground-color . ,(face-foreground 'default))
-	    (horizontal-scroll-bars . nil)
-	    (vertical-scroll-bars . nil)
-	    (menu-bar-lines . 0)
 	    (top . 200)	
 	    (left . 250)
 	    (height . 46)
