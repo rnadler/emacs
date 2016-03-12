@@ -88,4 +88,8 @@
 (add-to-list 'load-path "~/.emacs.d/elpa/dired+-20160124.1907")
 (setq diredp-hide-details-initially-flag nil)
 (require 'dired+)
+;; Typescript mode
+
+(add-to-list 'load-path "~/.emacs.d/elpa/typescript-mode-20160126.408")
+(require 'typescript-mode)
 
