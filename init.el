@@ -57,10 +57,10 @@
 (setq initial-frame-alist
 	  `((background-color . ,(face-background 'default))
 	    (foreground-color . ,(face-foreground 'default))
-	    (top . 200)	
-	    (left . 250)
-	    (height . 46)
-	    (width . 140)))
+	    (top . 100)	
+	    (left . 200)
+	    (height . 36)
+	    (width . 120)))
 
   ;; default-frame-alist is defined in terms of initial-frame-alist.  Don't
   ;; use copy-sequence here -- it doesn't copy the list elements, just the
