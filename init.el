@@ -55,17 +55,10 @@
 (setq ido-use-filename-at-point 'guess)
 ;; Set initial window/frame size and position
 (setq initial-frame-alist
-	  `((background-color . ,(face-background 'default))
-	    (foreground-color . ,(face-foreground 'default))
-	    (top . 100)	
-	    (left . 200)
+	  `((top . 0)	
+	    (left . 0)
 	    (height . 36)
 	    (width . 120)))
-
-  ;; default-frame-alist is defined in terms of initial-frame-alist.  Don't
-  ;; use copy-sequence here -- it doesn't copy the list elements, just the
-  ;; list's cons cells.  Use copy-alist instead.
-
 (setq default-frame-alist (copy-alist initial-frame-alist))
 ;; Parentheses highlight
 (add-to-list 'load-path "~/.emacs.d/elpa/highlight-parentheses-20151107.2316")
