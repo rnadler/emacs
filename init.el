@@ -15,17 +15,16 @@
 (require 'package)
 (add-to-list 'package-archives
 	     '("melpa" . "http://melpa.org/packages/") t)
+(package-initialize)
 ;; recent files
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
 (add-hook 'find-file-hook (lambda () (linum-mode 1)))
 (global-set-key (kbd "C-x g") 'magit-status)
-(add-to-list 'load-path "~/.emacs.d/elpa/neotree-20160214.532")
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
 (setq make-backup-files nil) ;; stop creating those backup~ files
-(add-to-list 'load-path "~/.emacs.d/elpa/tabbar-20141109.143")
 ;; tabbar
 (require 'tabbar)
 (tabbar-mode)
@@ -39,9 +38,6 @@
             (find (aref (buffer-name buffer) 0) " *"))
           (buffer-list))))
 ;; tabbar-ruler
-(add-to-list 'load-path "~/.emacs.d/elpa/mode-icons-20160223.1128")
-(add-to-list 'load-path "~/.emacs.d/elpa/powerline-20160224.2052")
-(add-to-list 'load-path "~/.emacs.d/elpa/tabbar-ruler-20160216.1932")
 (setq tabbar-ruler-global-tabbar t)    ; get tabbar
 ;;(setq tabbar-ruler-global-ruler t)     ; get global ruler
 ;;(setq tabbar-ruler-popup-menu t)       ; get popup menu.
@@ -61,7 +57,6 @@
 	    (width . 120)))
 (setq default-frame-alist (copy-alist initial-frame-alist))
 ;; Parentheses highlight
-(add-to-list 'load-path "~/.emacs.d/elpa/highlight-parentheses-20151107.2316")
 (require 'highlight-parentheses)
 (define-globalized-minor-mode global-highlight-parentheses-mode
   highlight-parentheses-mode
@@ -70,7 +65,6 @@
 (global-highlight-parentheses-mode t)
 (setq dired-listing-switches "-lXGha --group-directories-first")
 ;; YAML mode
-(add-to-list 'load-path "~/.emacs.d/elpa/yaml-mode-20160220.340")
  (require 'yaml-mode)
    (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 ;; Omit mode
@@ -78,11 +72,8 @@
     (setq-default dired-omit-files-p t) ; Buffer-local variable
 (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
 ;; Dired+
-(add-to-list 'load-path "~/.emacs.d/elpa/dired+-20160124.1907")
 (setq diredp-hide-details-initially-flag nil)
 (require 'dired+)
 ;; Typescript mode
-
-(add-to-list 'load-path "~/.emacs.d/elpa/typescript-mode-20160126.408")
 (require 'typescript-mode)
 
