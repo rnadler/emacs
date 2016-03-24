@@ -69,6 +69,16 @@
     (highlight-parentheses-mode t)))
 (global-highlight-parentheses-mode t)
 (setq dired-listing-switches "-lXGha --group-directories-first")
+;; Handle special switches for Remote ftp directories 
+;;(add-hook
+;; 'dired-before-readin-hook
+;; (lambda ()
+;;  (setq dired-actual-switches
+;;	      (if (file-remote-p dired-directory)
+;;			  "-lXGha"
+;;			  "-lXGha --group-directories-first"))
+;;  (message "default-directory=%s switches=%s" default-directory dired-actual-switches)
+;;))
 ;; YAML mode
 (use-package yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
