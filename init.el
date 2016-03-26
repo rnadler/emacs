@@ -98,11 +98,11 @@
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-;; Helm
-(use-package helm)
-(require 'helm-config)
-(helm-mode 1)
-(global-set-key (kbd "M-x") 'helm-M-x)
+;; Helm -- Seems like it gets in the way more than it helps. Disable for now.
+;; (use-package helm)
+;; (require 'helm-config)
+;; (helm-mode 1)
+;; (global-set-key (kbd "M-x") 'helm-M-x)
 ;; PHP mode
 (use-package php-mode)
 
