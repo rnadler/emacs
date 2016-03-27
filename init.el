@@ -2,7 +2,7 @@
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+ ;; If there is more than one, they won't work right.rt
  '(inhibit-startup-screen t)
  '(initial-scratch-message nil)
  '(magit-commit-arguments (quote ("--all"))))
@@ -68,7 +68,10 @@
   (lambda ()
     (highlight-parentheses-mode t)))
 (global-highlight-parentheses-mode t)
-(setq dired-listing-switches "-lXGha --group-directories-first")
+;;(setq dired-listing-switches "--group-directories-first -lXGha")
+(setq dired-listing-switches "-lXGha")
+(use-package dired-sort)
+(use-package dired-sort-menu)
 ;; Handle special switches for Remote ftp directories 
 ;;(add-hook
 ;; 'dired-before-readin-hook
