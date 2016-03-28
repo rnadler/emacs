@@ -108,4 +108,8 @@
 ;; (global-set-key (kbd "M-x") 'helm-M-x)
 ;; PHP mode
 (use-package php-mode)
+;; CSharp mode
+(use-package csharp-mode)
+ (setq auto-mode-alist
+     (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
 
