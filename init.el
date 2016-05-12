@@ -116,3 +116,5 @@
 (global-set-key (kbd "C-x t") 'toggle-truncate-lines)
 ;; package-list-packages key binding
 (global-set-key (kbd "C-x p") 'package-list-packages)
+;; Feature mode (Cucumber)
+(use-package feature-mode)
