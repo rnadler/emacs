@@ -119,3 +119,5 @@
 (global-set-key (kbd "C-x p") 'package-list-packages)
 ;; Feature mode (Cucumber)
 (use-package feature-mode)
+;; jtags-mode
+(use-package jtags)
