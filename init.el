@@ -121,3 +121,7 @@
 (use-package feature-mode)
 ;; jtags-mode
 (use-package jtags)
+;; CSV Mode
+(use-package csv-mode)
+(add-to-list 'auto-mode-alist '("\\.[Cc][Ss][Vv]\\'" . csv-mode))
+
