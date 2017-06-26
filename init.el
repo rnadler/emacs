@@ -8,7 +8,7 @@
  '(magit-commit-arguments (quote ("--all")))
  '(package-selected-packages
    (quote
-    (yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode))))
+    (php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -111,7 +111,7 @@
 ;; (helm-mode 1)
 ;; (global-set-key (kbd "M-x") 'helm-M-x)
 ;; PHP mode
-;;(use-package php-mode)
+(use-package php-mode)
 ;; CSharp mode
 (use-package csharp-mode)
  (setq auto-mode-alist
