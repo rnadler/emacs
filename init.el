@@ -130,4 +130,7 @@
 ;; which-key
 (use-package which-key)
 (which-key-mode)
+;; nXML mode customization
+(add-to-list 'auto-mode-alist '("\\.xsd\\'" . xml-mode))
+(add-to-list 'auto-mode-alist '("\\.xslt\\'" . xml-mode))
 
