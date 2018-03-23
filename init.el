@@ -133,4 +133,17 @@
 ;; nXML mode customization
 (add-to-list 'auto-mode-alist '("\\.xsd\\'" . xml-mode))
 (add-to-list 'auto-mode-alist '("\\.xslt\\'" . xml-mode))
-
+;; Org mode
+(defconst org-mode-directory "~/Downloads/org-mode")
+(if (file-directory-p org-mode-directory)
+    (progn
+      (setq load-path (cons (concat org-mode-directory "/lisp") load-path))
+      (setq load-path (cons (concat org-mode-directory "/contrib/lisp") load-path))
+      (require 'org-install))
+    (require 'org))
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(setq org-log-done t)
+(setq org-agenda-files (list "~/todo.org"))
+(setq org-todo-keywords
+  '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE")))
