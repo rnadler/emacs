@@ -16,9 +16,14 @@
  ;; If there is more than one, they won't work right.
  )
 (require 'package)
+(setq package-enable-at-startup nil)
 (add-to-list 'package-archives
 	     '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
+;; Bootstrap `use-package'
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 ;; use-package
 (setq use-package-always-ensure t)
 (setq use-package-verbose t)
@@ -161,5 +166,10 @@
       '(("t" "Todo" entry (file+headline todo-org-file "Tasks")
              "* TODO %?\n  %i\n  %a\n%T")
         ("j" "Journal" entry (file+datetree journal-org-file)
-             "* %?\nEntered on %U\n  %i\n  %a")))
+	 "* %?\nEntered on %U\n  %i\n  %a")))
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((shell . t)
+   (ruby . t)
+   (emacs-lisp . t)))
 
