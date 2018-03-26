@@ -24,6 +24,7 @@
 (setq use-package-verbose t)
 (use-package magit)
 ;; recent files
+(setq linum-format "%d ")
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
@@ -135,6 +136,9 @@
 (add-to-list 'auto-mode-alist '("\\.xslt\\'" . xml-mode))
 ;; Org mode
 (defconst org-mode-directory "~/Downloads/org-mode")
+(defconst my-org-directory "~/org")
+(defconst todo-org-file (concat my-org-directory "/todo.org"))
+(defconst journal-org-file (concat my-org-directory "/journal.org"))
 (if (file-directory-p org-mode-directory)
     (progn
       (setq load-path (cons (concat org-mode-directory "/lisp") load-path))
@@ -143,7 +147,19 @@
     (require 'org))
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
+(global-set-key (kbd "C-c o") 
+                (lambda () (interactive) (find-file todo-org-file)))
 (setq org-log-done t)
-(setq org-agenda-files (list "~/todo.org"))
+(setq org-agenda-files (list
+			todo-org-file
+			"~/Projects/emacs/shared.org"))
 (setq org-todo-keywords
-  '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE")))
+      '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE")))
+;;(setq org-default-notes-file (concat my-org-directory "/notes.org"))
+(define-key global-map "\C-cc" 'org-capture)
+(setq org-capture-templates
+      '(("t" "Todo" entry (file+headline todo-org-file "Tasks")
+             "* TODO %?\n  %i\n  %a\n%T")
+        ("j" "Journal" entry (file+datetree journal-org-file)
+             "* %?\nEntered on %U\n  %i\n  %a")))
+

@@ -1,0 +1,17 @@
+#-*- mode: org -*-
+#+STARTUP: showall
+
+* Tasks
+** IN-PROGRESS Org-mode learning [[https://orgmode.org/manual/index.html#SEC_Contents][The Org Manual]]
+   - My emacs init file: [[file:.emacs.d/init.el::(custom-set-variables][init.el]]
+   - Tutorials:
+      - [[https://orgmode.org/worg/org-tutorials/orgtutorial_dto.html][Org-mode tutorial]]
+      - [[https://orgmode.org/worg/org-tutorials/org4beginners.html][Org mode beginning at the basics]]
+   - Learn to use date+time calendar
+   - Best way to archive DONE tasks? [[https://orgmode.org/manual/Archiving.html#Archiving][Archiving]]
+
+* Completed Tasks
+** TODO Add emacs link to create link chrome extension 
+   [[chrome-extension://gcmghdmnkfdbncmnmlkkglmnnhagajbm/options.html][Options - Create Link]] -- add orgmodeLink: [[%url%][%text%].]
+** DONE Improve Emacs init files. See: [[https://github.com/gonsie/dotfiles/tree/master/emacs][gonsie/dotfiles]]
+   CLOSED: [2018-03-24 Sat 15:01]
