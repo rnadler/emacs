@@ -8,7 +8,7 @@
  '(magit-commit-arguments (quote ("--all")))
  '(package-selected-packages
    (quote
-    (which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode))))
+    (multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -172,4 +172,14 @@
  '((shell . t)
    (ruby . t)
    (emacs-lisp . t)))
-
+(setq org-agenda-include-diary t)
+;; multiple-cursors
+(use-package multiple-cursors
+  :bind (("<f2>" . mc/mark-previous-like-this)
+         ("S-<f2>" . mc/unmark-previous-like-this)
+         ("<f3>" . mc/mark-next-like-this)
+         ("S-<f3>" . mc/unmark-next-like-this)
+         ("C-c <f2>" . mc/mark-all-like-this)
+         ("C-S-<mouse-1>" . mc/add-cursor-on-click)
+         ("<ESC> <ESC>" . mc/keyboard-quit))
+  :ensure t)

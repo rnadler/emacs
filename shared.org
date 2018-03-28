@@ -5,10 +5,10 @@
 ** IN-PROGRESS Org-mode learning [[https://orgmode.org/manual/index.html#SEC_Contents][The Org Manual]]
    - Emacs init file: [[file:~/.emacs.d/init.el][init.el]]
    - Tutorials:
-      - [[https://orgmode.org/worg/org-tutorials/orgtutorial_dto.html][Org-mode tutorial]]
-      - [[https://orgmode.org/worg/org-tutorials/org4beginners.html][Org mode beginning at the basics]]
+     - [[https://orgmode.org/worg/org-tutorials/orgtutorial_dto.html][Org-mode tutorial]]
+     - [[https://orgmode.org/worg/org-tutorials/org4beginners.html][Org mode beginning at the basics]]
    - Learn to use date+time calendar
-   - Best way to archive DONE tasks? [[https://orgmode.org/manual/Archiving.html#Archiving][Archiving]]
+   - Best way to archive DONE tasks? [[https://orgmode.org/manual/Archiving.html#Archiving][Archiving]]  C-c C-w (org-refile) move subtree to another subtree
    - Convert orgLink to markdownLink: [[https://www.bigeekfan.com/post/20171010_hugo_org_functions/][Emacs: Convert Org-Mode Links to Markdown Links]]
 
 * Completed Tasks
