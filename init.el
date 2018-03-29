@@ -173,6 +173,10 @@
    (ruby . t)
    (emacs-lisp . t)))
 (setq org-agenda-include-diary t)
+(setq org-confirm-babel-evaluate nil)
+(fset 'do-org-backup
+      "\274\C-s: backup\C-n\C-n\C-c\C-c")
+(define-key global-map "\C-cb" 'do-org-backup)
 ;; multiple-cursors
 (use-package multiple-cursors
   :bind (("<f2>" . mc/mark-previous-like-this)
