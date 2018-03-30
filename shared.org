@@ -11,6 +11,17 @@
    - Best way to archive DONE tasks? [[https://orgmode.org/manual/Archiving.html#Archiving][Archiving]]  C-c C-w (org-refile) move subtree to another subtree
    - Convert orgLink to markdownLink: [[https://www.bigeekfan.com/post/20171010_hugo_org_functions/][Emacs: Convert Org-Mode Links to Markdown Links]]
 
+* Disk usage
+#+name: disk-usage
+#+begin_src sh :results table append
+  df | awk -v date="$(date +"%Y-%m-%d %r")" '/sda1/{print date "," $5 "," $3}'
+#+end_src
+
+#+RESULTS: disk-usage
+|------------------------+------+----------+------------|
+| Date/Time              | Use% |     Used | Comment    |
+|------------------------+------+----------+------------|
+
 * Completed Tasks
 ** DONE Add emacs link to create link chrome extension 
    CLOSED: [2018-03-26 Mon 08:15]
