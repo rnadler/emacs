@@ -8,7 +8,7 @@
  '(magit-commit-arguments (quote ("--all")))
  '(package-selected-packages
    (quote
-    (multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode))))
+    (htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -175,8 +175,9 @@
 (setq org-agenda-include-diary t)
 (setq org-confirm-babel-evaluate nil)
 (fset 'do-org-backup
-      "\274\C-s: backup\C-n\C-n\C-c\C-c")
+      "\C-co\274\C-s: backup\C-n\C-n\C-a\C-c\C-c")
 (define-key global-map "\C-cb" 'do-org-backup)
+(use-package htmlize)
 ;; multiple-cursors
 (use-package multiple-cursors
   :bind (("<f2>" . mc/mark-previous-like-this)
