@@ -65,8 +65,8 @@
 (setq ido-use-filename-at-point 'guess)
 ;; Set initial window/frame size and position
 (setq initial-frame-alist
-	  `((top . 0)	
-	    (left . 0)
+	  `((top . 40)	
+	    (left . 40)
 	    (height . 36)
 	    (width . 120)))
 (setq default-frame-alist (copy-alist initial-frame-alist))
@@ -159,7 +159,7 @@
 			todo-org-file
 			"~/Projects/emacs/shared.org"))
 (setq org-todo-keywords
-      '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE")))
+      '((sequence "TODO(t)" "IN-PROGRESS(p!)" "|" "WAITING(w@/!)" "DONE(d)")))
 ;;(setq org-default-notes-file (concat my-org-directory "/notes.org"))
 (define-key global-map "\C-cc" 'org-capture)
 (setq org-capture-templates
@@ -188,3 +188,6 @@
          ("C-S-<mouse-1>" . mc/add-cursor-on-click)
          ("<ESC> <ESC>" . mc/keyboard-quit))
   :ensure t)
+;; Display time
+(setq display-time-default-load-average nil)
+(display-time)
