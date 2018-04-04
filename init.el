@@ -3,6 +3,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
+ '(global-auto-revert-mode 1)
  '(inhibit-startup-screen t)
  '(initial-scratch-message nil)
  '(magit-commit-arguments (quote ("--all")))
