@@ -2,14 +2,12 @@
 #+STARTUP: showall
 
 * Tasks
-** IN-PROGRESS Org-mode learning [[https://orgmode.org/manual/index.html#SEC_Contents][The Org Manual]]
-   - Emacs init file: [[file:~/.emacs.d/init.el][init.el]]
-   - Tutorials:
-     - [[https://orgmode.org/worg/org-tutorials/orgtutorial_dto.html][Org-mode tutorial]]
-     - [[https://orgmode.org/worg/org-tutorials/org4beginners.html][Org mode beginning at the basics]]
-   - Learn to use date+time calendar
-   - Best way to archive DONE tasks? [[https://orgmode.org/manual/Archiving.html#Archiving][Archiving]]  C-c C-w (org-refile) move subtree to another subtree
-   - Convert orgLink to markdownLink: [[https://www.bigeekfan.com/post/20171010_hugo_org_functions/][Emacs: Convert Org-Mode Links to Markdown Links]]
+** Windows emacs error: gnutls.c: [1] (Emacs) GnuTLS library not found
+   - [[https://emacs.stackexchange.com/questions/27202/how-do-i-install-gnutls-for-emacs-25-1-on-windows][How do I install GnuTLS for Emacs 25.1 on Windows? - Emacs Stack Exchange]]
+** IN-PROGRESS Org Mode usage
+   - State "IN-PROGRESS" from "TODO"       [2018-04-03 Tue 13:55]
+  - Handling long-running "inactive" tasks (projects)... waiting for someone else to act.
+  - Overdue tasks? Auto-increment the day?
 
 * Disk usage
 #+name: disk-usage
@@ -30,3 +28,14 @@
    - add jiraLink: [%text_md%|%url%] 
 ** DONE Improve Emacs init files. See: [[https://github.com/gonsie/dotfiles/tree/master/emacs][gonsie/dotfiles]]
    CLOSED: [2018-03-24 Sat 15:01]
+** DONE Org-mode learning [[https://orgmode.org/manual/index.html#SEC_Contents][The Org Manual]]
+   CLOSED: [2018-04-03 Tue 13:55]
+   - State "DONE"       from "WAITING"    [2018-04-03 Tue 13:55]
+   - Emacs init file: [[file:~/.emacs.d/init.el][init.el]]
+   - Tutorials:
+     - [[https://orgmode.org/worg/org-tutorials/orgtutorial_dto.html][Org-mode tutorial]]
+     - [[https://orgmode.org/worg/org-tutorials/org4beginners.html][Org mode beginning at the basics]]
+   - Learn to use date+time calendar
+   - Best way to archive DONE tasks? [[https://orgmode.org/manual/Archiving.html#Archiving][Archiving]]  C-c C-w (org-refile) move subtree to another subtree
+   - Convert orgLink to markdownLink: [[https://www.bigeekfan.com/post/20171010_hugo_org_functions/][Emacs: Convert Org-Mode Links to Markdown Links]]
+

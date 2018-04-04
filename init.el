@@ -159,8 +159,7 @@
 			todo-org-file
 			"~/Projects/emacs/shared.org"))
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "IN-PROGRESS(p!)" "|" "WAITING(w@/!)" "DONE(d)")))
-;;(setq org-default-notes-file (concat my-org-directory "/notes.org"))
+      '((sequence "TODO(t)" "IN-PROGRESS(p!)" "WAITING(w@/!)" "|" "DONE(d)")))
 (define-key global-map "\C-cc" 'org-capture)
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline todo-org-file "Tasks")
