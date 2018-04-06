@@ -1,8 +1,9 @@
 ;; Org mode
-(defconst org-mode-directory "~/Downloads/org-mode")
+(defconst org-mode-directory "~/org-mode")
 (defconst my-org-directory "~/org")
 (defconst todo-org-file (concat my-org-directory "/todo.org"))
 (defconst journal-org-file (concat my-org-directory "/journal.org"))
+(defconst transfer-org-file "/media/sf_healthinformatics/BobN/org/transfer.org")
 (if (file-directory-p org-mode-directory)
     (progn
       (setq load-path (cons (concat org-mode-directory "/lisp") load-path))
@@ -30,7 +31,9 @@
 (define-key global-map "\C-cc" 'org-capture)
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline todo-org-file "Tasks")
-             "* TODO %?\n  %i\n  %a\n%T")
+	 "* TODO %?\n  %i\n  %a\n%T")
+	("x" "Transfer" entry (file+headline transfer-org-file "Tasks")
+          "* TODO %?\n  %i\n  %a\n%T")
         ("j" "Journal" entry (file+datetree journal-org-file)
 	 "* %?\nEntered on %U\n  %i\n  %a")))
 (org-babel-do-load-languages
@@ -51,11 +54,22 @@
 (setq org-agenda-window-setup 'current-window)
 (setq org-agenda-files (list
 			todo-org-file
-			"~/Projects/emacs/shared.org"))
+			"~/Projects/emacs/shared.org"
+			transfer-org-file))
+(setq org-refile-targets '((org-agenda-files :maxlevel . 2)))
+(setq org-refile-use-outline-path 'file)
+(setq org-refile-allow-creating-parent-nodes 'confirm)
+(setq org-agenda-tags-todo-honor-ignore-options t)
+(defun my/org-agenda-skip-scheduled ()
+  (org-agenda-skip-entry-if 'regexp ">"))
 (setq org-agenda-custom-commands
       '(("p" "Agenda and Projects"
          ((agenda "" nil)
+	  (tags-todo "-TODO=\"DONE\"-TODO=\"CANCELLED\""
+		((org-agenda-skip-function 'my/org-agenda-skip-scheduled)
+		 (org-agenda-overriding-header "Unscheduled TODO entries:")
+		 (org-agenda-view-columns-initially t)))
           (tags "project"
-              ((org-agenda-overriding-header "Projects")
+              ((org-agenda-overriding-header "Projects:")
                (org-tags-match-list-sublevels 'indented)))))
 	))
