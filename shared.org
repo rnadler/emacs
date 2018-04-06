@@ -8,6 +8,9 @@
    - State "IN-PROGRESS" from "TODO"       [2018-04-03 Tue 13:55]
   - Handling long-running "inactive" tasks (projects)... waiting for someone else to act.
   - Overdue tasks? Auto-increment the day?
+  Add links [2018-04-05 Thu 16:18]
+  [[http://doc.norang.ca/org-mode.html][Org Mode - Organize Your Life In Plain Text!]] (a crapload of useful information and customizations)
+  [[http://cachestocaches.com/2016/9/my-workflow-org-agenda/][My Workflow with Org-Agenda]]
 
 * Disk usage
 #+name: disk-usage

@@ -157,6 +157,10 @@
 (global-set-key (kbd "C-c o") 
                 (lambda () (interactive) (find-file todo-org-file)))
 (setq org-log-done t)
+(setq org-hide-leading-stars nil)
+(setq org-startup-indented t)
+(add-hook 'org-mode-hook 'turn-on-flyspell 'append)
+(setq org-agenda-window-setup 'current-window)
 (setq org-agenda-files (list
 			todo-org-file
 			"~/Projects/emacs/shared.org"))
