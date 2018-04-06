@@ -1,2 +1,2 @@
 #!/bin/bash
-cp -v init.el ~/.emacs.d/
+cp -v *.el ~/.emacs.d/

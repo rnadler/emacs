@@ -4,12 +4,11 @@
 * Tasks
 ** Windows emacs error: gnutls.c: [1] (Emacs) GnuTLS library not found
    - [[https://emacs.stackexchange.com/questions/27202/how-do-i-install-gnutls-for-emacs-25-1-on-windows][How do I install GnuTLS for Emacs 25.1 on Windows? - Emacs Stack Exchange]]
-** IN-PROGRESS Org Mode usage
-   - State "IN-PROGRESS" from "TODO"       [2018-04-03 Tue 13:55]
+** NEXT Org Mode usage
   - Handling long-running "inactive" tasks (projects)... waiting for someone else to act.
   - Overdue tasks? Auto-increment the day?
   Add links [2018-04-05 Thu 16:18]
-  [[http://doc.norang.ca/org-mode.html][Org Mode - Organize Your Life In Plain Text!]] (a crapload of useful information and customizations)
+  [[http://doc.norang.ca/org-mode.html][Org Mode - Organize Your Life In Plain Text!]] (a crapload of useful information and customization's)
   [[http://cachestocaches.com/2016/9/my-workflow-org-agenda/][My Workflow with Org-Agenda]]
 
 * Disk usage

@@ -29,7 +29,8 @@
 ;; use-package
 (setq use-package-always-ensure t)
 (setq use-package-verbose t)
-(use-package magit)
+(use-package magit
+   :defer t)
 ;; recent files
 (setq linum-format "%d ")
 (recentf-mode 1)
@@ -38,7 +39,8 @@
 (add-hook 'find-file-hook (lambda () (linum-mode 1)))
 (global-set-key (kbd "C-x g") 'magit-status)
 ;; Neotree
-(use-package neotree)
+(use-package neotree
+    :defer t)
 (global-set-key [f8] 'neotree-toggle)
 (setq make-backup-files nil) ;; stop creating those backup~ files
 ;; tabbar
@@ -81,8 +83,10 @@
 (global-highlight-parentheses-mode t)
 ;;(setq dired-listing-switches "--group-directories-first -lXGha")
 (setq dired-listing-switches "-lXGha")
-(use-package dired-sort)
-(use-package dired-sort-menu)
+(use-package dired-sort
+  :defer t)
+(use-package dired-sort-menu
+  :defer t)
 ;; Handle special switches for Remote ftp directories 
 ;;(add-hook
 ;; 'dired-before-readin-hook
@@ -94,7 +98,8 @@
 ;;  (message "default-directory=%s switches=%s" default-directory dired-actual-switches)
 ;;))
 ;; YAML mode
-(use-package yaml-mode)
+(use-package yaml-mode
+  :defer t)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 ;; Omit mode
 (require 'dired-x)
@@ -105,10 +110,12 @@
   :init
   (setq diredp-hide-details-initially-flag nil))
 ;; Typescript mode
-(use-package typescript-mode)
+(use-package typescript-mode
+  :defer t)
 ;; Markdown mode
-(use-package markdown-mode)
- (autoload 'markdown-mode "markdown-mode"
+(use-package markdown-mode
+  :defer t)
+(autoload 'markdown-mode "markdown-mode"
        "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
@@ -119,70 +126,35 @@
 ;; (helm-mode 1)
 ;; (global-set-key (kbd "M-x") 'helm-M-x)
 ;; PHP mode
-(use-package php-mode)
+(use-package php-mode
+    :defer t)
 ;; CSharp mode
-(use-package csharp-mode)
- (setq auto-mode-alist
-     (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
+(use-package csharp-mode
+  :defer t
+  :mode  "\\.cs$")
 ;; toggle-truncate-lines key binding
 (global-set-key (kbd "C-x t") 'toggle-truncate-lines)
 ;; package-list-packages key binding
 (global-set-key (kbd "C-x p") 'package-list-packages)
 ;; Feature mode (Cucumber)
-(use-package feature-mode)
+(use-package feature-mode
+    :defer t)
 ;; jtags-mode
-(use-package jtags)
+(use-package jtags
+    :defer t)
 ;; CSV Mode
-(use-package csv-mode)
-(add-to-list 'auto-mode-alist '("\\.[Cc][Ss][Vv]\\'" . csv-mode))
+(use-package csv-mode
+  :defer t
+  :mode  "\\.[Cc][Ss][Vv]\\'")
 ;; which-key
 (use-package which-key)
 (which-key-mode)
 ;; nXML mode customization
 (add-to-list 'auto-mode-alist '("\\.xsd\\'" . xml-mode))
 (add-to-list 'auto-mode-alist '("\\.xslt\\'" . xml-mode))
-;; Org mode
-(defconst org-mode-directory "~/Downloads/org-mode")
-(defconst my-org-directory "~/org")
-(defconst todo-org-file (concat my-org-directory "/todo.org"))
-(defconst journal-org-file (concat my-org-directory "/journal.org"))
-(if (file-directory-p org-mode-directory)
-    (progn
-      (setq load-path (cons (concat org-mode-directory "/lisp") load-path))
-      (setq load-path (cons (concat org-mode-directory "/contrib/lisp") load-path))
-      (require 'org-install))
-    (require 'org))
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
-(global-set-key (kbd "C-c o") 
-                (lambda () (interactive) (find-file todo-org-file)))
-(setq org-log-done t)
-(setq org-hide-leading-stars nil)
-(setq org-startup-indented t)
-(add-hook 'org-mode-hook 'turn-on-flyspell 'append)
-(setq org-agenda-window-setup 'current-window)
-(setq org-agenda-files (list
-			todo-org-file
-			"~/Projects/emacs/shared.org"))
-(setq org-todo-keywords
-      '((sequence "TODO(t)" "IN-PROGRESS(p!)" "WAITING(w@/!)" "|" "DONE(d)")))
-(define-key global-map "\C-cc" 'org-capture)
-(setq org-capture-templates
-      '(("t" "Todo" entry (file+headline todo-org-file "Tasks")
-             "* TODO %?\n  %i\n  %a\n%T")
-        ("j" "Journal" entry (file+datetree journal-org-file)
-	 "* %?\nEntered on %U\n  %i\n  %a")))
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((shell . t)
-   (ruby . t)
-   (emacs-lisp . t)))
-(setq org-agenda-include-diary t)
-(setq org-confirm-babel-evaluate nil)
-(fset 'do-org-backup
-      "\C-co\274\C-s: backup\C-n\C-n\C-a\C-c\C-c")
-(define-key global-map "\C-cb" 'do-org-backup)
-(use-package htmlize)
+;; Display time
+(setq display-time-default-load-average nil)
+(display-time)
 ;; multiple-cursors
 (use-package multiple-cursors
   :bind (("<f2>" . mc/mark-previous-like-this)
@@ -193,6 +165,5 @@
          ("C-S-<mouse-1>" . mc/add-cursor-on-click)
          ("<ESC> <ESC>" . mc/keyboard-quit))
   :ensure t)
-;; Display time
-(setq display-time-default-load-average nil)
-(display-time)
+;; Load org-config
+(load "~/.emacs.d/org-config.el")
