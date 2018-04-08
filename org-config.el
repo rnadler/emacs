@@ -56,6 +56,8 @@
 			todo-org-file
 			"~/Projects/emacs/shared.org"
 			transfer-org-file))
+(when (string= (system-name) "bob-x1-carbon")
+    (setq org-agenda-files (delete transfer-org-file org-agenda-files)))
 (setq org-refile-targets '((org-agenda-files :maxlevel . 2)))
 (setq org-refile-use-outline-path 'file)
 (setq org-refile-allow-creating-parent-nodes 'confirm)

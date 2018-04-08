@@ -4,12 +4,10 @@
 * Tasks
 ** Windows emacs error: gnutls.c: [1] (Emacs) GnuTLS library not found
    - [[https://emacs.stackexchange.com/questions/27202/how-do-i-install-gnutls-for-emacs-25-1-on-windows][How do I install GnuTLS for Emacs 25.1 on Windows? - Emacs Stack Exchange]]
-** NEXT Org Mode usage
-  - Handling long-running "inactive" tasks (projects)... waiting for someone else to act.
-  - Overdue tasks? Auto-increment the day?
-  Add links [2018-04-05 Thu 16:18]
-  [[http://doc.norang.ca/org-mode.html][Org Mode - Organize Your Life In Plain Text!]] (a crapload of useful information and customization's)
-  [[http://cachestocaches.com/2016/9/my-workflow-org-agenda/][My Workflow with Org-Agenda]]
+** NEXT Fix org-config: Use environment variable to control paths
+See [[file:~/.emacs.d/org-config.el][org-config.el]]
+-- Remove transfer file from agenda file list is (system-name) is "bob-x1-carbon"
+<2018-04-09 Mon>
 
 * Disk usage
 #+name: disk-usage
@@ -28,8 +26,9 @@
    [[chrome-extension://gcmghdmnkfdbncmnmlkkglmnnhagajbm/options.html][Options - Create Link]] -- 
    - add orgmodeLink: [[%url%][%text%].]
    - add jiraLink: [%text_md%|%url%] 
-** DONE Improve Emacs init files. See: [[https://github.com/gonsie/dotfiles/tree/master/emacs][gonsie/dotfiles]]
+** DONE Improve Emacs init files. 
    CLOSED: [2018-03-24 Sat 15:01]
+   [[https://github.com/gonsie/dotfiles/tree/master/emacs][gonsie/dotfiles]]
 ** DONE Org-mode learning [[https://orgmode.org/manual/index.html#SEC_Contents][The Org Manual]]
    CLOSED: [2018-04-03 Tue 13:55]
    - State "DONE"       from "WAITING"    [2018-04-03 Tue 13:55]
@@ -40,4 +39,10 @@
    - Learn to use date+time calendar
    - Best way to archive DONE tasks? [[https://orgmode.org/manual/Archiving.html#Archiving][Archiving]]  C-c C-w (org-refile) move subtree to another subtree
    - Convert orgLink to markdownLink: [[https://www.bigeekfan.com/post/20171010_hugo_org_functions/][Emacs: Convert Org-Mode Links to Markdown Links]]
-
+** DONE Org Mode usage
+CLOSED: [2018-04-07 Sat 07:40]
+  - Handling long-running "inactive" tasks (projects)... waiting for someone else to act.
+  - Overdue tasks? Auto-increment the day?
+  Add links [2018-04-05 Thu 16:18]
+  [[http://doc.norang.ca/org-mode.html][Org Mode - Organize Your Life In Plain Text!]] (a crapload of useful information and customization's)
+  [[http://cachestocaches.com/2016/9/my-workflow-org-agenda/][My Workflow with Org-Agenda]]
