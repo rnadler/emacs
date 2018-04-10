@@ -1,6 +1,9 @@
 ;; Org mode
 (defconst org-mode-directory "~/org-mode")
-(defconst my-org-directory "~/org")
+(defconst my-org-directory
+  (if (string= (system-name) "WIN10R90H8MKJ")
+      "//brutus/it/healthinformatics/BobN/org"
+      "~/org"))
 (defconst todo-org-file (concat my-org-directory "/todo.org"))
 (defconst journal-org-file (concat my-org-directory "/journal.org"))
 (defconst transfer-org-file "/media/sf_healthinformatics/BobN/org/transfer.org")
@@ -17,7 +20,8 @@
 (setq org-log-done t)
 (setq org-hide-leading-stars nil)
 (setq org-startup-indented t)
-(add-hook 'org-mode-hook 'turn-on-flyspell 'append)
+(unless (eq system-type 'windows-nt)
+  (add-hook 'org-mode-hook 'turn-on-flyspell 'append))
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
               (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)"))))

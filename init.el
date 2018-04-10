@@ -4,6 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
+ '(custom-enabled-themes nil)
  '(global-auto-revert-mode 1)
  '(inhibit-startup-screen t)
  '(initial-scratch-message nil)
@@ -106,9 +107,10 @@
 (setq-default dired-omit-files-p t) ; Buffer-local variable
 (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
 ;; Dired+
-(use-package dired+
-  :init
-  (setq diredp-hide-details-initially-flag nil))
+(unless (eq system-type 'windows-nt)
+ (use-package dired+
+   :init
+   (setq diredp-hide-details-initially-flag nil)))
 ;; Typescript mode
 (use-package typescript-mode
   :defer t)
