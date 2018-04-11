@@ -50,6 +50,8 @@
 (fset 'do-org-backup
       "\C-co\274\C-s: backup\C-n\C-n\C-a\C-c\C-c")
 (define-key global-map "\C-cb" 'do-org-backup)
+(fset 'my-agenda
+   (lambda (&optional arg) "Startup my custom agenda." (interactive "p") (kmacro-exec-ring-item (quote ("ap" 0 "%d")) arg)))
 (use-package htmlize
     :defer t)
 ;; Custom agenda

@@ -48,4 +48,17 @@ CLOSED: [2018-04-09 Mon 09:21]
 See [[file:~/.emacs.d/org-config.el][org-config.el]]
 -- Remove transfer file from agenda file list is (system-name) is "bob-x1-carbon"
 <2018-04-09 Mon>
+** DONE Run my custom agenda from the command line
+CLOSED: [2018-04-11 Wed 08:46]
+ emacs --eval '(my-agenda)'
+or
+  emacs --daemon
+  emacs -nc --eval '(my-agenda)'
+- .zshrc
+ # Emacs aliases
+ alias ea="emacs --eval '(my-agenda)'"
+ export ALTERNATE_EDITOR="" # Autostart the emacs daemon
+ alias ec="emacsclient -nc"
+ alias eca="ec --eval '(my-agenda)'"
+<2018-04-11 Wed>
 

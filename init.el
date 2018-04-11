@@ -110,7 +110,8 @@
 (unless (eq system-type 'windows-nt)
  (use-package dired+
    :init
-   (setq diredp-hide-details-initially-flag nil)))
+   (setq diredp-hide-details-initially-flag nil))
+ (diredp-toggle-find-file-reuse-dir 1))
 ;; Typescript mode
 (use-package typescript-mode
   :defer t)
