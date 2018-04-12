@@ -48,7 +48,7 @@
 (setq org-agenda-include-diary t)
 (setq org-confirm-babel-evaluate nil)
 (fset 'do-org-backup
-      "\C-co\274\C-s: backup\C-n\C-n\C-a\C-c\C-c")
+      "\C-u\C-xs\C-co\274\C-s: backup\C-n\C-n\C-a\C-c\C-c")
 (define-key global-map "\C-cb" 'do-org-backup)
 (fset 'my-agenda
    (lambda (&optional arg) "Startup my custom agenda." (interactive "p") (kmacro-exec-ring-item (quote ("ap" 0 "%d")) arg)))
