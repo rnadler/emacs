@@ -49,7 +49,16 @@
 (setq org-confirm-babel-evaluate nil)
 (fset 'do-org-backup
       "\C-u\C-xs\C-co\274\C-s: backup\C-n\C-n\C-a\C-c\C-c")
-(define-key global-map "\C-cb" 'do-org-backup)
+(global-set-key (kbd "C-c b")
+   (lambda ()
+     (interactive)
+     (let (
+         (oldp (point))
+         (oldbuff (current-buffer)))
+       (execute-kbd-macro (symbol-function 'do-org-backup))
+       (unless (eq (current-buffer) oldbuff) (switch-to-buffer oldbuff))
+       (goto-char oldp))
+     (message "Backup complete.")))
 (fset 'my-agenda
    (lambda (&optional arg) "Startup my custom agenda." (interactive "p") (kmacro-exec-ring-item (quote ("ap" 0 "%d")) arg)))
 (use-package htmlize
