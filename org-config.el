@@ -90,3 +90,9 @@
               ((org-agenda-overriding-header "Projects:")
                (org-tags-match-list-sublevels 'indented)))))
 	))
+;; Nice looking bullets for headings
+(use-package org-bullets
+  :ensure t
+  :config 
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
