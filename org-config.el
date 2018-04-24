@@ -85,7 +85,8 @@
 	  (tags-todo "-TODO=\"DONE\"-TODO=\"CANCELLED\""
 		((org-agenda-skip-function 'my/org-agenda-skip-scheduled)
 		 (org-agenda-overriding-header "Unscheduled TODO entries:")
-		 (org-agenda-view-columns-initially t)))
+		 (org-agenda-view-columns-initially t)
+		 (org-agenda-sorting-strategy '(tag-up alpha-up))))
           (tags "project"
               ((org-agenda-overriding-header "Projects:")
                (org-tags-match-list-sublevels 'indented)))))
