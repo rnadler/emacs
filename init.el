@@ -5,6 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(custom-enabled-themes nil)
+ '(display-time-mode t)
  '(global-auto-revert-mode 1)
  '(inhibit-startup-screen t)
  '(initial-scratch-message nil)
@@ -106,12 +107,11 @@
 (require 'dired-x)
 (setq-default dired-omit-files-p t) ; Buffer-local variable
 (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
-;; Dired+
-(unless (eq system-type 'windows-nt)
- (use-package dired+
+;; Dired+ (requires manual installation of dired+-20170818.1411 into ./elpa)
+(use-package dired+
    :init
    (setq diredp-hide-details-initially-flag nil))
- (diredp-toggle-find-file-reuse-dir 1))
+(diredp-toggle-find-file-reuse-dir 1)
 ;; Typescript mode
 (use-package typescript-mode
   :defer t)
