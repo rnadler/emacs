@@ -4,6 +4,9 @@
 * Tasks
 ** Windows emacs error: gnutls.c: [1] (Emacs) GnuTLS library not found
    - [[https://emacs.stackexchange.com/questions/27202/how-do-i-install-gnutls-for-emacs-25-1-on-windows][How do I install GnuTLS for Emacs 25.1 on Windows? - Emacs Stack Exchange]]
+** TODO Update dired+ with new version from zip file
+- Re-compile all packages
+  - M-: (byte-recompile-directory package-user-dir nil 'force)
 
 * Disk usage
 #+name: disk-usage
