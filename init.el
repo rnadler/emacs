@@ -4,7 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
- '(custom-enabled-themes nil)
+ '(custom-enabled-themes (quote (manoj-dark)))
  '(display-time-mode t)
  '(global-auto-revert-mode 1)
  '(inhibit-startup-screen t)
@@ -12,13 +12,13 @@
  '(magit-commit-arguments (quote ("--all")))
  '(package-selected-packages
    (quote
-    (org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode))))
+    (powerline-evil org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:family "Ubuntu Mono" :foundry "DAMA" :slant normal :weight normal :height 113 :width normal)))))
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
@@ -168,5 +168,8 @@
          ("C-S-<mouse-1>" . mc/add-cursor-on-click)
          ("<ESC> <ESC>" . mc/keyboard-quit))
   :ensure t)
+;; Powerline
+(use-package powerline)
+(powerline-default-theme)
 ;; Load org-config
 (load "~/.emacs.d/org-config.el")
