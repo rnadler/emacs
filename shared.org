@@ -65,4 +65,16 @@ CLOSED: [2018-05-17 Thu 18:55]
 <2018-05-17 Thu>
 - Re-compile all packages
   - M-: (byte-recompile-directory package-user-dir nil 'force)
+** DONE [[https://www.reddit.com/r/emacs/comments/8mqeyi/announce_emacs_261_released/][Emacs 26.1 released : emacs]]
+CLOSED: [2018-05-28 Mon 13:42]
+<2018-05-28>
+:INSTALL:
+   $ git clone --depth 1 --branch emacs-26 https://github.com/emacs-mirror/emacs.git
+   $ cd emacs
+   $ ./autogen.sh
+   $ ./configure
+   $ make
+   $ src/emacs -Q
+   $ sudo make install
+:END:
 
