@@ -6,7 +6,9 @@
  '(column-number-mode t)
  '(custom-enabled-themes (quote (manoj-dark)))
  '(display-time-mode t)
+ '(fill-column 100)
  '(global-auto-revert-mode 1)
+ '(global-display-line-numbers-mode t)
  '(inhibit-startup-screen t)
  '(initial-scratch-message nil)
  '(magit-commit-arguments (quote ("--all")))
@@ -34,12 +36,11 @@
 (use-package magit
    :defer t)
 ;; recent files
-(setq linum-format "%d ")
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
-(add-hook 'find-file-hook (lambda () (linum-mode 1)))
 (global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-x l") 'display-line-numbers-mode)
 ;; Neotree
 (use-package neotree
     :defer t)
