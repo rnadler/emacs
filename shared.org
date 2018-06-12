@@ -4,6 +4,24 @@
 * Tasks
 ** Windows emacs error: gnutls.c: [1] (Emacs) GnuTLS library not found
    - [[https://emacs.stackexchange.com/questions/27202/how-do-i-install-gnutls-for-emacs-25-1-on-windows][How do I install GnuTLS for Emacs 25.1 on Windows? - Emacs Stack Exchange]]
+** TODO Add org file backup
+#+name: backup
+#+begin_src sh :results silent
+  DEST=/media/sf_healthinformatics/BobN/org
+  EMACS=~/Projects/emacs
+  #cd ${EMACS}
+  #./get_init_el.sh
+  cp -v ~/org/*.org ${DEST}
+  cp -v ${EMACS}/*.org ${DEST}
+  cp -v ${EMACS}/*.el ${DEST}
+  # Only one backup per minute
+  cd ${DEST}
+  NOW="$(date +"%Y%m%d-%H%M")"
+  BACKUP_FILE=./backup/org-backup-${NOW}.tgz
+  rm ${BACKUP_FILE}
+  tar --exclude='./backup' -czf ${BACKUP_FILE} ./*
+#+end_src
+
 * Disk usage
 #+name: disk-usage
 #+begin_src sh :results table append
