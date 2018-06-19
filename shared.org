@@ -4,6 +4,19 @@
 * Tasks
 ** Windows emacs error: gnutls.c: [1] (Emacs) GnuTLS library not found
    - [[https://emacs.stackexchange.com/questions/27202/how-do-i-install-gnutls-for-emacs-25-1-on-windows][How do I install GnuTLS for Emacs 25.1 on Windows? - Emacs Stack Exchange]]
+** TODO Sunrise commander
+- Download repository zip from [[https://github.com/escherdragon/sunrise-commander][escherdragon/sunrise-commander]]
+;; Sunrise Commander
+(add-to-list 'load-path "~/sunrise-commander-master")
+(require 'sunrise-commander)
+(require 'sunrise-x-buttons)
+(require 'sunrise-x-modeline)
+(add-to-list 'auto-mode-alist '("\\.srvm\\'" . sr-virtual-mode))
+(setq sr-cursor-follows-mouse nil)
+(define-key sr-mode-map [mouse-1]        nil)
+(define-key sr-mode-map [mouse-movement] nil)
+[2018-06-19 Tue 08:55]
+
 * Disk usage
 #+name: disk-usage
 #+begin_src sh :results table append
@@ -77,7 +90,8 @@ CLOSED: [2018-05-28 Mon 13:42]
    $ src/emacs -Q
    $ sudo make install
 :END:
-** TODO Add org file backup
+** DONE Add org file backup
+CLOSED: [2018-06-14 Thu 08:33]
 :SCRIPT:
   #+name: backup
   #+begin_src sh :results silent
@@ -96,4 +110,3 @@ CLOSED: [2018-05-28 Mon 13:42]
     tar --exclude='./backup' -czf ${BACKUP_FILE} ./*
   #+end_src
 :END:
-
