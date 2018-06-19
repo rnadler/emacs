@@ -14,7 +14,8 @@
  '(magit-commit-arguments (quote ("--all")))
  '(package-selected-packages
    (quote
-    (powerline-evil org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode))))
+    (powerline-evil org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
+ '(recentf-max-saved-items 30))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -45,26 +46,27 @@
 (use-package neotree
     :defer t)
 (global-set-key [f8] 'neotree-toggle)
+(add-hook 'neo-after-create-hook (lambda (&optional dummy) (display-line-numbers-mode -1)))
 (setq make-backup-files nil) ;; stop creating those backup~ files
 ;; tabbar
-(use-package tabbar)
-(tabbar-mode)
-(setq tabbar-buffer-groups-function
-       (lambda ()
-         (list "All Buffers")))
-(setq tabbar-buffer-list-function
-       (lambda ()
-         (remove-if
-          (lambda(buffer)
-            (find (aref (buffer-name buffer) 0) " *"))
-          (buffer-list))))
-;; tabbar-ruler
-(setq tabbar-ruler-global-tabbar t)    ; get tabbar
-;;(setq tabbar-ruler-global-ruler t)     ; get global ruler
-;;(setq tabbar-ruler-popup-menu t)       ; get popup menu.
-;;(setq tabbar-ruler-popup-toolbar t)    ; get popup toolbar
-;;(setq tabbar-ruler-popup-scrollbar t)  ; show scroll-bar on mouse-move
-(use-package tabbar-ruler)
+;; (use-package tabbar)
+;; (tabbar-mode)
+;; (setq tabbar-buffer-groups-function
+;;        (lambda ()
+;;          (list "All Buffers")))
+;; (setq tabbar-buffer-list-function
+;;        (lambda ()
+;;          (remove-if
+;;           (lambda(buffer)
+;;             (find (aref (buffer-name buffer) 0) " *"))
+;;           (buffer-list))))
+;; ;; tabbar-ruler
+;; (setq tabbar-ruler-global-tabbar t)    ; get tabbar
+;; ;;(setq tabbar-ruler-global-ruler t)     ; get global ruler
+;; ;;(setq tabbar-ruler-popup-menu t)       ; get popup menu.
+;; ;;(setq tabbar-ruler-popup-toolbar t)    ; get popup toolbar
+;; ;;(setq tabbar-ruler-popup-scrollbar t)  ; show scroll-bar on mouse-move
+;; (use-package tabbar-ruler)
 ;; IDO
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
@@ -142,7 +144,9 @@
 (global-set-key (kbd "C-x p") 'package-list-packages)
 ;; Feature mode (Cucumber)
 (use-package feature-mode
-    :defer t)
+  :defer t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.feature$" . feature-mode)))
 ;; jtags-mode
 (use-package jtags
     :defer t)
@@ -174,3 +178,13 @@
 (powerline-default-theme)
 ;; Load org-config
 (load "~/.emacs.d/org-config.el")
+;; Sunrise Commander
+(add-to-list 'load-path "~/sunrise-commander")
+(require 'sunrise-commander)
+(require 'sunrise-x-buttons)
+(require 'sunrise-x-modeline)
+(add-to-list 'auto-mode-alist '("\\.srvm\\'" . sr-virtual-mode))
+(setq sr-cursor-follows-mouse nil)
+(define-key sr-mode-map [mouse-1]        nil)
+(define-key sr-mode-map [mouse-movement] nil)
+(global-set-key (kbd "C-x c") 'sunrise-cd)
