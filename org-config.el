@@ -97,3 +97,5 @@
   :config 
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 (setq org-ellipsis "⤵")
+(add-hook 'org-mode-hook 'my/disable-line-numbers)
+(add-hook 'org-agenda-finalize-hook 'my/disable-line-numbers)

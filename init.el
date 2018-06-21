@@ -27,6 +27,9 @@
 (add-to-list 'package-archives
 	     '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
+;; Disable line numbers
+(defun my/disable-line-numbers (&optional dummy)
+  (display-line-numbers-mode -1))
 ;; Bootstrap `use-package'
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -46,7 +49,7 @@
 (use-package neotree
     :defer t)
 (global-set-key [f8] 'neotree-toggle)
-(add-hook 'neo-after-create-hook (lambda (&optional dummy) (display-line-numbers-mode -1)))
+(add-hook 'neo-after-create-hook 'my/disable-line-numbers)
 (setq make-backup-files nil) ;; stop creating those backup~ files
 ;; tabbar
 ;; (use-package tabbar)
