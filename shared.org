@@ -4,11 +4,6 @@
 * Tasks
 ** Windows emacs error: gnutls.c: [1] (Emacs) GnuTLS library not found
    - [[https://emacs.stackexchange.com/questions/27202/how-do-i-install-gnutls-for-emacs-25-1-on-windows][How do I install GnuTLS for Emacs 25.1 on Windows? - Emacs Stack Exchange]]
-** TODO Sunrise commander
-- Download repository zip from [[https://github.com/escherdragon/sunrise-commander][escherdragon/sunrise-commander]]
-- see init.el
-[2018-06-19 Tue 08:55]
-
 * Disk usage
 #+name: disk-usage
 #+begin_src sh :results table append
@@ -102,3 +97,9 @@ CLOSED: [2018-06-14 Thu 08:33]
     tar --exclude='./backup' -czf ${BACKUP_FILE} ./*
   #+end_src
 :END:
+** DONE Sunrise commander
+CLOSED: [2018-06-22 Fri 09:01]
+- Download repository zip from [[https://github.com/escherdragon/sunrise-commander][escherdragon/sunrise-commander]]
+- see init.el
+[2018-06-19 Tue 08:55]
+
