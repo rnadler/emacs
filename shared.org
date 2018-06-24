@@ -4,6 +4,14 @@
 * Tasks
 ** Windows emacs error: gnutls.c: [1] (Emacs) GnuTLS library not found
    - [[https://emacs.stackexchange.com/questions/27202/how-do-i-install-gnutls-for-emacs-25-1-on-windows][How do I install GnuTLS for Emacs 25.1 on Windows? - Emacs Stack Exchange]]
+** TODO Get Org Agenda Working for [[https://github.com/seagle0128/.emacs.d][Centaur Emacs]]
+- Comment out (require 'init-org) from init.el
+- Add custom.el with my org-config.el and other stuff.
+(define-key global-map "\C-c\C-w" 'org-refile)
+(fset 'do-org-backup
+    [?\C-u ?\C-x ?s ?\C-c ?o ?\M-< ?\C-s ?: ?  ?b ?a ?c ?k ?u ?p return ?\C-n ?\C-n ?\C-c ?\C-c])
+<2018-06-23 Sat>
+
 * Disk usage
 #+name: disk-usage
 #+begin_src sh :results table append
@@ -16,12 +24,12 @@
 |------------------------+------+----------+------------|
 
 * Completed Tasks
-** DONE Add emacs link to create link chrome extension 
+** DONE Add emacs link to create link chrome extension
    CLOSED: [2018-03-26 Mon 08:15]
-   [[chrome-extension://gcmghdmnkfdbncmnmlkkglmnnhagajbm/options.html][Options - Create Link]] -- 
+   [[chrome-extension://gcmghdmnkfdbncmnmlkkglmnnhagajbm/options.html][Options - Create Link]] --
    - add orgmodeLink: [[%url%][%text%].]
-   - add jiraLink: [%text_md%|%url%] 
-** DONE Improve Emacs init files. 
+   - add jiraLink: [%text_md%|%url%]
+** DONE Improve Emacs init files.
    CLOSED: [2018-03-24 Sat 15:01]
    [[https://github.com/gonsie/dotfiles/tree/master/emacs][gonsie/dotfiles]]
 ** DONE Org-mode learning [[https://orgmode.org/manual/index.html#SEC_Contents][The Org Manual]]
@@ -102,4 +110,3 @@ CLOSED: [2018-06-22 Fri 09:01]
 - Download repository zip from [[https://github.com/escherdragon/sunrise-commander][escherdragon/sunrise-commander]]
 - see init.el
 [2018-06-19 Tue 08:55]
-
