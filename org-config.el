@@ -48,7 +48,7 @@
 (setq org-agenda-include-diary t)
 (setq org-confirm-babel-evaluate nil)
 (fset 'do-org-backup
-      "\C-u\C-xs\C-co\274\C-s: backup\C-n\C-n\C-a\C-c\C-c")
+   [?\C-u ?\C-x ?s ?\C-c ?o ?\M-< ?\M-x ?s ?e ?a ?r ?c ?h ?- ?f ?o ?r ?w ?a ?r ?d return ?: ?  ?b ?a ?c ?k ?u ?p return ?\C-n ?\C-n ?\C-c ?\C-c])
 (global-set-key (kbd "C-c b")
    (lambda ()
      (interactive)
@@ -99,3 +99,7 @@
 (setq org-ellipsis "⤵")
 (add-hook 'org-mode-hook 'my/disable-line-numbers)
 (add-hook 'org-agenda-finalize-hook 'my/disable-line-numbers)
+;; Ivy fix
+(setq org-refile-use-outline-path 'file
+      org-outline-path-complete-in-steps nil)
+

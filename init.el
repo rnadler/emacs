@@ -14,7 +14,7 @@
  '(magit-commit-arguments (quote ("--all")))
  '(package-selected-packages
    (quote
-    (powerline-evil org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
+    (counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline-evil org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
  '(recentf-max-saved-items 30))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -179,6 +179,8 @@
 ;; Powerline
 (use-package powerline)
 (powerline-default-theme)
+;; Ivy
+(load "~/.emacs.d/init-ivy.el")
 ;; Load org-config
 (load "~/.emacs.d/org-config.el")
 ;; Sunrise Commander
@@ -191,3 +193,7 @@
 (define-key sr-mode-map [mouse-1]        nil)
 (define-key sr-mode-map [mouse-movement] nil)
 (global-set-key (kbd "C-x c") 'sunrise-cd)
+;; Menu/Tool/Scroll bars
+(and (bound-and-true-p tool-bar-mode) (tool-bar-mode -1))
+(and (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(and (bound-and-true-p horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
