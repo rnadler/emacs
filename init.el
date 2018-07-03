@@ -15,7 +15,9 @@
  '(package-selected-packages
    (quote
     (beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline-evil org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
- '(recentf-max-saved-items 30))
+ '(recentf-max-saved-items 30)
+ '(size-indication-mode 1)
+ '(visible-bell t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -51,25 +53,6 @@
 (global-set-key [f8] 'neotree-toggle)
 (add-hook 'neo-after-create-hook 'my/disable-line-numbers)
 (setq make-backup-files nil) ;; stop creating those backup~ files
-;; tabbar
-;; (use-package tabbar)
-;; (tabbar-mode)
-;; (setq tabbar-buffer-groups-function
-;;        (lambda ()
-;;          (list "All Buffers")))
-;; (setq tabbar-buffer-list-function
-;;        (lambda ()
-;;          (remove-if
-;;           (lambda(buffer)
-;;             (find (aref (buffer-name buffer) 0) " *"))
-;;           (buffer-list))))
-;; ;; tabbar-ruler
-;; (setq tabbar-ruler-global-tabbar t)    ; get tabbar
-;; ;;(setq tabbar-ruler-global-ruler t)     ; get global ruler
-;; ;;(setq tabbar-ruler-popup-menu t)       ; get popup menu.
-;; ;;(setq tabbar-ruler-popup-toolbar t)    ; get popup toolbar
-;; ;;(setq tabbar-ruler-popup-scrollbar t)  ; show scroll-bar on mouse-move
-;; (use-package tabbar-ruler)
 ;; IDO
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
@@ -129,12 +112,6 @@
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-;; Helm -- Seems like it gets in the way more than it helps. Disable for now.
-;; (use-package helm)
-;; (require 'helm-config)
-;; (helm-mode 1)
-;; (global-set-key (kbd "M-x") 'helm-M-x)
-;; PHP mode
 (use-package php-mode
     :defer t)
 ;; CSharp mode
@@ -188,6 +165,7 @@
 (require 'sunrise-commander)
 (require 'sunrise-x-buttons)
 (require 'sunrise-x-modeline)
+(require 'sunrise-x-popviewer)
 (add-to-list 'auto-mode-alist '("\\.srvm\\'" . sr-virtual-mode))
 (setq sr-cursor-follows-mouse nil)
 (define-key sr-mode-map [mouse-1]        nil)
