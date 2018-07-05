@@ -110,13 +110,14 @@
                      (counsel-M-x "^counsel ")))
 
   ;; Use faster search tools: ripgrep or the silver search
-  ;; (let ((command
-  ;;        (cond
-  ;;         ((executable-find "rg")
-  ;;          "rg -i -M 120 --no-heading --line-number --color never '%s' %s")
-  ;;         ((executable-find "ag")
-  ;;          "ag -i --noheading --nocolor --nofilename --numbers '%s' %s"))))
-  ;;   (setq counsel-grep-base-command command))
+  (let ((command
+         (cond
+          ((executable-find "rg")
+           "rg -i -M 120 --no-heading --line-number --color never '%s' %s")
+          ((executable-find "ag")
+           "ag -i --noheading --nocolor --nofilename --numbers '%s' %s")
+          (t counsel-grep-base-command))))
+    (setq counsel-grep-base-command command))
 
   ;; Integration with `projectile'
   ;; (with-eval-after-load 'projectile
