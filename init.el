@@ -16,6 +16,7 @@
    (quote
     (beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline-evil org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
  '(recentf-max-saved-items 30)
+ '(ediff-split-window-function (quote split-window-horizontally))
  '(size-indication-mode 1)
  '(visible-bell t))
 (custom-set-faces
@@ -112,6 +113,7 @@
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+;; PHP mode
 (use-package php-mode
     :defer t)
 ;; CSharp mode
