@@ -31,6 +31,7 @@
 ;;; Code:
 
 (use-package counsel
+  :defer 0.5
   :diminish ivy-mode counsel-mode
   :bind (("C-s" . swiper)
          ("C-S-s" . swiper-all)

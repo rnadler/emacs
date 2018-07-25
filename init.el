@@ -100,6 +100,7 @@
 (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
 ;; Dired+ (requires manual installation of dired+-20170818.1411 into ./elpa)
 (use-package dired+
+   :defer 0.5
    :init
    (setq diredp-hide-details-initially-flag nil))
 (diredp-toggle-find-file-reuse-dir 1)
@@ -138,7 +139,8 @@
   :defer t
   :mode  "\\.[Cc][Ss][Vv]\\'")
 ;; which-key
-(use-package which-key)
+(use-package which-key
+  :defer 0.1)
 (which-key-mode)
 ;; nXML mode customization
 (add-to-list 'auto-mode-alist '("\\.xsd\\'" . xml-mode))
@@ -148,14 +150,14 @@
 (display-time)
 ;; multiple-cursors
 (use-package multiple-cursors
+  :defer t
   :bind (("<f2>" . mc/mark-previous-like-this)
          ("S-<f2>" . mc/unmark-previous-like-this)
          ("<f3>" . mc/mark-next-like-this)
          ("S-<f3>" . mc/unmark-next-like-this)
          ("C-c <f2>" . mc/mark-all-like-this)
          ("C-S-<mouse-1>" . mc/add-cursor-on-click)
-         ("<ESC> <ESC>" . mc/keyboard-quit))
-  :ensure t)
+         ("<ESC> <ESC>" . mc/keyboard-quit)))
 ;; Powerline
 (use-package powerline)
 (powerline-default-theme)
