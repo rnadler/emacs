@@ -201,9 +201,7 @@
                 ("M-," . counsel-gtags-go-backward))
     :init
     (setq counsel-gtags-auto-update t)
-
-    (add-hook 'c-mode-hook 'counsel-gtags-mode)
-    (add-hook 'c++-mode-hook 'counsel-gtags-mode))
+    (add-hook 'java-mode-hook 'counsel-gtags-mode))
 
   ;; Improve `counsel-ag', also impact `counsel-rg', `counsel-pt'.
   ;; search the selection or current symbol by default
@@ -264,6 +262,16 @@
   )
 
 (provide 'init-ivy)
+
+;; ivy-posframe
+(use-package ivy-posframe)
+;; (setq ivy-display-function #'ivy-posframe-display)
+;; (setq ivy-display-function #'ivy-posframe-display-at-frame-center)
+;; (setq ivy-display-function #'ivy-posframe-display-at-window-center)
+;; (setq ivy-display-function #'ivy-posframe-display-at-frame-bottom-left)
+;; (setq ivy-display-function #'ivy-posframe-display-at-window-bottom-left)
+(setq ivy-display-function #'ivy-posframe-display-at-point)
+(ivy-posframe-enable)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-ivy.el ends here
