@@ -151,19 +151,10 @@
 
   ;; More friendly display transformer for Ivy
   (use-package ivy-rich
-    :init
-    (setq ivy-virtual-abbreviate 'full
-          ivy-rich-switch-buffer-align-virtual-buffer t)
-    (setq ivy-rich-path-style 'abbrev)
-
-    (ivy-set-display-transformer 'ivy-switch-buffer
-                                 'ivy-rich-switch-buffer-transformer)
-
-    (with-eval-after-load 'counsel-projectile
-      (ivy-set-display-transformer 'counsel-projectile
-                                   'ivy-rich-switch-buffer-transformer)
-      (ivy-set-display-transformer 'counsel-projectile-switch-to-buffer
-                                   'ivy-rich-switch-buffer-transformer)))
+    :init (ivy-rich-mode 1)
+    :hook (ivy-rich-mode . (lambda ()
+                             (setq ivy-virtual-abbreviate
+                                   (or (and ivy-rich-mode 'abbreviate) 'name)))))
 
   ;; Correcting words with flyspell via Ivy
   (use-package flyspell-correct-ivy
