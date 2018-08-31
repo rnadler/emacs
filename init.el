@@ -61,12 +61,9 @@
 (ido-mode 1)
 (setq ido-use-filename-at-point 'guess)
 ;; Set initial window/frame size and position
-(setq initial-frame-alist
-	  `((top . 40)	
-	    (left . 40)
-	    (height . 36)
-	    (width . 120)))
-(setq default-frame-alist (copy-alist initial-frame-alist))
+(setq frame-resize-pixelwise t)
+(set-frame-position (selected-frame) (/ (display-pixel-width) 4)  (/ (display-pixel-height) 4))
+(set-frame-size (selected-frame) (/ (display-pixel-width) 2)  (/ (display-pixel-height) 2) t)
 ;; Parentheses highlight
 (use-package highlight-parentheses)
 (define-globalized-minor-mode global-highlight-parentheses-mode
