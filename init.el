@@ -60,10 +60,17 @@
 (setq ido-everywhere t)
 (ido-mode 1)
 (setq ido-use-filename-at-point 'guess)
-;; Set initial window/frame size and position
+;; Set initial frame size and position
+(defun my/set-initial-frame ()
+  (let* ((base-factor 0.70)
+	(a-width (* (display-pixel-width) base-factor))
+        (a-height (* (display-pixel-height) base-factor))
+        (a-left (truncate (/ (- (display-pixel-width) a-width) 2)))
+	(a-top (truncate (/ (- (display-pixel-height) a-height) 2))))
+    (set-frame-position (selected-frame) a-left a-top)
+    (set-frame-size (selected-frame) (truncate a-width)  (truncate a-height) t)))
 (setq frame-resize-pixelwise t)
-(set-frame-position (selected-frame) (/ (display-pixel-width) 4)  (/ (display-pixel-height) 4))
-(set-frame-size (selected-frame) (/ (display-pixel-width) 2)  (/ (display-pixel-height) 2) t)
+(my/set-initial-frame)
 ;; Parentheses highlight
 (use-package highlight-parentheses)
 (define-globalized-minor-mode global-highlight-parentheses-mode
