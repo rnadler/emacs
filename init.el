@@ -170,7 +170,7 @@
 ;; Load org-config
 (load "~/.emacs.d/org-config.el")
 ;; Sunrise Commander
-(add-to-list 'load-path "~/sunrise-commander")
+(add-to-list 'load-path "~/.emacs.d/sunrise-commander")
 (require 'sunrise-commander)
 (require 'sunrise-x-buttons)
 (require 'sunrise-x-modeline)

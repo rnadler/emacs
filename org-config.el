@@ -1,5 +1,5 @@
 ;; Org mode
-(defconst org-mode-directory "~/org-mode")
+(defconst org-mode-directory "~/.emacs.d/org-mode")
 (defconst my-org-directory
   (if (string= (system-name) "WIN10R90H8MKJ")
       "//brutus/it/healthinformatics/BobN/org"
