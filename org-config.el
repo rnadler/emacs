@@ -77,13 +77,11 @@
 (setq org-refile-use-outline-path 'file)
 (setq org-refile-allow-creating-parent-nodes 'confirm)
 (setq org-agenda-tags-todo-honor-ignore-options t)
-(defun my/org-agenda-skip-scheduled ()
-  (org-agenda-skip-entry-if 'regexp ">"))
 (setq org-agenda-custom-commands
       '(("p" "Agenda and Projects"
          ((agenda "" nil)
 	  (tags-todo "-TODO=\"DONE\"-TODO=\"CANCELLED\""
-		((org-agenda-skip-function 'my/org-agenda-skip-scheduled)
+		((org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))
 		 (org-agenda-overriding-header "Unscheduled TODO entries:")
 		 (org-agenda-view-columns-initially t)
 		 (org-agenda-sorting-strategy '(tag-up alpha-up))))
