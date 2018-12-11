@@ -14,7 +14,7 @@
  '(magit-commit-arguments (quote ("--all")))
  '(package-selected-packages
    (quote
-    (cider clojure-mode racket-mode sly company ivy-posframe beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline-evil org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
+    (smartparens cider clojure-mode sly company ivy-posframe beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline-evil org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
  '(recentf-max-saved-items 30)
  '(ediff-split-window-function (quote split-window-horizontally))
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
@@ -197,13 +197,12 @@
   :defer t
   :config
   (setq inferior-lisp-program "/usr/local/bin/sbcl"))
-;; Racket mode
-(use-package racket-mode
+;; Clojure mode
+(use-package smartparens)
+(use-package clojure-mode
   :defer t
   :config
-  (setq racket-program "/home/bobn/racket/bin/racket"))
-(use-package clojure-mode
-  :defer t)
+  (add-hook 'clojure-mode-hook #'smartparens-strict-mode))
 (use-package cider
   :defer t
   :config
