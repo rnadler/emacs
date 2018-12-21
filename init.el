@@ -198,7 +198,12 @@
   :config
   (setq inferior-lisp-program "/usr/local/bin/sbcl"))
 ;; Clojure mode
-(use-package smartparens)
+(use-package smartparens
+  :bind
+  (("C-)" . sp-forward-slurp-sexp)
+   ("C-(" . sp-forward-barf-sexp)
+   ("C-{" . sp-backward-unwrap-sexp)
+   ("C-}" . sp-unwrap-sexp)))
 (use-package clojure-mode
   :defer t
   :config
