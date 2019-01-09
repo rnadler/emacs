@@ -38,7 +38,7 @@
 	 "* TODO %?\n  %i\n  %a\n%T")
 	("x" "Transfer" entry (file+headline transfer-org-file "Tasks")
           "* TODO %?\n  %i\n  %a\n%T")
-        ("j" "Journal" entry (file+datetree journal-org-file)
+        ("j" "Journal" entry (file+olp+datetree journal-org-file)
 	 "* %?\nEntered on %U\n  %i\n  %a")))
 (org-babel-do-load-languages
  'org-babel-load-languages
