@@ -255,14 +255,20 @@
 (provide 'init-ivy)
 
 ;; ivy-posframe
-(use-package ivy-posframe)
+(use-package ivy-posframe
+  :init
+  (ivy-posframe-enable)
+  :config
+  (setq ivy-display-function #'ivy-posframe-display-at-point)
+  (set-face-attribute 'internal-border nil :background "gray50")
+  (setq ivy-posframe-border-width 1))
+;; Other display options:
 ;; (setq ivy-display-function #'ivy-posframe-display)
 ;; (setq ivy-display-function #'ivy-posframe-display-at-frame-center)
 ;; (setq ivy-display-function #'ivy-posframe-display-at-window-center)
 ;; (setq ivy-display-function #'ivy-posframe-display-at-frame-bottom-left)
 ;; (setq ivy-display-function #'ivy-posframe-display-at-window-bottom-left)
-(setq ivy-display-function #'ivy-posframe-display-at-point)
-(ivy-posframe-enable)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-ivy.el ends here
