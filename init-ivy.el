@@ -255,13 +255,13 @@
 (provide 'init-ivy)
 
 ;; ivy-posframe
-(use-package ivy-posframe
-  :init
-  (ivy-posframe-enable)
-  :config
-  (setq ivy-display-function #'ivy-posframe-display-at-point)
-  (set-face-attribute 'internal-border nil :background "gray50")
-  (setq ivy-posframe-border-width 1))
+;; (use-package ivy-posframe
+;;   :init
+;;   (ivy-posframe-enable)
+;;   :config
+;;   (setq ivy-display-function #'ivy-posframe-display-at-point)
+;;   (set-face-attribute 'internal-border nil :background "gray50")
+;;   (setq ivy-posframe-border-width 1))
 ;; Other display options:
 ;; (setq ivy-display-function #'ivy-posframe-display)
 ;; (setq ivy-display-function #'ivy-posframe-display-at-frame-center)
