@@ -14,7 +14,7 @@
  '(magit-commit-arguments (quote ("--all")))
  '(package-selected-packages
    (quote
-    (diff-hl inf-clojure smartparens cider clojure-mode sly company ivy-posframe beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline-evil org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
+    (diff-hl inf-clojure smartparens cider clojure-mode company beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline-evil org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
  '(recentf-max-saved-items 30)
  '(ediff-split-window-function (quote split-window-horizontally))
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
@@ -113,7 +113,9 @@
   :defer t)
 ;; Markdown mode
 (use-package markdown-mode
-  :defer t)
+  :defer t
+  :config
+  (setq markdown-fontify-code-blocks-natively t))
 (autoload 'markdown-mode "markdown-mode"
        "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
@@ -144,8 +146,9 @@
   :mode  "\\.[Cc][Ss][Vv]\\'")
 ;; which-key
 (use-package which-key
-  :defer 0.1)
-(which-key-mode)
+  :defer 0.1
+  :config
+  (which-key-mode +1))
 ;; nXML mode customization
 (add-to-list 'auto-mode-alist '("\\.xsd\\'" . xml-mode))
 (add-to-list 'auto-mode-alist '("\\.xslt\\'" . xml-mode))
@@ -190,14 +193,19 @@
     :diminish beacon-mode
     :hook (after-init . beacon-mode)))
 ;; Company mode
-(use-package company)
-(add-hook 'after-init-hook 'global-company-mode)
-;; Sly
-(use-package sly
-  :defer t
+(use-package company
+  :ensure t
   :config
-  (setq inferior-lisp-program "/usr/local/bin/sbcl"))
-;; Clojure mode
+  (setq company-idle-delay 0.5)
+  (setq company-show-numbers t)
+  (setq company-tooltip-limit 10)
+  (setq company-minimum-prefix-length 2)
+  (setq company-tooltip-align-annotations t)
+  ;; invert the navigation direction if the the completion popup-isearch-match
+  ;; is displayed on top (happens near the bottom of windows)
+  (setq company-tooltip-flip-when-above t)
+  (global-company-mode))
+;; Smartparens
 (use-package smartparens
   :bind
   (("C-)" . sp-forward-slurp-sexp)
@@ -205,6 +213,7 @@
    ("C-{" . sp-backward-unwrap-sexp)
    ("C-}" . sp-unwrap-sexp)))
 (show-paren-mode 1)
+;; Clojure
 (use-package clojure-mode
   :defer t
   :config
@@ -212,6 +221,10 @@
 (use-package cider
   :defer t
   :config
+  (add-hook 'cider-mode-hook #'eldoc-mode)
+  (add-hook 'cider-repl-mode-hook #'eldoc-mode)
+  (add-hook 'cider-repl-mode-hook #'paredit-mode)
+  (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode)
   (setq cider-repl-display-help-banner nil))
 ;; Clojurescript support
 (use-package inf-clojure
@@ -222,4 +235,6 @@
 (use-package diff-hl
   :defer t
   :config
-  (global-diff-hl-mode))
+  (global-diff-hl-mode +1)
+  (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
