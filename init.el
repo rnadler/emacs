@@ -146,9 +146,8 @@
   :mode  "\\.[Cc][Ss][Vv]\\'")
 ;; which-key
 (use-package which-key
-  :defer 0.1
-  :config
-  (which-key-mode +1))
+  :defer 0.1)
+(which-key-mode)
 ;; nXML mode customization
 (add-to-list 'auto-mode-alist '("\\.xsd\\'" . xml-mode))
 (add-to-list 'auto-mode-alist '("\\.xslt\\'" . xml-mode))
