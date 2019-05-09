@@ -246,12 +246,13 @@
   (add-to-list 'lsp-language-id-configuration '(clojure-mode . "clojure-mode"))
   :init
   (setq lsp-enable-indentation nil)
+  (setq lsp-enable-snippet nil)
   (add-hook 'clojure-mode-hook #'lsp)
   (add-hook 'clojurec-mode-hook #'lsp)
   (add-hook 'clojurescript-mode-hook #'lsp))
 (use-package lsp-ui
-  :defer t
+  :ensure t
   :commands lsp-ui-mode)
 (use-package company-lsp
-  :defer t
+  :ensure t
   :commands company-lsp)
