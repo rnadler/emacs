@@ -100,4 +100,6 @@
 ;; Ivy fix
 (setq org-refile-use-outline-path 'file
       org-outline-path-complete-in-steps nil)
-
+;; Other stuff
+(setq org-catch-invisible-edits 'show-and-error)
+(setq org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+")))

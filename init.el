@@ -31,6 +31,12 @@
 (add-to-list 'package-archives
 	     '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
+;; Bootstrap `use-package'
+(setq-default use-package-always-ensure t ; Auto-download package if not exists
+              use-package-always-defer t ; Always defer load package to speed up startup
+              use-package-verbose nil ; Don't report loading details
+              use-package-expand-minimally t  ; make the expanded code as minimal as possible
+              use-package-enable-imenu-support t) ; Let imenu finds use-package definitions
 ;; Disable line numbers
 (defun my/disable-line-numbers (&optional dummy)
   (display-line-numbers-mode -1))
