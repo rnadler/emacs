@@ -14,7 +14,7 @@
  '(magit-commit-arguments (quote ("--all")))
  '(package-selected-packages
    (quote
-    (company-lsp lsp-ui lsp-mode diff-hl inf-clojure smartparens cider clojure-mode company beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline-evil org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
+    (company-lsp lsp-ui lsp-mode diff-hl smartparens cider clojure-mode company beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline-evil org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
  '(recentf-max-saved-items 30)
  '(ediff-split-window-function (quote split-window-horizontally))
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
@@ -228,19 +228,13 @@
   :config
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
-  (add-hook 'cider-repl-mode-hook #'paredit-mode)
-  (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'cider-repl-mode-hook #'smartparens-strict-mode)
   (setq cider-repl-display-help-banner nil))
-;; Clojurescript support
-(use-package inf-clojure
-  :defer t
-  :config
-  (setf inf-clojure-lein-cmd '("localhost" . 5555)))
 ;; Diff highlight
 (use-package diff-hl
-  :defer t
+  :ensure t
   :config
-  (global-diff-hl-mode +1)
+  (global-diff-hl-mode)
   (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 ;; LSP mode
