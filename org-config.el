@@ -103,3 +103,9 @@
 ;; Other stuff
 (setq org-catch-invisible-edits 'show-and-error)
 (setq org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+")))
+(add-hook 'org-mode-hook (lambda ()
+   "Beautify Org Checkbox Symbol"
+   (push '("[ ]" .  "☐") prettify-symbols-alist)
+   (push '("[X]" . "☑" ) prettify-symbols-alist)
+   (push '("[-]" . "❍" ) prettify-symbols-alist)
+   (prettify-symbols-mode)))
