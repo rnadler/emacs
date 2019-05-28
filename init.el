@@ -247,12 +247,15 @@
   :init
   (setq lsp-enable-indentation nil)
   (setq lsp-enable-snippet nil)
+  (setq flymake-start-on-flymake-mode nil)
   (add-hook 'clojure-mode-hook #'lsp)
   (add-hook 'clojurec-mode-hook #'lsp)
   (add-hook 'clojurescript-mode-hook #'lsp))
 (use-package lsp-ui
   :ensure t
-  :commands lsp-ui-mode)
+  :commands lsp-ui-mode
+  :config
+  (setq lsp-ui-sideline-enable nil))
 (use-package company-lsp
   :ensure t
   :commands company-lsp)
