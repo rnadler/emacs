@@ -92,7 +92,7 @@
 ;; Nice looking bullets for headings
 (use-package org-bullets
   :ensure t
-  :config 
+  :init
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 (setq org-ellipsis "⤵")
 (add-hook 'org-mode-hook 'my/disable-line-numbers)

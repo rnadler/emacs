@@ -200,7 +200,7 @@
 ;; Company mode
 (use-package company
   :ensure t
-  :config
+  :init
   (setq company-idle-delay 0.5)
   (setq company-show-numbers t)
   (setq company-tooltip-limit 10)
@@ -221,11 +221,11 @@
 ;; Clojure
 (use-package clojure-mode
   :defer t
-  :config
+  :init
   (add-hook 'clojure-mode-hook #'smartparens-strict-mode))
 (use-package cider
   :defer t
-  :config
+  :init
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'smartparens-strict-mode)
@@ -233,8 +233,15 @@
 ;; Diff highlight
 (use-package diff-hl
   :ensure t
-  :config
-  (global-diff-hl-mode)
+  :init
+  (custom-set-faces
+   '(diff-hl-change ((t (:background "#3a81c3"))))
+   '(diff-hl-insert ((t (:background "#7ccd7c"))))
+   '(diff-hl-delete ((t (:background "#ee6363")))))
+  ;; On-the-fly diff updates
+  (diff-hl-flydiff-mode)
+  ;; Enable diff-hl globally
+  (global-diff-hl-mode 1)
   (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 ;; LSP mode
@@ -254,7 +261,7 @@
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode
-  :config
+  :init
   (setq lsp-ui-sideline-enable nil))
 (use-package company-lsp
   :ensure t
