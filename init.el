@@ -9,6 +9,8 @@
  '(fill-column 100)
  '(global-auto-revert-mode 1)
  '(global-display-line-numbers-mode t)
+ '(grep-find-template
+   "find <D> <X> -name '*.java' <F> -exec grep <C> -nH --null -e <R> \\{\\} +")
  '(inhibit-startup-screen t)
  '(initial-scratch-message nil)
  '(magit-commit-arguments (quote ("--all")))
@@ -26,6 +28,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Ubuntu Mono" :foundry "DAMA" :slant normal :weight normal :height 113 :width normal)))))
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
