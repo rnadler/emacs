@@ -16,7 +16,7 @@
  '(magit-commit-arguments (quote ("--all")))
  '(package-selected-packages
    (quote
-    (company-lsp lsp-ui lsp-mode diff-hl smartparens cider clojure-mode company beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline-evil org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
+    (js2-mode company-lsp lsp-ui lsp-mode diff-hl smartparens cider clojure-mode company beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline-evil org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
  '(recentf-max-saved-items 30)
  '(ediff-split-window-function (quote split-window-horizontally))
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
@@ -118,8 +118,19 @@
    (setq diredp-hide-details-initially-flag nil))
 (diredp-toggle-find-file-reuse-dir 1)
 ;; Typescript mode
+;; Language server:
+;;   npm install -g typescript-language-server
+;;   npm i -g typescript
 (use-package typescript-mode
+  :mode "\\.ts\\'"
   :defer t)
+;; Javascript mode
+(use-package js2-mode
+  :mode "\\.js\\'"
+  :defer t
+  :init
+;;  (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
+  (setf js2-mode-indent-inhibit-undo t))
 ;; Markdown mode
 (use-package markdown-mode
   :defer t
@@ -260,12 +271,15 @@
   (setq flymake-start-on-flymake-mode nil)
   (add-hook 'clojure-mode-hook #'lsp)
   (add-hook 'clojurec-mode-hook #'lsp)
-  (add-hook 'clojurescript-mode-hook #'lsp))
+  (add-hook 'clojurescript-mode-hook #'lsp)
+  (add-hook 'typescript-mode-hook #'lsp)
+  (add-hook 'js2-mode-hook #'lsp))
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode
-  :init
-  (setq lsp-ui-sideline-enable nil))
+  ;; :init
+  ;; (setq lsp-ui-sideline-enable nil)
+  )
 (use-package company-lsp
   :ensure t
   :commands company-lsp)
