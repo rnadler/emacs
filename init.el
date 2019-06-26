@@ -235,6 +235,7 @@
 ;; Clojure
 (use-package clojure-mode
   :defer t
+  :mode ("\\.cljs$" "\\.cljc$")
   :init
   (add-hook 'clojure-mode-hook #'smartparens-strict-mode))
 (use-package cider
@@ -273,7 +274,9 @@
   (add-hook 'clojurec-mode-hook #'lsp)
   (add-hook 'clojurescript-mode-hook #'lsp)
   (add-hook 'typescript-mode-hook #'lsp)
-  (add-hook 'js2-mode-hook #'lsp))
+  (add-hook 'js2-mode-hook #'lsp)
+  (add-hook 'java-mode-hook #'lsp))
+
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode
