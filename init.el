@@ -6,20 +6,21 @@
  '(column-number-mode t)
  '(custom-enabled-themes (quote (manoj-dark)))
  '(display-time-mode t)
+ '(ediff-split-window-function (quote split-window-horizontally))
+ '(ediff-window-setup-function (quote ediff-setup-windows-plain))
  '(fill-column 100)
  '(global-auto-revert-mode 1)
  '(global-display-line-numbers-mode t)
- '(grep-find-template
-   "find <D> <X> -name '*.java' <F> -exec grep <C> -nH --null -e <R> \\{\\} +")
+ '(grep-find-command
+   (quote
+    ("find . -name '*.java' -exec grep --color -nH --null -e  \\{\\} +" . 56)))
  '(inhibit-startup-screen t)
  '(initial-scratch-message nil)
  '(magit-commit-arguments (quote ("--all")))
  '(package-selected-packages
    (quote
-    (js2-mode company-lsp lsp-ui lsp-mode diff-hl smartparens cider clojure-mode company beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline-evil org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
+    (js2-mode company-lsp lsp-ui lsp-mode diff-hl smartparens cider clojure-mode company beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
  '(recentf-max-saved-items 30)
- '(ediff-split-window-function (quote split-window-horizontally))
- '(ediff-window-setup-function (quote ediff-setup-windows-plain))
  '(size-indication-mode 1)
  '(visible-bell t))
 (custom-set-faces
@@ -276,13 +277,11 @@
   (add-hook 'typescript-mode-hook #'lsp)
   (add-hook 'js2-mode-hook #'lsp)
   (add-hook 'java-mode-hook #'lsp))
-
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode
-  ;; :init
-  ;; (setq lsp-ui-sideline-enable nil)
-  )
+  :init
+  (setq lsp-ui-sideline-enable nil))
 (use-package company-lsp
   :ensure t
   :commands company-lsp)
