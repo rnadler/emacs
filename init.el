@@ -19,7 +19,7 @@
  '(magit-commit-arguments (quote ("--all")))
  '(package-selected-packages
    (quote
-    (js2-mode company-lsp lsp-ui lsp-mode diff-hl smartparens cider clojure-mode company beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
+    (vterm js2-mode company-lsp lsp-ui lsp-mode diff-hl smartparens cider clojure-mode company beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
  '(recentf-max-saved-items 30)
  '(size-indication-mode 1)
  '(visible-bell t))
@@ -28,7 +28,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Ubuntu Mono" :foundry "DAMA" :slant normal :weight normal :height 113 :width normal)))))
+ '(default ((t (:family "Ubuntu Mono" :foundry "DAMA" :slant normal :weight normal :height 113 :width normal))))
+ '(diff-hl-change ((t (:background "#3a81c3"))))
+ '(diff-hl-delete ((t (:background "#ee6363"))))
+ '(diff-hl-insert ((t (:background "#7ccd7c")))))
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 (require 'package)
 (setq package-enable-at-startup nil)
@@ -250,10 +253,6 @@
 (use-package diff-hl
   :ensure t
   :init
-  (custom-set-faces
-   '(diff-hl-change ((t (:background "#3a81c3"))))
-   '(diff-hl-insert ((t (:background "#7ccd7c"))))
-   '(diff-hl-delete ((t (:background "#ee6363")))))
   ;; On-the-fly diff updates
   (diff-hl-flydiff-mode)
   ;; Enable diff-hl globally
@@ -285,3 +284,9 @@
 (use-package company-lsp
   :ensure t
   :commands company-lsp)
+;; Vterm
+(use-package vterm
+  :ensure t
+  :config
+  ;; Turn off line numbers in vterm
+  (add-hook 'vterm-mode-hook 'my/disable-line-numbers))
