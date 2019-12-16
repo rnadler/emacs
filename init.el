@@ -19,7 +19,7 @@
  '(magit-commit-arguments (quote ("--all")))
  '(package-selected-packages
    (quote
-    (expand-region vterm js2-mode company-lsp lsp-ui lsp-mode diff-hl smartparens cider clojure-mode company beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
+    (json-mode expand-region vterm js2-mode company-lsp lsp-ui lsp-mode diff-hl smartparens cider clojure-mode company beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
  '(recentf-max-saved-items 30)
  '(size-indication-mode 1)
  '(visible-bell t))
@@ -294,3 +294,5 @@
 (use-package expand-region
   :ensure t
   :bind (("C-=" . er/expand-region)))
+;; Json mode
+(use-package json-mode)
