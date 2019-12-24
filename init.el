@@ -19,7 +19,7 @@
  '(magit-commit-arguments (quote ("--all")))
  '(package-selected-packages
    (quote
-    (json-mode expand-region vterm js2-mode company-lsp lsp-ui lsp-mode diff-hl smartparens cider clojure-mode company beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup neotree markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
+    (treemacs-magit treemacs-icons-dired treemacs json-mode expand-region vterm js2-mode company-lsp lsp-ui lsp-mode diff-hl smartparens cider clojure-mode company beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
  '(recentf-max-saved-items 30)
  '(size-indication-mode 1)
  '(visible-bell t))
@@ -63,11 +63,12 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x l") 'display-line-numbers-mode)
 ;; Neotree
-(use-package neotree
-    :defer t)
-(global-set-key [f8] 'neotree-toggle)
-(add-hook 'neo-after-create-hook 'my/disable-line-numbers)
+;; (use-package neotree
+;;     :defer t)
+;; (global-set-key [f8] 'neotree-toggle)
+;; (add-hook 'neo-after-create-hook 'my/disable-line-numbers)
 (setq make-backup-files nil) ;; stop creating those backup~ files
+(load "~/.emacs.d/init-treemacs.el")
 ;; IDO
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
