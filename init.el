@@ -19,7 +19,7 @@
  '(magit-commit-arguments (quote ("--all")))
  '(package-selected-packages
    (quote
-    (treemacs-magit treemacs-icons-dired treemacs json-mode expand-region vterm js2-mode company-lsp lsp-ui lsp-mode diff-hl smartparens cider clojure-mode company beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup markdown-mode magit jtags highlight-parentheses feature-mode dired-sort-menu dired-sort dired+ csv-mode csharp-mode php-mode)))
+    (treemacs-magit treemacs-icons-dired treemacs json-mode expand-region vterm js2-mode company-lsp lsp-ui lsp-mode diff-hl smartparens cider clojure-mode company beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup markdown-mode magit jtags highlight-parentheses feature-mode dired+ csv-mode csharp-mode php-mode)))
  '(recentf-max-saved-items 30)
  '(size-indication-mode 1)
  '(visible-bell t))
@@ -32,6 +32,7 @@
  '(diff-hl-change ((t (:background "#3a81c3"))))
  '(diff-hl-delete ((t (:background "#ee6363"))))
  '(diff-hl-insert ((t (:background "#7ccd7c")))))
+(defalias 'yes-or-no-p 'y-or-n-p)
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 (require 'package)
 (setq package-enable-at-startup nil)
@@ -94,10 +95,6 @@
 (global-highlight-parentheses-mode t)
 ;;(setq dired-listing-switches "--group-directories-first -lXGha")
 (setq dired-listing-switches "-lXGha")
-(use-package dired-sort
-  :defer t)
-(use-package dired-sort-menu
-  :defer t)
 ;; Handle special switches for Remote ftp directories 
 ;;(add-hook
 ;; 'dired-before-readin-hook
