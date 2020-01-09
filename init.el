@@ -278,7 +278,8 @@
   :ensure t
   :commands lsp-ui-mode
   :init
-  (setq lsp-ui-sideline-enable nil))
+  (setq lsp-ui-sideline-enable nil
+	lsp-ui-doc-position 'top))
 (use-package company-lsp
   :ensure t
   :commands company-lsp)
