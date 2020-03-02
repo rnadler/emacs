@@ -3,8 +3,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
  '(column-number-mode t)
- '(custom-enabled-themes (quote (manoj-dark)))
+ '(custom-enabled-themes (quote (wheatgrass)))
  '(display-time-mode t)
  '(ediff-split-window-function (quote split-window-horizontally))
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
@@ -19,7 +23,7 @@
  '(magit-commit-arguments (quote ("--all")))
  '(package-selected-packages
    (quote
-    (treemacs-magit treemacs-icons-dired treemacs json-mode expand-region vterm js2-mode company-lsp lsp-ui lsp-mode diff-hl smartparens cider clojure-mode company beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup markdown-mode magit jtags highlight-parentheses feature-mode dired+ csv-mode csharp-mode php-mode)))
+    (terraform-mode treemacs-magit treemacs-icons-dired treemacs json-mode expand-region vterm js2-mode company-lsp lsp-ui lsp-mode diff-hl smartparens cider clojure-mode company beacon counsel-gtags flyspell-correct-ivy ivy-rich ivy-hydra smex flx counsel powerline org-bullets htmlize multiple-cursors which-key php-mode yaml-mode use-package typescript-mode tabbar-ruler popup markdown-mode magit jtags highlight-parentheses feature-mode dired+ csv-mode csharp-mode php-mode)))
  '(recentf-max-saved-items 30)
  '(size-indication-mode 1)
  '(visible-bell t))
@@ -315,3 +319,5 @@
       (gui-set-selection
        nil (substring text (match-beginning 3)(match-end 3))))))
 (global-set-key (kbd "C-x y") 'org-export-url)
+;; Terraform mode
+(use-package terraform-mode)
