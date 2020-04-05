@@ -26,15 +26,11 @@
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-one)
 
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
-
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
-
-;;(display-time-mode t)
+(setq display-time-default-load-average nil)
+(display-time)
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
@@ -42,11 +38,38 @@
 (global-set-key (kbd "C-x l") 'display-line-numbers-mode)
 (global-set-key (kbd "C-x t") 'toggle-truncate-lines)
 (global-set-key [f8] 'treemacs)
+;; Sunrise Commander
+(after! sunrise
+  (use-package! sunrise-buttons)
+  (use-package! sunrise-modeline)
+  (use-package! sunrise-popviewer)
+  (setq sr-cursor-follows-mouse nil)
+  ;;(define-key sr-mode-map [mouse-1]        nil)
+  ;;(define-key sr-mode-map [mouse-movement] nil)
+  )
+(add-to-list 'auto-mode-alist '("\\.srvm\\'" . sr-virtual-mode))
+(global-set-key (kbd "C-x c") 'sunrise-cd)
+
 (setq make-backup-files nil) ;; stop creating those backup~ files
 
 (setq-default dired-omit-files-p t) ; Buffer-local variable
 (defun my/disable-line-numbers (&optional _)
   (display-line-numbers-mode -1))
+
+;; Set initial frame size and position
+(defun my/set-initial-frame ()
+  (let* ((base-factor 0.70)
+	 (geometry (assq 'geometry (car (display-monitor-attributes-list))))
+	 (fheight (nth 4 geometry))
+	 (fwidth (nth 3 geometry))
+	 (a-width (* fwidth base-factor))
+	 (a-height (* fheight base-factor))
+	 (a-left (truncate (/ (- fwidth a-width) 2)))
+	 (a-top (truncate (/ (- fheight a-height) 2))))
+    (set-frame-position (selected-frame) a-left a-top)
+    (set-frame-size (selected-frame) (truncate a-width)  (truncate a-height) t)))
+(setq frame-resize-pixelwise t)
+(my/set-initial-frame)
 
 (load! "./org-config.el")
 ;; Here are some additional functions/macros that could help you configure Doom:
