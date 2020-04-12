@@ -49,4 +49,9 @@
 ;; This is required for some packages whose default branch isn't 'master' (which
 ;; our package manager can't deal with; see raxod502/straight.el#279)
 ;(package! builtin-package :recipe (:branch "develop"))
+
 (package! sunrise-commander :recipe (:host github :repo "sunrise-commander/sunrise-commander"))
+(package! treemacs-icons-dired)
+(package! dired+)
+
+(unpin! treemacs treemacs-icons-dired)

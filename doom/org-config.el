@@ -8,8 +8,7 @@
 (defconst transfer-org-file "/media/sf_healthinformatics/BobN/org/transfer.org")
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
-(global-set-key (kbd "C-c o") 
-                (lambda () (interactive) (find-file todo-org-file)))
+
 (setq org-log-done t)
 (setq org-hide-leading-stars nil)
 (setq org-startup-indented t)
@@ -71,13 +70,15 @@
 (setq org-agenda-include-diary t)
 (setq org-confirm-babel-evaluate nil)
 (fset 'do-org-backup
-   [?\C-u ?\C-x ?s ?\C-c ?o ?\M-< ?\C-r ?\C-s ?: ?  ?b ?a ?c ?k ?u ?p return ?\C-n ?\C-n ?\C-c ?\C-c])
+   [?\M-< ?\C-s ?: ?  ?b ?a ?c ?k ?u ?p return ?\C-n ?\C-n ?\C-c ?\C-c])
 (global-set-key (kbd "C-c b")
    (lambda ()
      (interactive)
      (let (
          (oldp (point))
          (oldbuff (current-buffer)))
+       (save-some-buffers)
+       (find-file todo-org-file)
        (execute-kbd-macro (symbol-function 'do-org-backup))
        (unless (eq (current-buffer) oldbuff) (switch-to-buffer oldbuff))
        (goto-char oldp))

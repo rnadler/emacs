@@ -33,11 +33,58 @@
 (display-time)
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
+
+;; Treemacs
+(after! treemacs
+  (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
+        treemacs-deferred-git-apply-delay      0.5
+        treemacs-directory-name-transformer    #'identity
+        treemacs-display-in-side-window        t
+        treemacs-eldoc-display                 t
+        treemacs-file-event-delay              5000
+        treemacs-file-extension-regex          treemacs-last-period-regex-value
+        treemacs-file-follow-delay             0.2
+        treemacs-file-name-transformer         #'identity
+        treemacs-follow-after-init             t
+        treemacs-git-command-pipe              ""
+        treemacs-goto-tag-strategy             'refetch-index
+        treemacs-indentation                   2
+        treemacs-indentation-string            " "
+        treemacs-is-never-other-window         nil
+        treemacs-max-git-entries               5000
+        treemacs-missing-project-action        'ask
+        treemacs-no-png-images                 nil
+        treemacs-no-delete-other-windows       t
+        treemacs-project-follow-cleanup        nil
+        treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+        treemacs-position                      'left
+        treemacs-recenter-distance             0.1
+        treemacs-recenter-after-file-follow    nil
+        treemacs-recenter-after-tag-follow     nil
+        treemacs-recenter-after-project-jump   'always
+        treemacs-recenter-after-project-expand 'on-distance
+        treemacs-show-cursor                   nil
+        treemacs-show-hidden-files             nil
+        treemacs-silent-filewatch              nil
+        treemacs-silent-refresh                nil
+        treemacs-sorting                       'alphabetic-asc
+        treemacs-space-between-root-nodes      t
+        treemacs-tag-follow-cleanup            t
+        treemacs-tag-follow-delay              1.5
+        treemacs-width                         35)
+  (treemacs-follow-mode t)
+  (treemacs-filewatch-mode t)
+  (treemacs-fringe-indicator-mode t))
+
+(after! treemacs-icons-dired
+  (treemacs-icons-dired-mode))
+(global-set-key [f8] 'treemacs)
+
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x l") 'display-line-numbers-mode)
 (global-set-key (kbd "C-x t") 'toggle-truncate-lines)
-(global-set-key [f8] 'treemacs)
+
 ;; Sunrise Commander
 (after! sunrise
   (use-package! sunrise-buttons)
@@ -53,19 +100,28 @@
 (setq make-backup-files nil) ;; stop creating those backup~ files
 
 (setq-default dired-omit-files-p t) ; Buffer-local variable
+(after! dired+
+  (use-package! dired-x)
+  (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$")))
+
+(setq diredp-hide-details-initially-flag nil)
+(diredp-toggle-find-file-reuse-dir 1)
+
 (defun my/disable-line-numbers (&optional _)
   (display-line-numbers-mode -1))
 
 ;; Set initial frame size and position
 (defun my/set-initial-frame ()
   (let* ((base-factor 0.70)
-	 (geometry (assq 'geometry (car (display-monitor-attributes-list))))
-	 (fheight (nth 4 geometry))
-	 (fwidth (nth 3 geometry))
-	 (a-width (* fwidth base-factor))
-	 (a-height (* fheight base-factor))
-	 (a-left (truncate (/ (- fwidth a-width) 2)))
-	 (a-top (truncate (/ (- fheight a-height) 2))))
+         (geometry (assq 'geometry (car (last (display-monitor-attributes-list)))))
+         (fx (nth 1 geometry))
+         (fy (nth 2 geometry))
+	       (fheight (nth 4 geometry))
+	       (fwidth (nth 3 geometry))
+	       (a-width (* fwidth base-factor))
+	       (a-height (* fheight base-factor))
+	       (a-left (truncate (+ fx (/ (- fwidth a-width) 2))))
+	       (a-top (truncate (+ fy (/ (- fheight a-height) 2)))))
     (set-frame-position (selected-frame) a-left a-top)
     (set-frame-size (selected-frame) (truncate a-width)  (truncate a-height) t)))
 (setq frame-resize-pixelwise t)
