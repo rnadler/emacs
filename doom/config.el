@@ -24,7 +24,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-vibrant)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -76,9 +76,14 @@
   (treemacs-filewatch-mode t)
   (treemacs-fringe-indicator-mode t))
 
-(after! treemacs-icons-dired
+(after! doom-themes
+   (setq doom-themes-treemacs-theme "Default")
+   (doom-themes-treemacs-config))
+
+(after! treemacs-icons-dired dired
   (treemacs-icons-dired-mode))
-(global-set-key [f8] 'treemacs)
+
+(global-set-key [f8] '+treemacs/toggle)
 
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
 (global-set-key (kbd "C-x g") 'magit-status)
@@ -126,6 +131,7 @@
     (set-frame-size (selected-frame) (truncate a-width)  (truncate a-height) t)))
 (setq frame-resize-pixelwise t)
 (my/set-initial-frame)
+(setq confirm-kill-emacs nil)
 
 (load! "./org-config.el")
 ;; Here are some additional functions/macros that could help you configure Doom:
