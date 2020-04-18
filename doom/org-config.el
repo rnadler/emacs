@@ -7,7 +7,7 @@
 (defconst journal-org-file (concat my-org-directory "/journal.org.gpg"))
 (defconst transfer-org-file "/media/sf_healthinformatics/BobN/org/transfer.org")
 (define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
+(define-key global-map "\C-c!" 'org-time-stamp-inactive)
 
 (setq org-log-done t)
 (setq org-hide-leading-stars nil)
@@ -24,7 +24,6 @@
               ("WAITING" :foreground "orange" :weight bold)
               ("HOLD" :foreground "magenta" :weight bold)
               ("CANCELLED" :foreground "forest green" :weight bold))))
-(define-key global-map "\C-cc" 'org-capture)
 
 (cl-defun my/make/org-capture-template
    (shortcut heading &optional (no-todo nil) (description heading) (category heading) (scheduled t))
@@ -85,8 +84,6 @@
      (message "Backup complete.")))
 (fset 'my-agenda
    (lambda (&optional arg) "Startup my custom agenda." (interactive "p") (kmacro-exec-ring-item (quote ("ap" 0 "%d")) arg)))
-(use-package htmlize
-    :defer t)
 ;; Custom agenda
 (setq org-agenda-dim-blocked-tasks nil)
 (setq org-agenda-compact-blocks t)
@@ -113,17 +110,9 @@
               ((org-agenda-overriding-header "Projects:")
                (org-tags-match-list-sublevels 'indented)))))
 	))
-;; Nice looking bullets for headings
-(use-package org-bullets
-  :ensure t
-  :init
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 (setq org-ellipsis "⤵")
 (add-hook 'org-mode-hook 'my/disable-line-numbers)
 (add-hook 'org-agenda-finalize-hook 'my/disable-line-numbers)
-;; Ivy fix
-(setq org-refile-use-outline-path 'file
-      org-outline-path-complete-in-steps nil)
 ;; Other stuff
 (setq org-catch-invisible-edits 'show-and-error)
 (setq org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+")))
