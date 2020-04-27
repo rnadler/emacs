@@ -9,6 +9,10 @@
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-c!" 'org-time-stamp-inactive)
 
+(setq org-agenda-start-day "-1d")
+(setq org-agenda-span 5)
+(setq org-agenda-start-on-weekday nil)
+
 (setq org-log-done t)
 (setq org-hide-leading-stars nil)
 (setq org-startup-indented t)
@@ -39,18 +43,6 @@
 			    "CREATED: %U")
 			  "\n:END:") "\n\n ")
 		:empty-lines 1 :time-prompt t))
-
-;; (setq org-capture-templates
-;;       (loop for (shortcut heading)
-;;             in (seq-partition '("t" "Tasks, Getting Things Done"
-;;                                "r" "Research"
-;;                                "2" "2FA3"
-;;                                "m" "Email"
-;;                                "e" "Emacs (•̀ᴗ•́)و"
-;;                                "b" "Blog"
-;;                                "a" "Arbitrary Reading and Learning"
-;;                                "p" "Personal Matters") 2)
-;;             collect (my/make/org-capture-template shortcut heading)))
 
 (setq org-capture-templates
       (cons (my/make/org-capture-template "b" "Blog")
