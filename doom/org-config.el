@@ -130,3 +130,21 @@
  `(("^[ \t]*\\(?:[-+*]\\|[0-9]+[).]\\)[ \t]+\\(\\(?:\\[@\\(?:start:\\)?[0-9]+\\][ \t]*\\)?\\[\\(?:X\\|\\([0-9]+\\)/\\2\\)\\][^\n]*\n\\)"
     1 'org-checkbox-done-text prepend))
  'append)
+;; Copy org link to clipboard
+(defun org-export-url ()
+  (interactive)
+  (let* ((link-info (assoc :link (org-context)))
+         (text
+          (when link-info
+            (buffer-substring-no-properties
+             (or (cadr link-info)(point-min))
+             (or (caddr link-info)(point-max))))))
+    (if (not text)
+        (error "Not in org link")
+      (string-match
+       org-bracket-link-regexp text)
+      (kill-new
+       (substring text (match-beginning 1)(match-end 1)))
+      (gui-set-selection
+       nil (substring text (match-beginning 3)(match-end 3))))))
+(global-set-key (kbd "C-x y") 'org-export-url)
