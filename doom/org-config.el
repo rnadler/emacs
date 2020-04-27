@@ -98,6 +98,7 @@
 (setq org-refile-use-outline-path 'file)
 (setq org-refile-allow-creating-parent-nodes 'confirm)
 (setq org-agenda-tags-todo-honor-ignore-options t)
+(setq org-agenda-include-diary nil)
 (setq org-agenda-custom-commands
       '(("p" "Agenda and Projects"
          ((agenda "" nil)
