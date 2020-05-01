@@ -9,8 +9,8 @@
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-c!" 'org-time-stamp-inactive)
 
-(setq org-agenda-start-day "-1d")
-(setq org-agenda-span 5)
+(setq org-agenda-start-day "-2d")
+(setq org-agenda-span 7)
 (setq org-agenda-start-on-weekday nil)
 
 (setq org-log-done t)
