@@ -68,7 +68,7 @@
      (let (
          (oldp (point))
          (oldbuff (current-buffer)))
-       (save-some-buffers)
+       (org-save-all-org-buffers)
        (find-file todo-org-file)
        (execute-kbd-macro (symbol-function 'do-org-backup))
        (unless (eq (current-buffer) oldbuff) (switch-to-buffer oldbuff))

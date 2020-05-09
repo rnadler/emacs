@@ -86,6 +86,7 @@
 (setq frame-resize-pixelwise t)
 (my/set-initial-frame)
 (setq confirm-kill-emacs nil)
+(grep-apply-setting 'grep-find-command '("find . -name '*.java' -exec grep -nH --null -e   \\{\\} +" . 48))
 ;; Org mode
 (define-key global-map "\C-ca" 'org-agenda)
 (define-key global-map "\C-cc" 'org-capture)
