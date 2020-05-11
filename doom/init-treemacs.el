@@ -36,7 +36,7 @@
       treemacs-tag-follow-cleanup            t
       treemacs-tag-follow-delay              1.5
       treemacs-width                         35)
-(treemacs-follow-mode t)
+(treemacs-follow-mode nil)
 (treemacs-filewatch-mode t)
 (treemacs-fringe-indicator-mode t)
 

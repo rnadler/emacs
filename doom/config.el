@@ -35,7 +35,7 @@
 (setq recentf-max-menu-items 25)
 
 ;; Treemacs
-(global-set-key [f8] '+treemacs/toggle)
+(global-set-key [f8] 'treemacs)
 (after! treemacs
   (load! "./init-treemacs.el"))
 
