@@ -93,6 +93,9 @@
 (after! org
   (load! "./org-config.el"))
 
+;; Beacon
+(beacon-mode 1)
+
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one

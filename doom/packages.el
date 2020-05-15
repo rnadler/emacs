@@ -53,5 +53,6 @@
 (package! sunrise-commander :recipe (:host github :repo "sunrise-commander/sunrise-commander"))
 (package! treemacs-icons-dired)
 (package! dired+)
+(package! beacon)
 
 (unpin! treemacs treemacs-icons-dired)
