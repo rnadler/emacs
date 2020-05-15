@@ -60,8 +60,6 @@
    (emacs-lisp . t)))
 (setq org-agenda-include-diary t)
 (setq org-confirm-babel-evaluate nil)
-(fset 'do-org-backup
-   [?\M-< ?\C-s ?: ?  ?b ?a ?c ?k ?u ?p return ?\C-n ?\C-n ?\C-c ?\C-c])
 (global-set-key (kbd "C-c b")
    (lambda ()
      (interactive)
@@ -70,7 +68,7 @@
          (oldbuff (current-buffer)))
        (org-save-all-org-buffers)
        (find-file todo-org-file)
-       (execute-kbd-macro (symbol-function 'do-org-backup))
+       (org-sbe backup)
        (unless (eq (current-buffer) oldbuff) (switch-to-buffer oldbuff))
        (goto-char oldp))
      (message "Backup complete.")))
