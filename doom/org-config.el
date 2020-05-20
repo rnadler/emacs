@@ -103,7 +103,10 @@
 	))
 (setq org-ellipsis "⤵")
 (add-hook 'org-mode-hook 'my/disable-line-numbers)
-(add-hook 'org-agenda-finalize-hook 'my/disable-line-numbers)
+(add-hook 'org-agenda-finalize-hook
+          (lambda ()
+            (remove-text-properties (point-min) (point-max) '(mouse-face t))
+            (my/disable-line-numbers)))
 ;; Other stuff
 (setq org-catch-invisible-edits 'show-and-error)
 (setq org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+")))
