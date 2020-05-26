@@ -96,6 +96,10 @@
 ;; Beacon
 (beacon-mode 1)
 
+;; Org-roam
+(after! org-roam
+  (setq org-roam-link-title-format "R:%s"))
+
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
