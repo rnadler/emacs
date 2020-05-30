@@ -97,8 +97,14 @@
 (beacon-mode 1)
 
 ;; Org-roam
+;; error in process filter: eww-display-html: This function requires Emacs to be compiled with libxml2
+(defun my/open-org-roam-server (_)
+  (eww "http://localhost:8080"))
+
 (after! org-roam
-  (setq org-roam-link-title-format "R:%s"))
+  (setq org-roam-link-title-format "§%s")
+  (setq org-roam-graph-viewer 'my/open-org-roam-server)
+  (setq org-roam-graph-extra-config '(("overlap" . "false"))))
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;

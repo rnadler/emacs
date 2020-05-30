@@ -54,5 +54,6 @@
 (package! treemacs-icons-dired)
 (package! dired+)
 (package! beacon)
+(package! org-roam-server)
 
 (unpin! treemacs treemacs-icons-dired)
