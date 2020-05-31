@@ -44,11 +44,14 @@
 			  "\n:END:") "\n\n ")
 		:empty-lines 1 :time-prompt t))
 
+;; https://github.com/sprig/org-capture-extension#set-up-handlers-in-emacs
 (setq org-capture-templates
       (cons (my/make/org-capture-template "b" "Blog")
 	    '(("t" "Todo" entry (file+headline todo-org-file "Tasks")
 	       "* TODO %?\n  %i\n  %a\n%T")
-	      ("x" "Transfer" entry (file+headline transfer-org-file "Tasks")
+        ("L" "Protocol Link" entry (file+headline todo-org-file "Inbox")
+         "* %? [[%:link][%:description]] \nCaptured On: %U")
+        ("x" "Transfer" entry (file+headline transfer-org-file "Tasks")
 	       "* TODO %?\n  %i\n  %a\n%T")
 	      ("j" "Journal" entry (file+olp+datetree journal-org-file)
 	       "* %?\nEntered on %U\n  %i\n  %a"))))
@@ -60,18 +63,21 @@
    (emacs-lisp . t)))
 (setq org-agenda-include-diary t)
 (setq org-confirm-babel-evaluate nil)
-(global-set-key (kbd "C-c b")
-   (lambda ()
+(cl-defun my/make-save-template (sbe what)
+  `(lambda ()
      (interactive)
      (let (
          (oldp (point))
          (oldbuff (current-buffer)))
        (org-save-all-org-buffers)
        (find-file todo-org-file)
-       (org-sbe backup)
+       (org-sbe ,sbe)
        (unless (eq (current-buffer) oldbuff) (switch-to-buffer oldbuff))
        (goto-char oldp))
-     (message "Backup complete.")))
+     (message (concat ,what " complete."))))
+
+(global-set-key (kbd "C-c b") (my/make-save-template 'backup "Backup"))
+
 (fset 'my-agenda
    (lambda (&optional arg) "Startup my custom agenda." (interactive "p") (kmacro-exec-ring-item (quote ("ap" 0 "%d")) arg)))
 ;; Custom agenda

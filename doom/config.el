@@ -97,14 +97,23 @@
 (beacon-mode 1)
 
 ;; Org-roam
-;; error in process filter: eww-display-html: This function requires Emacs to be compiled with libxml2
+;; https://org-roam.github.io/org-roam/manual/Installation-_00281_0029.html#Installation-_00281_0029
 (defun my/open-org-roam-server (_)
-  (eww "http://localhost:8080"))
+  (interactive)
+  (when (not (get-buffer "*httpd*"))
+    (org-roam-server-mode))
+  (browse-url "http://localhost:8080"))
 
 (after! org-roam
   (setq org-roam-link-title-format "§%s")
   (setq org-roam-graph-viewer 'my/open-org-roam-server)
-  (setq org-roam-graph-extra-config '(("overlap" . "false"))))
+  (setq org-roam-graph-extra-config '(("overlap" . "false")))
+  (setq org-roam-capture-ref-templates '(("r" "ref" plain #'org-roam-capture--get-point
+                                          "\n- tags :: [[${ref}][${title}]]\n\n%?"
+                                          :file-name "${slug}"
+                                          :head "#+TITLE: ${title}\n#+DATE: %<%Y-%m-%d %H:%M:%S>\n#+ROAM_KEY: ${ref}\n#+CATEGORY: webref"
+                                          :unnarrowed t)))
+  )
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
