@@ -49,8 +49,9 @@
       (cons (my/make/org-capture-template "b" "Blog")
 	    '(("t" "Todo" entry (file+headline todo-org-file "Tasks")
 	       "* TODO %?\n  %i\n  %a\n%T")
+        ;; javascript:location.href = 'org-protocol://capture?template=L&url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title) + '&body='
         ("L" "Protocol Link" entry (file+headline todo-org-file "Inbox")
-         "* %? [[%:link][%:description]] \nCaptured On: %U")
+         "* [[%:link][%:description]] \n- %?\nCaptured: %U")
         ("x" "Transfer" entry (file+headline transfer-org-file "Tasks")
 	       "* TODO %?\n  %i\n  %a\n%T")
 	      ("j" "Journal" entry (file+olp+datetree journal-org-file)

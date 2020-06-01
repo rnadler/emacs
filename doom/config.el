@@ -106,12 +106,15 @@
 
 (after! org-roam
   (setq org-roam-link-title-format "§%s")
+  (when (string= (system-name) "bob-x1-carbon")
+    (setq org-roam-directory "~/Dropbox/org/roam"))
   (setq org-roam-graph-viewer 'my/open-org-roam-server)
   (setq org-roam-graph-extra-config '(("overlap" . "false")))
+  ;; javascript:location.href = 'org-protocol://roam-ref?template=r&ref=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title)
   (setq org-roam-capture-ref-templates '(("r" "ref" plain #'org-roam-capture--get-point
-                                          "\n- tags :: [[${ref}][${title}]]\n\n%?"
+                                          "- tags :: %?\n* [[${ref}][${title}]]\n- "
                                           :file-name "${slug}"
-                                          :head "#+TITLE: ${title}\n#+DATE: %<%Y-%m-%d %H:%M:%S>\n#+ROAM_KEY: ${ref}\n#+CATEGORY: webref"
+                                          :head "#+TITLE: ${title}\n#+DATE: %<%Y-%m-%d %H:%M:%S>\n#+ROAM_KEY: ${ref}\n#+CATEGORY: webref\n"
                                           :unnarrowed t)))
   )
 
