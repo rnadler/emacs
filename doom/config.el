@@ -112,9 +112,9 @@
   (setq org-roam-graph-extra-config '(("overlap" . "false")))
   ;; javascript:location.href = 'org-protocol://roam-ref?template=r&ref=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title)
   (setq org-roam-capture-ref-templates '(("r" "ref" plain #'org-roam-capture--get-point
-                                          "- tags :: %?\n* [[${ref}][${title}]]\n- "
+                                          "#+roam_tags: %?\n* [[${ref}][${title}]]\n- "
                                           :file-name "${slug}"
-                                          :head "#+TITLE: ${title}\n#+DATE: %<%Y-%m-%d %H:%M:%S>\n#+ROAM_KEY: ${ref}\n#+CATEGORY: webref\n"
+                                          :head "#+title: ${title}\n#+DATE: %<%Y-%m-%d %H:%M:%S>\n#+roam_key: ${ref}\n#+category: webref\n"
                                           :unnarrowed t)))
   )
 
