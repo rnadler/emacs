@@ -97,12 +97,24 @@
 (beacon-mode 1)
 
 ;; Org-roam
-;; https://org-roam.github.io/org-roam/manual/Installation-_00281_0029.html#Installation-_00281_0029
+;; https://org-roam.github.io/org-roam/manual/Installation-_00281_0029.html#Installation-_00281_002
+;; WSL chrome startup
+(defconst chrome-exe "/mnt/c/Program Files (x86)/Google/Chrome/Application/chrome.exe")
+(defconst roam-host "http://localhost:8080")
+
+(defun my/is-wsl ()
+  (string= (system-name) "WIN10R90H8MKJ"))
+
+(when (my/is-wsl)
+  (setq browse-url-generic-program chrome-exe))
+
 (defun my/open-org-roam-server (_)
   (interactive)
   (when (not (get-buffer "*httpd*"))
     (org-roam-server-mode))
-  (browse-url "http://localhost:8080"))
+  (if (my/is-wsl)
+      (browse-url-generic roam-host)
+    (browse-url roam-host)))
 
 (after! org-roam
   (setq org-roam-link-title-format "§%s")
