@@ -33,6 +33,7 @@
 (display-time)
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
+(setq confirm-kill-processes nil)
 
 ;; Treemacs
 (global-set-key [f8] 'treemacs)
