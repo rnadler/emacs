@@ -51,7 +51,7 @@
 	       "* TODO %?\n  %i\n  %a\n%T")
         ;; javascript:location.href = 'org-protocol://capture?template=L&url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title) + '&body='
         ("L" "Protocol Link" entry (file+headline todo-org-file "Inbox")
-         "* [[%:link][%:description]] \n- %?\nCaptured: %U")
+         "* [[%:link][%:description]] %i\n- %?\nCaptured: %U")
         ("x" "Transfer" entry (file+headline transfer-org-file "Tasks")
 	       "* TODO %?\n  %i\n  %a\n%T")
 	      ("j" "Journal" entry (file+olp+datetree journal-org-file)
@@ -72,7 +72,7 @@
          (oldbuff (current-buffer)))
        (org-save-all-org-buffers)
        (find-file todo-org-file)
-       (org-sbe ,sbe)
+       (ignore-errors (org-sbe ,sbe))
        (unless (eq (current-buffer) oldbuff) (switch-to-buffer oldbuff))
        (goto-char oldp))
      (message (concat ,what " complete."))))
