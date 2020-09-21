@@ -47,7 +47,7 @@
 ;; https://github.com/sprig/org-capture-extension#set-up-handlers-in-emacs
 (setq org-capture-templates
       (cons (my/make/org-capture-template "b" "Blog")
-	    '(("t" "Todo" entry (file+headline todo-org-file "Tasks")
+	    '(("t" "Todo" entry (file+headline todo-org-file "Inbox")
 	       "* TODO %?\n  %i\n  %a\n%T")
         ;; javascript:location.href = 'org-protocol://capture?template=L&url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title) + '&body='
         ("L" "Protocol Link" entry (file+headline todo-org-file "Inbox")
@@ -142,10 +142,7 @@
              (or (caddr link-info)(point-max))))))
     (if (not text)
         (error "Not in org link")
-      (string-match
-       org-bracket-link-regexp text)
-      (kill-new
-       (substring text (match-beginning 1)(match-end 1)))
-      (gui-set-selection
-       nil (substring text (match-beginning 3)(match-end 3))))))
+      (string-match org-bracket-link-regexp text)
+      (message (concat "Exported: " (kill-new (substring text (match-beginning 1) (match-end 1)))))
+      (gui-set-selection nil (substring text (match-beginning 3) (match-end 3))))))
 (global-set-key (kbd "C-x y") 'org-export-url)

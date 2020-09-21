@@ -55,5 +55,8 @@
 (package! dired+)
 (package! beacon)
 (package! org-roam-server)
+(package! json-mode)
+(package! json-reformat)
+(package! terraform-mode)
 
 (unpin! treemacs treemacs-icons-dired)
