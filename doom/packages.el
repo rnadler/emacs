@@ -58,5 +58,6 @@
 (package! json-mode)
 (package! json-reformat)
 (package! terraform-mode)
+(package! org-bullets)
 
 (unpin! treemacs treemacs-icons-dired)
