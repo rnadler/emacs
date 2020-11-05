@@ -135,7 +135,7 @@
 ;; Copy org link to clipboard
 (defun org-export-url ()
   (interactive)
-  (let* ((link-info (assoc :link (org-context)))
+  (let* ((link-info (assoc :item (org-context)))
          (text
           (when link-info
             (buffer-substring-no-properties
