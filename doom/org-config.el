@@ -108,7 +108,7 @@
               ((org-agenda-overriding-header "Projects:")
                (org-tags-match-list-sublevels 'indented)))))
 	))
-(setq org-ellipsis "⤵")
+(setq org-ellipsis " ▼")
 (add-hook 'org-mode-hook 'my/disable-line-numbers)
 (add-hook 'org-agenda-finalize-hook
           (lambda ()
