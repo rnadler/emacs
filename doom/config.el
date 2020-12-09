@@ -130,6 +130,88 @@
                                           :head "#+title: ${title}\n#+DATE: %<%Y-%m-%d %H:%M:%S>\n#+roam_key: ${ref}\n#+category: webref\n"
                                           :unnarrowed t)))
   )
+;; Clojure
+;; https://github.com/ericdallo/dotfiles/blob/master/.doom.d/config.el#L99-L134
+(use-package! cider
+  :after clojure-mode
+  :config
+  (setq cider-ns-refresh-show-log-buffer t
+        cider-show-error-buffer t;'only-in-repl
+        cider-font-lock-dynamically '(macro core function var deprecated)
+        cider-prompt-for-symbol nil)
+  (set-lookup-handlers! 'cider-mode nil))
+
+(use-package! clj-refactor
+  :after clojure-mode
+  :config
+  (set-lookup-handlers! 'clj-refactor-mode nil)
+  (setq cljr-warn-on-eval nil
+        cljr-eagerly-build-asts-on-startup nil
+        cljr-add-ns-to-blank-clj-files nil
+        ;; cljr-magic-require-namespaces
+        ;; '(("s"   . "schema.core")
+        ;;   ("th"  . "common-core.test-helpers")
+        ;;   ("gen" . "common-test.generators")
+        ;;   ("d-pro" . "common-datomic.protocols.datomic")
+        ;;   ("ex" . "common-core.exceptions")
+        ;;   ("dth" . "common-datomic.test-helpers")
+        ;;   ("t-money" . "common-core.types.money")
+        ;;   ("t-time" . "common-core.types.time")
+        ;;   ("d" . "datomic.api")
+        ;;   ("m" . "matcher-combinators.matchers")
+        ;;   ("pp" . "clojure.pprint"))
+  ))
+
+(use-package! clojure-mode
+  :config
+  (setq clojure-indent-style 'align-arguments
+        clojure-thread-all-but-last t
+        clojure-align-forms-automatically t
+        yas-minor-mode 1)
+  (cljr-add-keybindings-with-prefix "C-c C-c"))
+
+;; LSP
+(use-package! lsp-mode
+  :commands lsp
+  :hook ((clojure-mode . lsp)
+         (java-mode . lsp))
+  :config
+  (setq lsp-clojure-custom-server-command '("bash" "-c" "/usr/bin/clojure-lsp")
+        lsp-headerline-breadcrumb-enable t
+        ;; lsp-lens-enable t
+        lsp-enable-file-watchers t
+        lsp-signature-auto-activate nil
+        lsp-completion-use-last-result nil))
+
+(use-package! lsp-ui
+  :after lsp-mode
+  :commands lsp-ui-mode
+  :config
+  (setq lsp-ui-peek-list-width 60
+        ;; lsp-ui-doc-enable nil
+        ;; lsp-ui-doc-max-width 200
+        ;; lsp-ui-doc-max-height 30
+        ;; lsp-signature-auto-activate nil
+        lsp-ui-peek-fontify 'always
+        lsp-ui-sideline-show-code-actions nil))
+
+(use-package! company
+  :init
+  (setq company-idle-delay 0.5)
+  (setq company-show-numbers t)
+  (setq company-tooltip-limit 10)
+  (setq company-minimum-prefix-length 2)
+  (setq company-tooltip-align-annotations t)
+  ;; invert the navigation direction if the the completion popup-isearch-match
+  ;; is displayed on top (happens near the bottom of windows)
+  (setq company-tooltip-flip-when-above t)
+  (global-company-mode))
+
+;; TCP Server
+(setq server-auth-key "N#'=2;T_VbOS#<,u~$bue@j1_C=n{/x'#'^vW532`5'OIYkRWGIUxWD.#]g$CC<U")
+(setq server-host "0.0.0.0")
+(setq server-port "8081")
+(setq server-use-tcp t)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
