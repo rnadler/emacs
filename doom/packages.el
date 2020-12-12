@@ -59,9 +59,7 @@
 (package! json-reformat)
 (package! terraform-mode)
 (package! org-bullets)
-(package! clj-refactor)
-(package! clojure-mode)
-(package! lsp-mode)
 (package! lsp-ui)
+(package! lsp-ivy)
 
 (unpin! treemacs treemacs-icons-dired)

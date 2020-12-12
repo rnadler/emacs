@@ -174,14 +174,21 @@
 (use-package! lsp-mode
   :commands lsp
   :hook ((clojure-mode . lsp)
-         (java-mode . lsp))
+         (clojurescript-mode . lsp)
+         (lsp-mode . lsp-enable-which-key-integration)
+         ;;(java-mode . lsp)
+         )
   :config
-  (setq lsp-clojure-custom-server-command '("bash" "-c" "/usr/bin/clojure-lsp")
+  (setq ;; clojure-lsp is on PATH
+        ;; lsp-clojure-custom-server-command '("bash" "-c" "/usr/bin/clojure-lsp")
         lsp-headerline-breadcrumb-enable t
         ;; lsp-lens-enable t
-        lsp-enable-file-watchers t
+        lsp-enable-file-watchers nil
         lsp-signature-auto-activate nil
         lsp-completion-use-last-result nil))
+
+(use-package! lsp-ivy
+  :commands lsp-ivy-workspace-symbol)
 
 (use-package! lsp-ui
   :after lsp-mode
