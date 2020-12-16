@@ -133,17 +133,15 @@
     1 'org-checkbox-done-text prepend))
  'append)
 ;; Copy org link to clipboard
-(defun org-export-url ()
-  (interactive)
-  (let* ((link-info (assoc :item (org-context)))
-         (text
-          (when link-info
-            (buffer-substring-no-properties
-             (or (cadr link-info)(point-min))
-             (or (caddr link-info)(point-max))))))
-    (if (not text)
-        (error "Not in org link")
-      (string-match org-bracket-link-regexp text)
-      (message (concat "Exported: " (kill-new (substring text (match-beginning 1) (match-end 1)))))
-      (gui-set-selection nil (substring text (match-beginning 3) (match-end 3))))))
+;; Based on https://emacs.stackexchange.com/a/60555/19347
+(defun org-export-url (&optional arg)
+  "Extract URL from org-mode link and add it to kill ring."
+  (interactive "P")
+  (let* ((link (org-element-lineage (org-element-context) '(link) t))
+         (url (org-element-property :raw-link link)))
+    (if (not url)
+        (message "Not in an org link.")
+    (kill-new url)
+    (message (concat "Copied URL: " url)))))
+
 (global-set-key (kbd "C-x y") 'org-export-url)
