@@ -134,14 +134,11 @@
  'append)
 ;; Copy org link to clipboard
 ;; Based on https://emacs.stackexchange.com/a/60555/19347
-(defun org-export-url (&optional arg)
-  "Extract URL from org-mode link and add it to kill ring."
-  (interactive "P")
+(defun org-export-url ()
+  "Extract URL from org-mode link (or current word) and add it to kill ring."
+  (interactive)
   (let* ((link (org-element-lineage (org-element-context) '(link) t))
-         (url (org-element-property :raw-link link)))
-    (if (not url)
-        (message "Not in an org link.")
-    (kill-new url)
-    (message (concat "Copied URL: " url)))))
-
+         (url (org-element-property :raw-link link))
+         (url (if (not url) (thing-at-point 'word 'no-properties) url)))
+    (message (concat "Copied: " (kill-new url)))))
 (global-set-key (kbd "C-x y") 'org-export-url)
