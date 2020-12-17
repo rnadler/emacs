@@ -133,12 +133,15 @@
     1 'org-checkbox-done-text prepend))
  'append)
 ;; Copy org link to clipboard
+(defun my/replace-in-string (what with in)
+  (replace-regexp-in-string (regexp-quote what) with in nil 'literal))
 ;; Based on https://emacs.stackexchange.com/a/60555/19347
-(defun org-export-url ()
+(defun my/org-export-url ()
   "Extract URL from org-mode link (or current word) and add it to kill ring."
   (interactive)
   (let* ((link (org-element-lineage (org-element-context) '(link) t))
          (url (org-element-property :raw-link link))
          (url (if (not url) (thing-at-point 'word 'no-properties) url)))
-    (message (concat "Copied: " (kill-new url)))))
-(global-set-key (kbd "C-x y") 'org-export-url)
+    (kill-new url)
+    (message (concat "Copied: " (my/replace-in-string "%" "%%" url)))))
+(global-set-key (kbd "C-x y") 'my/org-export-url)
