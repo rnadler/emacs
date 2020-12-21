@@ -19,7 +19,19 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "monospace" :size 14))
+;;
+;;(setq doom-font (font-spec :family "monospace" :size 14))
+;;
+(setq doom-font (font-spec :family "Ubuntu Mono" :size 16)
+      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 16)
+      doom-big-font (font-spec :family "Ubuntu Mono" :size 24))
+(after! doom-themes
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t))
+(custom-set-faces!
+  '(font-lock-comment-face :slant italic)
+  '(font-lock-keyword-face :slant italic))
+
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -121,6 +133,8 @@
   (setq org-roam-link-title-format "§%s")
   (when (string= (system-name) "bob-x1-carbon")
     (setq org-roam-directory "~/Dropbox/org/roam"))
+  (setq org-roam-server-host "0.0.0.0")
+  (setq org-roam-server-port 8080)
   (setq org-roam-graph-viewer 'my/open-org-roam-server)
   (setq org-roam-graph-extra-config '(("overlap" . "false")))
   ;; javascript:location.href = 'org-protocol://roam-ref?template=r&ref=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title)
