@@ -14,6 +14,11 @@
 ;;      Alternatively, press 'gd' (or 'C-c g d') on a module to browse its
 ;;      directory (for easy access to its source code).
 
+;; https://github.com/hlissner/doom-emacs/issues/4498
+(when doom-debug-p
+  (require 'benchmark-init)
+  (add-hook 'doom-first-input-hook #'benchmark-init/deactivate))
+
 (doom! :input
        ;;chinese
        ;;japanese

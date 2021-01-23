@@ -61,5 +61,6 @@
 (package! org-bullets)
 (package! lsp-ui)
 (package! lsp-ivy)
+(package! benchmark-init)
 
 (unpin! treemacs treemacs-icons-dired)
