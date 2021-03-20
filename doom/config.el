@@ -57,6 +57,12 @@
 (global-set-key (kbd "C-x l") 'display-line-numbers-mode)
 (global-set-key (kbd "C-x t") 'toggle-truncate-lines)
 
+;; Elfeed
+(global-set-key (kbd "C-x w") 'elfeed)
+(after! elfeed
+  (setq-default elfeed-search-filter "@4-days-old +unread ")
+  (setq elfeed-sort-order 'ascending))
+
 ;; Sunrise Commander
 (after! sunrise
   (use-package! sunrise-buttons)
