@@ -50,7 +50,14 @@
 ;; our package manager can't deal with; see raxod502/straight.el#279)
 ;(package! builtin-package :recipe (:branch "develop"))
 
-(package! sunrise-commander :recipe (:host github :repo "sunrise-commander/sunrise-commander"))
+;; Fix for https://github.com/sunrise-commander/sunrise-commander/issues/113
+;; cd ~/.doom.d
+;; git clone https://github.com/sunrise-commander/sunrise-commander.git
+;; git checkout b85cca90da6abadd3393f88b324e2b9d70345cd9
+;; rm -rf ~/.emacs.d/.local/straight/build-27.2.50/sunrise-commander
+;; ~/.emacs.d/bin/doom sync
+(package! sunrise-commander :recipe (:local-repo "sunrise-commander"))
+;;(package! sunrise-commander :recipe (:host github :repo "sunrise-commander/sunrise-commander"))
 (package! treemacs-icons-dired)
 (package! dired+)
 (package! beacon)
