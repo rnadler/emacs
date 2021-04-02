@@ -53,6 +53,7 @@
 ;; Fix for https://github.com/sunrise-commander/sunrise-commander/issues/113
 ;; cd ~/.doom.d
 ;; git clone https://github.com/sunrise-commander/sunrise-commander.git
+;; cd sunrise-commander
 ;; git checkout b85cca90da6abadd3393f88b324e2b9d70345cd9
 ;; rm -rf ~/.emacs.d/.local/straight/build-27.2.50/sunrise-commander
 ;; ~/.emacs.d/bin/doom sync
@@ -70,4 +71,4 @@
 (package! lsp-ivy)
 (package! benchmark-init)
 
-(unpin! treemacs treemacs-icons-dired)
+(unpin! treemacs treemacs-icons-dired org-roam)
