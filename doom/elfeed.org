@@ -18,7 +18,7 @@
 *** [[http://martinfowler.com/bliki/bliki.atom][Martin Fowler's Bliki]]
 *** [[https://medium.com/feed/topic/software-engineering][Handpicked stories about Software Engineering on Medium]]
 *** [[http://www.daedtech.com/feed][DaedTech]]
-*** [[http://blog.frama-c.com/index.php?feed/atom][Frama-C news and ideas]]
+-  [[http://blog.frama-c.com/feed/][Frama-C news and ideas]]
 *** [[http://tirania.org/blog/miguel.rss2][Miguel de Icaza]]
 *** [[http://rss.slashdot.org/Slashdot/slashdot][Slashdot]]
 *** [[http://feeds.feedburner.com/AyendeRahien][Ayende @ Rahien]]
@@ -31,11 +31,11 @@
 *** [[https://planet.emacslife.com/atom.xml][Planet Emacslife]]
 ** Science
 *** [[http://blog.wired.com/wiredscience/rss.xml][Science Latest]]
-*** [[http://feeds.feedburner.com/Scienceroll][ScienceRoll]]
+-  [[http://feeds.feedburner.com/Scienceroll][ScienceRoll]]
 *** [[http://jkrouwer.wordpress.com/feed/][Krouwer Consulting]]
 ** Blogs
 *** [[http://steve-yegge.blogspot.com/atom.xml][Stevey's Blog Rants]]
-*** [[http://www.randsinrepose.com/index.xml][Rands In Repose]]
+*** [[http://www.randsinrepose.com/feed/][Rands In Repose]]
 *** [[http://xkcd.com/rss.xml][xkcd.com]]
 ** Healthcare IT
 *** [[http://histalk2.com/feed][HIStalk]]
