@@ -240,6 +240,29 @@
 (setq server-port "8081")
 (setq server-use-tcp t)
 
+;; Rename buffer file
+(defun my/rename-current-file ()
+  "Rename the current visiting file and switch buffer focus to it."
+  (interactive)
+
+  (if (null (buffer-file-name))
+      (user-error "Buffer does not have a filename: %s" (current-buffer)))
+  (let ((new-filename (my/expand-filename-prompt
+    		       (format "Rename %s to: " (file-name-nondirectory (buffer-file-name))))))
+    (if (null (file-writable-p new-filename))
+    	(user-error "New file not writable: %s" new-filename))
+
+    (rename-file (buffer-file-name) new-filename 1)
+    (find-alternate-file new-filename)
+    (message "Renamed to and now visiting: %s" (abbreviate-file-name new-filename))))
+
+(defun my/expand-filename-prompt (prompt)
+  "Return expanded filename prompt."
+  (expand-file-name (read-file-name prompt)))
+
+(defalias '/rename 'my/rename-current-file)
+
+
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
