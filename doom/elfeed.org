@@ -29,6 +29,7 @@
 *** [[http://jeremydmiller.com/feed/][The Shade Tree Developer]]
 *** [[http://metaredux.com/feed.xml][Meta Redux]]
 *** [[https://planet.emacslife.com/atom.xml][Planet Emacslife]]
+*** [[https://codepunk.io/rss.xml][CodePunk]]
 ** Science
 *** [[http://blog.wired.com/wiredscience/rss.xml][Science Latest]]
 -  [[http://feeds.feedburner.com/Scienceroll][ScienceRoll]]
