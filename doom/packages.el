@@ -70,5 +70,6 @@
 (package! lsp-ui)
 (package! lsp-ivy)
 (package! benchmark-init)
+(package! magit-section)
 
 (unpin! treemacs treemacs-icons-dired org-roam)

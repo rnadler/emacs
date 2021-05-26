@@ -110,7 +110,8 @@
 (define-key global-map "\C-ca" 'org-agenda)
 (define-key global-map "\C-cc" 'org-capture)
 (after! org
-  (load! "./org-config.el"))
+  (load! "./org-config.el")
+  (setq org-execute-file-search-functions nil))
 
 ;; Beacon
 (beacon-mode 1)
