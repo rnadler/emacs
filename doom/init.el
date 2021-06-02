@@ -19,6 +19,11 @@
   (require 'benchmark-init)
   (add-hook 'doom-first-input-hook #'benchmark-init/deactivate))
 
+;; emacs 28 deprecation
+(defadvice! shut-up-emacs28 (_msg form &optional _compile-only)
+  :override #'macroexp-warn-and-return
+  form)
+
 (doom! :input
        ;;chinese
        ;;japanese
@@ -111,6 +116,7 @@
        ;;assembly          ; assembly for fun or debugging
        ;;cc                ; C/C++/Obj-C madness
        (clojure +lsp)             ; java with a lisp
+       yaml
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs
        ;;crystal           ; ruby at the speed of c
