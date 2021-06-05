@@ -75,6 +75,8 @@
 (add-to-list 'auto-mode-alist '("\\.srvm\\'" . sr-virtual-mode))
 (global-set-key (kbd "C-x c") 'sunrise-cd)
 
+(add-to-list 'auto-mode-alist '("Dockerfile.*\\'" . dockerfile-mode))
+
 (setq make-backup-files nil) ;; stop creating those backup~ files
 
 (setq-default dired-omit-files-p t) ; Buffer-local variable
@@ -263,6 +265,12 @@
 
 (defalias '/rename 'my/rename-current-file)
 
+(defun fun/make-latest-version-of-GT ()
+  "Make latest version of GT."
+  (interactive)
+  (if (file-exists-p "/tmp/myGT")
+      (async-shell-command "cd /tmp/myGT; cd */.; ./glamoroustoolkit")
+      (async-shell-command "mkdir /tmp/myGT; cd /tmp/myGT; wget https://dl.feenk.com/gt/GlamorousToolkitLinux64-release.zip; unzip GlamorousToolkitLinux64-release.zip; cd */.; ./glamoroustoolkit")))
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
