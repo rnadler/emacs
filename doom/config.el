@@ -48,9 +48,9 @@
 (setq confirm-kill-processes nil)
 
 ;; Treemacs
-(global-set-key [f8] 'treemacs)
-(after! treemacs
-  (load! "./init-treemacs.el"))
+;;(global-set-key [f8] 'treemacs)
+;;(after! treemacs
+;;  (load! "./init-treemacs.el"))
 
 (global-set-key (kbd "C-x C-r") 'recentf-open-files)
 (global-set-key (kbd "C-x g") 'magit-status)
@@ -206,6 +206,7 @@
         ;; lsp-clojure-custom-server-command '("bash" "-c" "/usr/bin/clojure-lsp")
         lsp-headerline-breadcrumb-enable t
         ;; lsp-lens-enable t
+        ;; lsp-keymap-prefix "C-c l"
         lsp-enable-file-watchers nil
         lsp-signature-auto-activate nil
         lsp-completion-use-last-result nil))

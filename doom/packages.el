@@ -59,7 +59,7 @@
 ;; ~/.emacs.d/bin/doom sync
 (package! sunrise-commander :recipe (:local-repo "sunrise-commander"))
 ;;(package! sunrise-commander :recipe (:host github :repo "sunrise-commander/sunrise-commander"))
-(package! treemacs-icons-dired)
+;;(package! treemacs-icons-dired)
 (package! dired+ :pin "40881cb") ;; See https://github.com/emacsmirror/dired-plus/commits/master
 (package! beacon)
 (package! org-roam-server)
@@ -72,4 +72,5 @@
 (package! benchmark-init)
 (package! magit-section)
 
-(unpin! treemacs treemacs-icons-dired org-roam)
+;;(unpin! treemacs treemacs-icons-dired org-roam)
+(unpin! org-roam)
