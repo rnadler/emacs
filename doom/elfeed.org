@@ -1,7 +1,7 @@
 * Imported Feeds            :elfeed:
 ** Medical Devices
 *** [[http://feeds.feedburner.com/MedicalConnectivityConsulting][Medical Connectivity]]
-*** [[http://rdn-consulting.com/blog/feed/][Bob on Medical Device Software]]
+*** [[https://bobonmedicaldevicesoftware.com/blog/feed/][Bob on Medical Device Software]]
 *** [[http://feeds.feedburner.com/Medgadget][Medgadget]]
 ** Web
 *** [[http://feeds.feedburner.com/ScottHanselman][Scott Hanselman's Computer Zen]]
