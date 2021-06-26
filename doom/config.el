@@ -81,7 +81,7 @@
 
 (setq-default dired-omit-files-p t) ; Buffer-local variable
 (after! dired+
-  (use-package! dired-x)
+  (setq all-the-icons-dired-monochrome nil)
   (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$")))
 
 (setq diredp-hide-details-initially-flag nil)
