@@ -62,7 +62,7 @@
 ;;(package! treemacs-icons-dired)
 (package! dired+ :pin "40881cb") ;; See https://github.com/emacsmirror/dired-plus/commits/master
 (package! beacon)
-(package! org-roam-server)
+;;(package! org-roam-server)
 (package! json-mode)
 (package! json-reformat)
 (package! terraform-mode)
@@ -73,4 +73,4 @@
 (package! magit-section)
 
 ;;(unpin! treemacs treemacs-icons-dired org-roam)
-(unpin! org-roam)
+;;(unpin! org-roam)
