@@ -138,21 +138,21 @@
       (browse-url-generic roam-host)
     (browse-url roam-host)))
 
-(after! org-roam
-  (setq org-roam-link-title-format "§%s")
-  (when (string= (system-name) "bob-x1-carbon")
-    (setq org-roam-directory "~/Dropbox/org/roam"))
-  (setq org-roam-server-host "0.0.0.0")
-  (setq org-roam-server-port 8080)
-  (setq org-roam-graph-viewer 'my/open-org-roam-server)
-  (setq org-roam-graph-extra-config '(("overlap" . "false")))
-  ;; javascript:location.href = 'org-protocol://roam-ref?template=r&ref=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title)
-  (setq org-roam-capture-ref-templates '(("r" "ref" plain #'org-roam-capture--get-point
-                                          "#+roam_tags: %?\n* [[${ref}][${title}]]\n- "
-                                          :file-name "${slug}"
-                                          :head "#+title: ${title}\n#+DATE: %<%Y-%m-%d %H:%M:%S>\n#+roam_key: ${ref}\n#+category: webref\n"
-                                          :unnarrowed t)))
-  )
+;; (after! org-roam
+;;   (setq org-roam-link-title-format "§%s")
+;;   (when (string= (system-name) "bob-x1-carbon")
+;;     (setq org-roam-directory "~/Dropbox/org/roam"))
+;;   (setq org-roam-server-host "0.0.0.0")
+;;   (setq org-roam-server-port 8080)
+;;   (setq org-roam-graph-viewer 'my/open-org-roam-server)
+;;   (setq org-roam-graph-extra-config '(("overlap" . "false")))
+;;   ;; javascript:location.href = 'org-protocol://roam-ref?template=r&ref=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title)
+;;   (setq org-roam-capture-ref-templates '(("r" "ref" plain #'org-roam-capture--get-point
+;;                                           "#+roam_tags: %?\n* [[${ref}][${title}]]\n- "
+;;                                           :file-name "${slug}"
+;;                                           :head "#+title: ${title}\n#+DATE: %<%Y-%m-%d %H:%M:%S>\n#+roam_key: ${ref}\n#+category: webref\n"
+;;                                           :unnarrowed t)))
+;;   )
 ;; Clojure
 ;; https://github.com/ericdallo/dotfiles/blob/master/.doom.d/config.el#L99-L134
 (use-package! cider

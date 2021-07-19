@@ -20,9 +20,9 @@
   (add-hook 'doom-first-input-hook #'benchmark-init/deactivate))
 
 ;; emacs 28 deprecation
-(defadvice! shut-up-emacs28 (_msg form &optional _compile-only)
-  :override #'macroexp-warn-and-return
-  form)
+;; (defadvice! shut-up-emacs28 (_msg form &optional _compile-only)
+;;   :override #'macroexp-warn-and-return
+;;   form)
 
 (doom! :input
        ;;chinese
@@ -150,7 +150,7 @@
        ;;ocaml             ; an objective camel
        (org              ; organize your plain life in plain text
         +dragndrop       ; drag & drop files/images into org buffers
-        +roam
+        ;;+roam
         ;;+hugo            ; use Emacs for hugo blogging
         ;;+jupyter        ; ipython/jupyter support for babel
         ;;+pandoc          ; export-with-pandoc support
