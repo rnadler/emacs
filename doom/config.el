@@ -47,11 +47,6 @@
 (setq recentf-max-menu-items 25)
 (setq confirm-kill-processes nil)
 
-;; Treemacs
-;;(global-set-key [f8] 'treemacs)
-;;(after! treemacs
-;;  (load! "./init-treemacs.el"))
-
 (global-set-key (kbd "C-x C-r") 'recentf-open-files)
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x l") 'display-line-numbers-mode)
@@ -138,21 +133,6 @@
       (browse-url-generic roam-host)
     (browse-url roam-host)))
 
-;; (after! org-roam
-;;   (setq org-roam-link-title-format "§%s")
-;;   (when (string= (system-name) "bob-x1-carbon")
-;;     (setq org-roam-directory "~/Dropbox/org/roam"))
-;;   (setq org-roam-server-host "0.0.0.0")
-;;   (setq org-roam-server-port 8080)
-;;   (setq org-roam-graph-viewer 'my/open-org-roam-server)
-;;   (setq org-roam-graph-extra-config '(("overlap" . "false")))
-;;   ;; javascript:location.href = 'org-protocol://roam-ref?template=r&ref=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title)
-;;   (setq org-roam-capture-ref-templates '(("r" "ref" plain #'org-roam-capture--get-point
-;;                                           "#+roam_tags: %?\n* [[${ref}][${title}]]\n- "
-;;                                           :file-name "${slug}"
-;;                                           :head "#+title: ${title}\n#+DATE: %<%Y-%m-%d %H:%M:%S>\n#+roam_key: ${ref}\n#+category: webref\n"
-;;                                           :unnarrowed t)))
-;;   )
 ;; Clojure
 ;; https://github.com/ericdallo/dotfiles/blob/master/.doom.d/config.el#L99-L134
 (use-package! cider
@@ -272,6 +252,27 @@
   (if (file-exists-p "/tmp/myGT")
       (async-shell-command "cd /tmp/myGT; cd */.; ./glamoroustoolkit")
       (async-shell-command "mkdir /tmp/myGT; cd /tmp/myGT; wget https://dl.feenk.com/gt/GlamorousToolkitLinux64-release.zip; unzip GlamorousToolkitLinux64-release.zip; cd */.; ./glamoroustoolkit")))
+
+;; Magit repo status
+(setq magit-repolist-columns
+      '(("Name"    25 magit-repolist-column-ident ())
+        ("Version" 25 magit-repolist-column-version ())
+        ("D"        1 magit-repolist-column-dirty ())
+        ("⇣"      3 magit-repolist-column-unpulled-from-upstream
+         ((:right-align t)
+          (:help-echo "Upstream changes not in branch")))
+        ("⇡"        3 magit-repolist-column-unpushed-to-upstream
+         ((:right-align t)
+          (:help-echo "Local changes not in upstream")))
+        ("Path"    99 magit-repolist-column-path ())))
+(setq magit-repository-directories
+      `(
+        ("~/Projects/airview-web" . 1)
+        ("~/Projects/exchange" . 1)
+        ("~/Projects/eco-builds" . 1)
+        ("~/Projects/eco-builds-config" . 1)
+        ("~/Projects/eco-builds-ui" . 1)
+        ("~/Projects/variant-json" . 1)))
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
