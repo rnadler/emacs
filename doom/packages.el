@@ -63,3 +63,5 @@
 (package! benchmark-init)
 (package! magit-section)
 
+;; Part of lang/org module
+(package! org-fancy-priorities :disable t)
