@@ -165,7 +165,7 @@
         ;;   ("pp" . "clojure.pprint"))
   ))
 
-(use-package! clojure-mode
+(after! clojure-mode
   :config
   (setq clojure-indent-style 'align-arguments
         clojure-thread-all-but-last t
@@ -174,13 +174,13 @@
   (cljr-add-keybindings-with-prefix "C-c C-c"))
 
 ;; LSP
-(use-package! lsp-mode
-  :commands lsp
-  :hook ((clojure-mode . lsp)
-         (clojurescript-mode . lsp)
-         (lsp-mode . lsp-enable-which-key-integration)
-         ;;(java-mode . lsp)
-         )
+(after! lsp-mode
+  ;; :commands lsp
+  ;; :hook ((clojure-mode . lsp)
+  ;;        (clojurescript-mode . lsp)
+  ;;        (lsp-mode . lsp-enable-which-key-integration)
+  ;;        ;;(java-mode . lsp)
+  ;;        )
   :config
   (setq ;; clojure-lsp is on PATH
         ;; lsp-clojure-custom-server-command '("bash" "-c" "/usr/bin/clojure-lsp")
@@ -191,17 +191,18 @@
         lsp-signature-auto-activate nil
         lsp-completion-use-last-result nil))
 
-(use-package! lsp-ivy
-  :commands lsp-ivy-workspace-symbol)
+;; (use-package! lsp-ivy
+;;   :commands lsp-ivy-workspace-symbol)
 
-(use-package! lsp-ui
+(after! lsp-ui
   :after lsp-mode
   :commands lsp-ui-mode
   :config
   (setq lsp-ui-peek-list-width 60
-        ;; lsp-ui-doc-enable nil
-        ;; lsp-ui-doc-max-width 200
-        ;; lsp-ui-doc-max-height 30
+        lsp-ui-doc-enable t
+        lsp-ui-doc-position 'top
+        lsp-ui-doc-max-width 300
+        lsp-ui-doc-max-height 30
         ;; lsp-signature-auto-activate nil
         lsp-ui-peek-fontify 'always
         lsp-ui-sideline-show-code-actions nil))
