@@ -110,6 +110,7 @@
 	))
 (setq org-ellipsis " ▼")
 (add-hook 'org-mode-hook 'my/disable-line-numbers)
+(add-hook 'org-mode-hook 'org-appear-mode)
 (add-hook 'org-agenda-finalize-hook
           (lambda ()
             (remove-text-properties (point-min) (point-max) '(mouse-face t))
@@ -123,6 +124,7 @@
    (push '("[X]" . "☑" ) prettify-symbols-alist)
    (push '("[-]" . "❍" ) prettify-symbols-alist)
    (prettify-symbols-mode)))
+
 (defface org-checkbox-done-text
   '((t (:foreground "#71696A")))
   "Face for the text part of a checked org-mode checkbox.")

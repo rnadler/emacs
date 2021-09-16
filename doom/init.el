@@ -24,6 +24,8 @@
 ;;   :override #'macroexp-warn-and-return
 ;;   form)
 
+(advice-add #'magit-version :override #'ignore)
+
 (doom! :input
        ;;chinese
        ;;japanese

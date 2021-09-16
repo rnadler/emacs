@@ -56,7 +56,12 @@
 (global-set-key (kbd "C-x w") 'elfeed)
 (after! elfeed
   (setq-default elfeed-search-filter "@4-days-old +unread ")
-  (setq elfeed-sort-order 'ascending))
+  (setq elfeed-sort-order 'ascending)
+  (advice-add #'elfeed-insert-html
+              :around
+              (lambda (fun &rest r)
+                (let ((shr-use-fonts nil))
+                  (apply fun r)))))
 
 ;; Sunrise Commander
 (after! sunrise
