@@ -252,12 +252,15 @@
 
 (defalias '/rename 'my/rename-current-file)
 
-(defun fun/make-latest-version-of-GT ()
+(defun my/make-latest-version-of-GT ()
   "Make latest version of GT."
   (interactive)
   (if (file-exists-p "/tmp/myGT")
       (async-shell-command "cd /tmp/myGT; cd */.; ./glamoroustoolkit")
       (async-shell-command "mkdir /tmp/myGT; cd /tmp/myGT; wget https://dl.feenk.com/gt/GlamorousToolkitLinux64-release.zip; unzip GlamorousToolkitLinux64-release.zip; cd */.; ./glamoroustoolkit")))
+
+;; Make Script Files Executable Automatically
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
 ;; Magit repo status
 (setq magit-repolist-columns
@@ -279,6 +282,10 @@
         ("~/Projects/eco-builds-config" . 1)
         ("~/Projects/eco-builds-ui" . 1)
         ("~/Projects/variant-json" . 1)))
+
+;; magit-delta
+;;(add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1)))
+
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;

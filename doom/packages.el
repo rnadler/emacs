@@ -62,6 +62,7 @@
 (package! lsp-ivy)
 (package! benchmark-init)
 (package! magit-section)
+;;(package! magit-delta) ;; https://github.com/dandavison/delta
 
 ;; Part of lang/org module
 (package! org-fancy-priorities :disable t)
