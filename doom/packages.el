@@ -66,6 +66,7 @@
 
 ;; Part of lang/org module
 (package! org-fancy-priorities :disable t)
+(package! elfeed-goodies :disable t)
 
 ;; Cider fix
 ;; https://githubmemory.com/repo/clojure-emacs/cider/issues/3029 -- last comment
