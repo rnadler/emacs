@@ -32,6 +32,7 @@
 *** [[http://metaredux.com/feed.xml][Meta Redux]]
 *** [[https://planet.emacslife.com/atom.xml][Planet Emacslife]]
 *** [[https://codepunk.io/rss.xml][CodePunk]]
+*** [[https://clojure.org/feed.xml][Clojure Deref]]
 ** Science
 *** [[http://blog.wired.com/wiredscience/rss.xml][Science Latest]]
 -  [[http://feeds.feedburner.com/Scienceroll][ScienceRoll]]
@@ -42,6 +43,6 @@
 *** [[http://xkcd.com/rss.xml][xkcd.com]]
 ** Healthcare IT
   -  [[http://histalk2.com/feed][HIStalk]]
-*** [[http://www.emrandhipaa.com/feed/][EMR and HIPAA]]
+  -  [[http://www.emrandhipaa.com/feed/][EMR and HIPAA]]
 *** [[http://www.informationweek.com/rss_simple.asp?f_n=441][InformationWeek:]]
 *** [[http://feeds.feedburner.com/XconomyHealthIT][Xconomy Health IT]]
