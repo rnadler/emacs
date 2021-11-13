@@ -22,9 +22,13 @@
 ;;
 ;;(setq doom-font (font-spec :family "monospace" :size 14))
 ;;
-(setq doom-font (font-spec :family "Ubuntu Mono" :size 16)
-      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 16)
-      doom-big-font (font-spec :family "Ubuntu Mono" :size 24))
+ (setq doom-font (font-spec :family "Ubuntu Mono" :size 16)
+       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 16)
+       doom-big-font (font-spec :family "Ubuntu Mono" :size 24))
+;; (setq doom-font (font-spec :family "Ubuntu Mono" :size 40)
+;;       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 40)
+;;       doom-big-font (font-spec :family "Ubuntu Mono" :size 52))
+
 (after! doom-themes
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t))
@@ -61,7 +65,19 @@
               :around
               (lambda (fun &rest r)
                 (let ((shr-use-fonts nil))
-                  (apply fun r)))))
+                  (apply fun r))))
+
+  ;; From http://pragmaticemacs.com/emacs/star-and-unstar-articles-in-elfeed/
+  (defalias 'elfeed-toggle-star
+    (elfeed-expose #'elfeed-search-toggle-all 'star))
+  (eval-after-load 'elfeed-search
+    '(define-key elfeed-search-mode-map (kbd "m") 'elfeed-toggle-star))
+  ;; face for starred articles
+  (defface elfeed-search-star-title-face
+    '((t :foreground "#f77"))
+    "Marks a starred Elfeed entry.")
+  (push '(star elfeed-search-star-title-face) elfeed-search-face-alist)
+  )
 
 ;; Sunrise Commander
 (after! sunrise
@@ -286,6 +302,20 @@
 ;; magit-delta
 ;;(add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1)))
 
+;; Blamer
+(use-package blamer
+  :defer 20
+  :custom
+  (blamer-idle-time 0.3)
+  (blamer-min-offset 70)
+  :custom-face
+  (blamer-face ((t :foreground "#7a88cf"
+                    :background nil
+                    :height 140
+                    :italic t)))
+  ;;:config
+  ;;(global-blamer-mode t)
+  )
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;

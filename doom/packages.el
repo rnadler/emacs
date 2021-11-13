@@ -71,3 +71,5 @@
 ;; Cider fix
 ;; https://githubmemory.com/repo/clojure-emacs/cider/issues/3029 -- last comment
 (package! map :pin "bb50dba")
+;; Blamer
+(package! blamer :recipe (:host github :repo "artawower/blamer.el"))
