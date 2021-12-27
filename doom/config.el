@@ -56,6 +56,11 @@
 (global-set-key (kbd "C-x l") 'display-line-numbers-mode)
 (global-set-key (kbd "C-x t") 'toggle-truncate-lines)
 
+;;(setq auth-source-debug t)
+(after! magit
+  (add-hook 'magit-process-find-password-functions
+            'magit-process-password-auth-source))
+
 ;; Elfeed
 (global-set-key (kbd "C-x w") 'elfeed)
 (after! elfeed
