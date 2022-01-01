@@ -6,15 +6,15 @@
 ** Web
 *** [[http://feeds.feedburner.com/ScottHanselman][Scott Hanselman's Computer Zen]]
 *** [[http://blog.stackoverflow.com/feed/][stackoverflow]]
-*** [[https://www.future-processing.pl/blog/feed/?post_type=post][Technical Blog – Future Processing]]
+-  [[https://www.future-processing.pl/blog/feed/?post_type=post][Technical Blog – Future Processing]]
 *** [[http://scobleizer.com/feed/][Scobleizer -- Tech geek blogger]]
 *** [[http://blog.trello.com/feed/][Trello Blog]]
--  [[http://feeds.feedburner.com/typepad/sethsmainblog][Seth's Blog]]
+- [[http://feeds.feedburner.com/typepad/sethsmainblog][Seth's Blog]]
 - [[https://hnrss.org/frontpage][Hacker News]]
 - See [[https://hnrss.github.io/][Hacker News RSS]]
 ** Software
 *** [[http://feeds.feedburner.com/d0od][OMG! Ubuntu!]]
-*** [[http://samsaffron.com/posts.rss][Sam Saffron]]
+-  [[http://samsaffron.com/posts.rss][Sam Saffron]]
 -  [[https://medium.com/feed/topic/programming][Handpicked stories about Programming on Medium]]
 *** [[http://feeds2.feedburner.com/alvinashcraft][Morning Dew by Alvin Ashcraft]]
 *** [[http://martinfowler.com/bliki/bliki.atom][Martin Fowler's Bliki]]
