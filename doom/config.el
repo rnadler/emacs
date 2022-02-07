@@ -230,7 +230,8 @@
         ;; lsp-lens-enable t
         ;; lsp-keymap-prefix "C-c l"
         lsp-enable-file-watchers nil
-        lsp-signature-auto-activate nil
+        lsp-signature-render-documentation t
+        lsp-signature-auto-activate t
         lsp-completion-use-last-result nil))
 
 ;; (use-package! lsp-ivy
@@ -242,10 +243,10 @@
   :config
   (setq lsp-ui-peek-list-width 60
         lsp-ui-doc-enable t
+        lsp-ui-doc-show-with-cursor t
         lsp-ui-doc-position 'top
         lsp-ui-doc-max-width 300
         lsp-ui-doc-max-height 30
-        ;; lsp-signature-auto-activate nil
         lsp-ui-peek-fontify 'always
         lsp-ui-sideline-show-code-actions nil))
 
