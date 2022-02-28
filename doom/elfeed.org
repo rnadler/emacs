@@ -24,7 +24,7 @@
 *** [[http://tirania.org/blog/miguel.rss2][Miguel de Icaza]]
 - [[http://rss.slashdot.org/Slashdot/slashdot][Slashdot]]
 *** [[http://feeds.feedburner.com/AyendeRahien][Ayende @ Rahien]]
-*** [[http://blogs.tedneward.com/SyndicationService.asmx/GetRss][Interoperability Happens]]
+*** [[http://blogs.newardassociates.com/feed.xml][Interoperability Happens]]
 *** [[http://feeds.feedburner.com/codinghorror][Coding Horror]]
 *** [[http://feeds.feedburner.com/JonSkeetCodingBlog][Jon Skeet: Coding Blog]]
 *** [[http://www.joelonsoftware.com/rss.xml][Joel on Software]]
