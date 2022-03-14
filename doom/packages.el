@@ -72,3 +72,4 @@
 (package! blamer :recipe (:host github :repo "artawower/blamer.el"))
 (unpin! org-roam)
 (package! org-roam-ui)
+(unpin! cider)

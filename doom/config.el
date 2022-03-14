@@ -213,7 +213,8 @@
         clojure-thread-all-but-last t
         clojure-align-forms-automatically t
         yas-minor-mode 1)
-  (cljr-add-keybindings-with-prefix "C-c C-c"))
+  (cljr-add-keybindings-with-prefix "C-c C-c")
+  (add-hook 'clojure-mode-hook #'smartparens-strict-mode))
 
 ;; LSP
 (after! lsp-mode
@@ -249,6 +250,14 @@
         lsp-ui-doc-max-height 30
         lsp-ui-peek-fontify 'always
         lsp-ui-sideline-show-code-actions nil))
+
+;; Smartparens
+(after! smartparens
+ (global-set-key (kbd "C-)") 'sp-forward-slurp-sexp)
+ (global-set-key (kbd "C-(") 'sp-forward-barf-sexp)
+ (global-set-key (kbd "C-{") 'sp-backward-unwrap-sexp)
+ (global-set-key (kbd "C-}") 'sp-unwrap-sexp)
+ (show-paren-mode 1))
 
 (use-package! company
   :init
