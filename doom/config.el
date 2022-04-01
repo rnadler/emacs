@@ -64,7 +64,7 @@
 ;; Elfeed
 (global-set-key (kbd "C-x w") 'elfeed)
 (after! elfeed
-  (setq-default elfeed-search-filter "@4-days-old +unread ")
+  (setq-default elfeed-search-filter "+unread")
   (setq elfeed-sort-order 'ascending)
   (advice-add #'elfeed-insert-html
               :around
