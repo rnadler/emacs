@@ -53,7 +53,7 @@
 ;; Fix for https://github.com/sunrise-commander/sunrise-commander/issues/113
 (package! sunrise-commander :recipe (:host github :repo "sunrise-commander/sunrise-commander")
   :pin "b85cca90da6abadd3393f88b324e2b9d70345cd9")
-(package! dired+ :pin "40881cb") ;; See https://github.com/emacsmirror/dired-plus/commits/master
+(package! dired+)
 (package! beacon)
 (package! json-mode)
 (package! json-reformat)
