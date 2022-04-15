@@ -1,8 +1,5 @@
 ;; Org mode
-(defconst my-org-directory
-  (if (string= (system-name) "WIN10R90H8MKJ")
-      "//brutus/it/healthinformatics/BobN/org"
-      "~/Dropbox/org"))
+(defconst my-org-directory "~/org")
 (defconst todo-org-file (concat my-org-directory "/todo.org"))
 (defconst journal-org-file (concat my-org-directory "/journal.org.gpg"))
 (defconst transfer-org-file "/media/sf_healthinformatics/BobN/org/transfer.org")
@@ -71,13 +68,14 @@
          (oldp (point))
          (oldbuff (current-buffer)))
        (org-save-all-org-buffers)
-       (find-file todo-org-file)
+       (find-file scripts-org-file)
        (ignore-errors (org-sbe ,sbe))
        (unless (eq (current-buffer) oldbuff) (switch-to-buffer oldbuff))
        (goto-char oldp))
      (message (concat ,what " complete."))))
 
 (global-set-key (kbd "C-c b") (my/make-save-template 'backup "Backup"))
+(global-set-key (kbd "C-c d") (my/make-save-template 'save_git_diff "Save git diff"))
 
 (fset 'my-agenda
    (lambda (&optional arg) "Startup my custom agenda." (interactive "p") (kmacro-exec-ring-item (quote ("ap" 0 "%d")) arg)))
