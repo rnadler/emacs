@@ -112,6 +112,16 @@
   (display-line-numbers-mode -1))
 
 ;; Set initial frame size and position
+
+(defun my/frame-recenter (&optional frame)
+"Center FRAME on the screen.
+FRAME can be a frame name, a terminal name, or a frame.
+If FRAME is omitted or nil, use currently selected frame."
+  (interactive)
+  (unless (eq 'maximised (frame-parameter nil 'fullscreen))
+    (modify-frame-parameters
+     frame '((user-position . t) (top . 0.5) (left . 0.5)))))
+
 (defun my/set-initial-frame ()
   (let* ((base-factor 0.70)
          (geometry (assq 'geometry (car (last (display-monitor-attributes-list)))))
@@ -184,7 +194,11 @@
         cider-show-error-buffer t;'only-in-repl
         cider-font-lock-dynamically '(macro core function var deprecated)
         cider-prompt-for-symbol nil)
-  (set-lookup-handlers! 'cider-mode nil))
+  (set-lookup-handlers! 'cider-mode nil)
+  (setq cider-cljs-lein-repl
+      "(do (require 'figwheel-sidecar.repl-api)
+           (figwheel-sidecar.repl-api/start-figwheel!)
+           (figwheel-sidecar.repl-api/cljs-repl))"))
 
 (use-package! clj-refactor
   :after clojure-mode
