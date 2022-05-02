@@ -15,7 +15,7 @@
 ** Software
 *** [[http://feeds.feedburner.com/d0od][OMG! Ubuntu!]]
 -  [[http://samsaffron.com/posts.rss][Sam Saffron]]
--  [[https://medium.com/feed/topic/programming][Handpicked stories about Programming on Medium]]
+*** [[https://medium.com/feed/topic/programming][Handpicked stories about Programming on Medium]]
 *** [[http://feeds2.feedburner.com/alvinashcraft][Morning Dew by Alvin Ashcraft]]
 *** [[http://martinfowler.com/bliki/bliki.atom][Martin Fowler's Bliki]]
 -  [[https://medium.com/feed/topic/software-engineering][Handpicked stories about Software Engineering on Medium]]
@@ -30,9 +30,13 @@
 *** [[http://www.joelonsoftware.com/rss.xml][Joel on Software]]
 *** [[http://jeremydmiller.com/feed/][The Shade Tree Developer]]
 *** [[http://metaredux.com/feed.xml][Meta Redux]]
-*** [[https://planet.emacslife.com/atom.xml][Planet Emacslife]]
 *** [[https://codepunk.io/rss.xml][CodePunk]]
 *** [[https://clojure.org/feed.xml][Clojure Deref]]
+** Emacs
+-  [[https://planet.emacslife.com/atom.xml][Planet Emacslife]]  [2022-05-02 Mon] No longer there!?!
+*** [[https://irreal.org/blog/?feed=rss2][Irreal]]
+*** [[https://sachachua.com/blog/feed/][Sacha Chua]]
+*** [[https://pragmaticemacs.wordpress.com/feed/][Pragmatic Emacs]]
 ** Science
 *** [[http://blog.wired.com/wiredscience/rss.xml][Science Latest]]
 -  [[http://feeds.feedburner.com/Scienceroll][ScienceRoll]]
