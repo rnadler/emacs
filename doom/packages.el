@@ -53,7 +53,7 @@
 ;; Fix for https://github.com/sunrise-commander/sunrise-commander/issues/113
 (package! sunrise-commander :recipe (:host github :repo "sunrise-commander/sunrise-commander")
   :pin "b85cca90da6abadd3393f88b324e2b9d70345cd9")
-(package! dired+)
+(package! dired-plus)
 (package! beacon)
 (package! json-mode)
 (package! json-reformat)
@@ -70,6 +70,7 @@
 (package! code-review :disable t)
 
 (package! blamer :recipe (:host github :repo "artawower/blamer.el"))
+(package! org-modern)
 (unpin! org-roam)
 (package! org-roam-ui)
 (unpin! cider)

@@ -144,7 +144,17 @@ If FRAME is omitted or nil, use currently selected frame."
 (define-key global-map "\C-cc" 'org-capture)
 (after! org
   (load! "./org-config.el")
-  (setq org-execute-file-search-functions nil))
+  (setq org-execute-file-search-functions nil
+        org-agenda-current-time-string "⬅ now ─────────────────────────────────────────────────"))
+(after! org-modern
+  (setq org-modern-todo-faces
+      (quote (("TODO" :foreground "red" :weight bold)
+              ("NEXT" :foreground "blue" :weight bold)
+              ("DONE" :foreground "forest green" :weight bold)
+              ("WAITING" :foreground "orange" :weight bold)
+              ("HOLD" :foreground "magenta" :weight bold)
+              ("CANCELLED" :foreground "forest green" :weight bold)))))
+(global-org-modern-mode)
 
 ;; Beacon
 (beacon-mode 1)
