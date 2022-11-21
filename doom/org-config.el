@@ -71,7 +71,8 @@
        (find-file scripts-org-file)
        (ignore-errors (org-sbe ,sbe))
        (unless (eq (current-buffer) oldbuff) (switch-to-buffer oldbuff))
-       (goto-char oldp))
+       (goto-char oldp)
+       (when (string= (buffer-name) "*Org Agenda*") (org-agenda-redo-all)))
      (message (concat ,what " complete."))))
 
 (global-set-key (kbd "C-c b") (my/make-save-template 'backup "Backup"))
