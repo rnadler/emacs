@@ -73,3 +73,4 @@
 (unpin! org-roam)
 (package! org-roam-ui)
 (unpin! cider)
+(package! deadgrep)
