@@ -147,6 +147,11 @@ If FRAME is omitted or nil, use currently selected frame."
   (setq org-execute-file-search-functions nil
         org-agenda-current-time-string "⬅ now ─────────────────────────────────────────────────"))
 (after! org-modern
+;;  (setq org-modern-hide-stars nil) ; adds extra indentation
+  (setq org-modern-table nil)
+  (setq org-modern-list
+   '((?* . "•")
+     (?+ . "‣")))
   (setq org-modern-todo-faces
       (quote (("TODO" :foreground "red" :weight bold)
               ("NEXT" :foreground "blue" :weight bold)
