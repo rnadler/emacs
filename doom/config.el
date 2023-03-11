@@ -36,7 +36,6 @@
   '(font-lock-comment-face :slant italic)
   '(font-lock-keyword-face :slant italic))
 
-
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
@@ -71,16 +70,13 @@
               (lambda (fun &rest r)
                 (let ((shr-use-fonts nil))
                   (apply fun r))))
-
   ;; From http://pragmaticemacs.com/emacs/star-and-unstar-articles-in-elfeed/
   (defalias 'elfeed-toggle-star
     (elfeed-expose #'elfeed-search-toggle-all 'star))
   (eval-after-load 'elfeed-search
     '(define-key elfeed-search-mode-map (kbd "m") 'elfeed-toggle-star))
   ;; face for starred articles
-  (defface elfeed-search-star-title-face
-    '((t :foreground "#f77"))
-    "Marks a starred Elfeed entry.")
+  (defface elfeed-search-star-title-face '((t :foreground "#f77")) "Marks a starred Elfeed entry.")
   (push '(star elfeed-search-star-title-face) elfeed-search-face-alist)
   )
 
@@ -160,6 +156,9 @@ If FRAME is omitted or nil, use currently selected frame."
               ("HOLD" :foreground "magenta" :weight bold)
               ("CANCELLED" :foreground "forest green" :weight bold)))))
 (global-org-modern-mode)
+(after! org-modern-indent
+  :config
+  (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
 ;; Beacon
 (beacon-mode 1)

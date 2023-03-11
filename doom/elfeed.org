@@ -49,4 +49,4 @@
   -  [[http://histalk2.com/feed][HIStalk]]
   -  [[http://www.emrandhipaa.com/feed/][EMR and HIPAA]]
 -  [[http://www.informationweek.com/rss_simple.asp?f_n=441][InformationWeek:]]
-*** [[http://feeds.feedburner.com/XconomyHealthIT][Xconomy Health IT]]
+-  [[http://feeds.feedburner.com/XconomyHealthIT][Xconomy Health IT]]

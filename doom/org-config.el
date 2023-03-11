@@ -124,8 +124,6 @@
    (push '("[-]" . "❍" ) prettify-symbols-alist)
    (prettify-symbols-mode)))
 
-(add-hook 'org-mode-hook #'org-modern-indent-mode 90)
-
 (defface org-checkbox-done-text
   '((t (:foreground "#71696A")))
   "Face for the text part of a checked org-mode checkbox.")
