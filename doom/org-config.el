@@ -123,7 +123,6 @@
    (push '("[X]" . "☑" ) prettify-symbols-alist)
    (push '("[-]" . "❍" ) prettify-symbols-alist)
    (prettify-symbols-mode)))
-
 (defface org-checkbox-done-text
   '((t (:foreground "#71696A")))
   "Face for the text part of a checked org-mode checkbox.")

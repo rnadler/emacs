@@ -143,8 +143,8 @@ If FRAME is omitted or nil, use currently selected frame."
   (setq org-execute-file-search-functions nil
         org-agenda-current-time-string "⬅ now ─────────────────────────────────────────────────"))
 (after! org-modern
-;;  (setq org-modern-hide-stars nil) ; adds extra indentation
-  (setq org-modern-table nil)
+  ;; (setq org-modern-hide-stars nil) ; adds extra indentation
+  ;; (setq org-modern-table nil)
   (setq org-modern-list
    '((?* . "•")
      (?+ . "‣")))
@@ -156,9 +156,9 @@ If FRAME is omitted or nil, use currently selected frame."
               ("HOLD" :foreground "magenta" :weight bold)
               ("CANCELLED" :foreground "forest green" :weight bold)))))
 (global-org-modern-mode)
-(after! org-modern-indent
-  :config
-  (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
+;; (after! org-modern-indent
+;;   :config
+;;   (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
 ;; Beacon
 (beacon-mode 1)
