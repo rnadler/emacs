@@ -156,9 +156,7 @@ If FRAME is omitted or nil, use currently selected frame."
               ("HOLD" :foreground "magenta" :weight bold)
               ("CANCELLED" :foreground "forest green" :weight bold)))))
 (global-org-modern-mode)
-;; (after! org-modern-indent
-;;   :config
-;;   (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
+;;(add-hook 'org-mode-hook #'org-modern-indent-mode 90)
 
 ;; Beacon
 (beacon-mode 1)
