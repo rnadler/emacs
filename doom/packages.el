@@ -74,4 +74,4 @@
 (package! org-roam-ui)
 (unpin! cider)
 (package! deadgrep)
-;;(package! org-modern-indent :recipe (:host github :repo "jdtsmith/org-modern-indent"))
+(package! org-modern-indent :recipe (:host github :repo "jdtsmith/org-modern-indent"))

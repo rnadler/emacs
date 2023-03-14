@@ -156,7 +156,16 @@ If FRAME is omitted or nil, use currently selected frame."
               ("HOLD" :foreground "magenta" :weight bold)
               ("CANCELLED" :foreground "forest green" :weight bold)))))
 (global-org-modern-mode)
-;;(add-hook 'org-mode-hook #'org-modern-indent-mode 90)
+(add-hook 'org-mode-hook #'org-modern-indent-mode 90)
+;; https://discord.com/channels/406534637242810369/1019657860361224202/threads/1085222477904498719
+;; Enable compact on search buffer delete
+(advice-add #'+rss-cleanup-h :after #'+rss--cleanup-on-kill-h)
+;; Disable compact on emacs exit
+(defadvice! cleanup-on-kill (fn &rest args)
+  :around #'+rss-cleanup-h
+  (let (kill-emacs-hook)
+    (prog1 (apply fn args)
+      (+rss--cleanup-on-kill-h))))
 
 ;; Beacon
 (beacon-mode 1)
