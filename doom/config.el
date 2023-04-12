@@ -167,6 +167,10 @@ If FRAME is omitted or nil, use currently selected frame."
     (prog1 (apply fn args)
       (+rss--cleanup-on-kill-h))))
 
+;; chatGPT
+(after! chatgpt-shell
+  (setq chatgpt-shell-openai-key ""))
+
 ;; Beacon
 (beacon-mode 1)
 
