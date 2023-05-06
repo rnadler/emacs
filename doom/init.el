@@ -33,7 +33,7 @@
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ;;(ivy +icons)        ; a search engine for love and life
-       vertico
+       (vertico +icons)
 
        :ui
        ;;deft              ; notational velocity for Emacs

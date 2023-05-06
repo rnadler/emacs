@@ -75,5 +75,4 @@
 (unpin! cider)
 (package! deadgrep)
 (package! org-modern-indent :recipe (:host github :repo "jdtsmith/org-modern-indent"))
-(package! chatgpt-shell :recipe (:host github :repo "xenodium/chatgpt-shell"))
 (package! dired-du)
