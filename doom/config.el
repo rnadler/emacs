@@ -49,11 +49,28 @@
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
 (setq confirm-kill-processes nil)
+(setq pixel-scroll-precision-mode t)  ;; New Emacs 29 feature
 
 (global-set-key (kbd "C-x C-r") 'recentf-open-files)
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x l") 'display-line-numbers-mode)
 (global-set-key (kbd "C-x t") 'toggle-truncate-lines)
+
+;; https://www.emacs.dyerdwelling.family/emacs/20230503211610-emacs--isearch-occur-advice-window-focus/
+;; The advice-add method doesn't seem to work!
+;; The hook-based approach (in comment) works!
+(defun my/rename-and-select-occur-buffer ()
+  "Renames the current buffer to *Occur: [term] [buffer]*.
+   Meant to be added to `occur-hook'."
+  (cl-destructuring-bind (search-term _ (buffer-name &rest _)) occur-revert-arguments
+    (pop-to-buffer
+     (rename-buffer (format "*Occur: %s %s*" search-term buffer-name) t))))
+(add-hook 'occur-hook #'my/rename-and-select-occur-buffer)
+
+;; https://zck.org/improved-emacs-search
+(setq isearch-lazy-count t)
+(setq lazy-count-prefix-format nil)
+(setq lazy-count-suffix-format "   (%s/%s)")
 
 ;;(setq auth-source-debug t)
 (after! magit
