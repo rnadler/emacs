@@ -95,6 +95,9 @@
   ;; face for starred articles
   (defface elfeed-search-star-title-face '((t :foreground "#f77")) "Marks a starred Elfeed entry.")
   (push '(star elfeed-search-star-title-face) elfeed-search-face-alist)
+  (use-package! elfeed-webkit
+    :ensure
+    :bind (:map elfeed-show-mode-map ("x" . elfeed-webkit-toggle)))
   )
 
 ;; Sunrise Commander

@@ -57,7 +57,6 @@
 (package! beacon)
 (package! json-mode)
 (package! json-reformat)
-(package! terraform-mode)
 (package! lsp-ui)
 (package! lsp-ivy)
 (package! benchmark-init)
@@ -76,3 +75,4 @@
 (package! deadgrep)
 (package! org-modern-indent :recipe (:host github :repo "jdtsmith/org-modern-indent"))
 (package! dired-du)
+(package! elfeed-webkit)
