@@ -95,9 +95,7 @@
   ;; face for starred articles
   (defface elfeed-search-star-title-face '((t :foreground "#f77")) "Marks a starred Elfeed entry.")
   (push '(star elfeed-search-star-title-face) elfeed-search-face-alist)
-  (use-package! elfeed-webkit
-    :ensure
-    :bind (:map elfeed-show-mode-map ("x" . elfeed-webkit-toggle)))
+  (use-package! elfeed-webkit :bind (:map elfeed-show-mode-map ("x" . elfeed-webkit-toggle)))
   )
 
 ;; Sunrise Commander
@@ -347,6 +345,21 @@ If FRAME is omitted or nil, use currently selected frame."
     (rename-file (buffer-file-name) new-filename 1)
     (find-alternate-file new-filename)
     (message "Renamed to and now visiting: %s" (abbreviate-file-name new-filename))))
+
+;; Duplicate the current file in Dired.
+(defun my/dired-duplicate-file (arg)
+  "Duplicate the current file in Dired."
+  (interactive "p")
+  (let ((filename (dired-get-filename)))
+    (setq target (concat (file-name-sans-extension filename)
+                   "-old"
+                   (if (> arg 1) (number-to-string arg))
+                   (file-name-extension filename t)))
+    (if (file-directory-p filename)
+      (copy-directory filename target)
+      (copy-file filename target))))
+
+;;(define-key dired-mode-map (kbd "C-c d") 'my/dired-duplicate-file)
 
 (defun my/expand-filename-prompt (prompt)
   "Return expanded filename prompt."
