@@ -98,7 +98,16 @@
   (use-package! elfeed-webkit :bind (:map elfeed-show-mode-map ("x" . elfeed-webkit-toggle)))
   (defun elfeed-search-format-date (date)
     (format-time-string "%Y-%m-%d %H:%M" (seconds-to-time date)))
+  ;; elfeed-curate key bindings
+  (define-key elfeed-search-mode-map "a" #'elfeed-curate-edit-entry-annoation)
+  (define-key elfeed-search-mode-map "x" #'elfeed-curate-export-entries)
   )
+
+;; elfeed-curate (WIP)
+;; See Installing a private local package: https://github.com/doomemacs/doomemacs/issues/1213
+;; From ~/.doom.d/lisp (new directory):
+;; $ ln -s ~/Projects/emacs/elfeed-curate/elfeed-curate.el ./elfeed-curate.el
+(load! "lisp/elfeed-curate.el")
 
 ;; Sunrise Commander
 (after! sunrise
@@ -348,7 +357,7 @@ If FRAME is omitted or nil, use currently selected frame."
     (find-alternate-file new-filename)
     (message "Renamed to and now visiting: %s" (abbreviate-file-name new-filename))))
 
-;; Duplicate the current file in Dired.
+;; https://www.emacs.dyerdwelling.family/emacs/20230606213531-emacs--dired-duplicate-here-revisited/
 (defun my/dired-duplicate-file (arg)
   "Duplicate the current file in Dired."
   (interactive "p")
@@ -360,7 +369,7 @@ If FRAME is omitted or nil, use currently selected frame."
     (if (file-directory-p filename)
       (copy-directory filename target)
       (copy-file filename target))))
-
+;; The key binding doesn't seem to work...
 ;;(define-key dired-mode-map (kbd "C-c d") 'my/dired-duplicate-file)
 
 (defun my/expand-filename-prompt (prompt)

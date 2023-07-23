@@ -9,6 +9,7 @@
 (setq org-agenda-start-day "-2d")
 (setq org-agenda-span 7)
 (setq org-agenda-start-on-weekday nil)
+(setq org-export-with-toc nil)
 
 (setq org-log-done t)
 (setq org-hide-leading-stars nil)
