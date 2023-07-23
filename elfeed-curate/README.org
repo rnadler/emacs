@@ -1,0 +1,88 @@
+* elfeed-curate.el
+
+**elfeed-curate** is an add-on for [[https://github.com/skeeto/elfeed][elfeed]], an RSS reader for
+Emacs. This package allows you to annotate and publish curated RSS
+feed entries.
+
+The purpose of this package is the curation of RSS feeds for publication of
+annotated feed entries. =elfeed-curate= uses the available elfeed search
+functionality for marking, tagging, and filtering of feed entries.
+Two new functions bound to the search key map to support the workflow:
+
+*** Entry annotation (=elfeed-curate-edit-entry-annoation=)
+*** Publication (=elfeed-curate-export-entries=)
+
+* Usage
+- Include [[screenshots/screenshot.png]](s).
+
+* Prerequisites
+
+This package depends on =elfeed= being installed.
+
+* Installation
+
+If you use MELPA, an easy way to install this package is via
+=package-install=. Alternatively, download =elfeed-curate.el=, put it in
+your =load-path= and =require= it.
+
+If you use both MELPA and =use-package=, you can use this, too:
+
+#+begin_src emacs-lisp
+(use-package elfeed-curate
+  :ensure
+  :after elfeed)
+#+end_src
+
+* Custom key bindings
+
+The **annotate** and **export** functions need to be bound to keys
+in =elfeed-search-mode-map=:
+
+#+begin_src emacs-lisp
+(use-package elfeed-curate
+  :ensure
+  :bind (:map elfeed-search-mode-map
+              ("a" . elfeed-curate-edit-entry-annoation)
+              ("x" . elfeed-curate-export-entries)))
+#+end_src
+
+The [[https://github.com/doomemacs/doomemacs][Doom]] configuration would be:
+
+*** =packages.el=
+#+begin_src emacs-lisp
+;;...
+(package! elfeed-curate)
+;;...
+#+end_src
+
+*** =config.el=
+#+begin_src emacs-lisp
+(after! elfeed
+  ;; Your custom Elfeed configuration.
+  ;; elfeed-curate key bindings:
+  (define-key elfeed-search-mode-map "a" #'elfeed-curate-edit-entry-annoation)
+  (define-key elfeed-search-mode-map "x" #'elfeed-curate-export-entries))
+#+end_src
+
+* Customization
+
+Here are the more variables that can be customized:
+
+| Variable                                   | Default                                                                              | Desc.                                                                                                                                        |
+|--------------------------------------------+--------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------|
+| =elfeed-curate-title-length=               | 60                                                                                   | Maximum length of the entry title to show in the annotation edit buffer.                                                                     |
+| =elfeed-curate-annotation-key=             | :rdn/annotation                                                                      | Elfeed meta data key to store annotations.                                                                                                   |
+| =elfeed-curate-annotation-tag=             | 'ann                                                                                 | "Tag used to indicate that annotation has been added to an entry.                                                                            |
+| =elfeed-curate-org-content-title-function= | #'elfeed-curate-org-content-title--default                                           | Function used to create the title content. This will likely need to be changed for different export formats. The default is for HTML output. |
+| =elfeed-curate-org-title=                  | "Content of Note"                                                                    | The TITLE part of the '<Date> <Title>' format. See the =elfeed-curate-org-content-title--default= function.                                  |
+| =elfeed-curate-org-html-options=           | #+OPTIONS: html-style:nil toc:nil num:nil f:nil html-postamble:nil html-preamble:nil | Set html format options. Default is no styles, TOC, section numbering, footer.                                                               |
+| =elfeed-curate-export-dir=                 | "~/"                                                                                 | Export the org and html content to this directory.                                                                                           |
+| =elfeed-curate-org-file-name=              | (concat elfeed-curate-export-dir "export.org")                                       | Generated org file name.                                                                                                                     |
+| =elfeed-curate-org-export-backend=         | 'html                                                                                | "Select export format. Can be one of:                                                                                                        |
+ascii - Export to plain ASCII text.
+html - Export to HTML.
+latex - Export to LaTeX.
+md - Export to Markdown.
+odt - Export to OpenDocument Text.
+pdf - Export to PDF (requires additional setup).|
+| =elfeed-curate-group-exclude-tag-list= | (list 'unread 'star elfeed-curate-annotation-tag) | List of tags to exclude from the group list. These are typically non-subject categories. |
