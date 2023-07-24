@@ -1,5 +1,5 @@
-* Imported Feeds            :elfeed:
-** Medical Devices :meddev:
+* Imported Feeds :elfeed:
+** Medical Devices :med_dev:
 *** [[https://bobonmedicaldevicesoftware.com/blog/feed/][Bob on Medical Device Software]]
 *** [[http://feeds.feedburner.com/Medgadget][Medgadget]]
 *** [[https://www.google.com/alerts/feeds/00675895880009107218/7602843549073834453][Medical Device Software]]
@@ -38,7 +38,7 @@
 -  [[https://irreal.org/blog/?feed=rss2][Irreal]]
 -  [[https://sachachua.com/blog/feed/][Sacha Chua]]
 -  [[https://pragmaticemacs.wordpress.com/feed/][Pragmatic Emacs]]
-*** [[https://cestlaz.github.io/rss.xml][C'est la Z]]
+***  [[https://cestlaz.github.io/rss.xml][C'est la Z]]
 ** Science :science:
 *** [[http://blog.wired.com/wiredscience/rss.xml][Science Latest]]
 -  [[http://feeds.feedburner.com/Scienceroll][ScienceRoll]]
@@ -47,8 +47,8 @@
 *** [[http://steve-yegge.blogspot.com/atom.xml][Stevey's Blog Rants]]
 *** [[http://www.randsinrepose.com/feed/][Rands In Repose]]
 *** [[http://xkcd.com/rss.xml][xkcd.com]]
-** Healthcare IT :healthit:
+** Healthcare IT :health_it:
   -  [[http://histalk2.com/feed][HIStalk]]
   -  [[http://www.emrandhipaa.com/feed/][EMR and HIPAA]]
--  [[http://www.informationweek.com/rss_simple.asp?f_n=441][InformationWeek:]]
+*** [[https://www.healthcareitnews.com/most_popular/feed][Healthcare IT News]]
 -  [[http://feeds.feedburner.com/XconomyHealthIT][Xconomy Health IT]]

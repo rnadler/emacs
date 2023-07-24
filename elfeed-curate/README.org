@@ -1,6 +1,10 @@
+#+TITLE:     elfeed-curate.el
+#+AUTHOR:    Robert Nadler
+#+EMAIL:     robert.nadler@gmail.com
+
 * elfeed-curate.el
 
-**elfeed-curate** is an add-on for [[https://github.com/skeeto/elfeed][elfeed]], an RSS reader for
+*elfeed-curate* is an add-on for [[https://github.com/skeeto/elfeed][elfeed]], an RSS reader for
 Emacs. This package allows you to annotate and publish curated RSS
 feed entries.
 
@@ -13,6 +17,8 @@ Two new functions bound to the search key map to support the workflow:
 *** Publication (=elfeed-curate-export-entries=)
 
 * Usage
+
+
 - Include [[screenshots/screenshot.png]](s).
 
 * Prerequisites
@@ -35,7 +41,7 @@ If you use both MELPA and =use-package=, you can use this, too:
 
 * Custom key bindings
 
-The **annotate** and **export** functions need to be bound to keys
+The *annotate* and *export* functions need to be bound to keys
 in =elfeed-search-mode-map=:
 
 #+begin_src emacs-lisp
@@ -72,17 +78,17 @@ Here are the more variables that can be customized:
 |--------------------------------------------+--------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------|
 | =elfeed-curate-title-length=               | 60                                                                                   | Maximum length of the entry title to show in the annotation edit buffer.                                                                     |
 | =elfeed-curate-annotation-key=             | :rdn/annotation                                                                      | Elfeed meta data key to store annotations.                                                                                                   |
-| =elfeed-curate-annotation-tag=             | 'ann                                                                                 | "Tag used to indicate that annotation has been added to an entry.                                                                            |
+| =elfeed-curate-annotation-tag=             | 'ann                                                                                 | Tag used to indicate that annotation has been added to an entry.                                                                             |
 | =elfeed-curate-org-content-title-function= | #'elfeed-curate-org-content-title--default                                           | Function used to create the title content. This will likely need to be changed for different export formats. The default is for HTML output. |
-| =elfeed-curate-org-title=                  | "Content of Note"                                                                    | The TITLE part of the '<Date> <Title>' format. See the =elfeed-curate-org-content-title--default= function.                                  |
+| =elfeed-curate-org-title=                  | Content of Note                                                                      | The TITLE part of the '<Date> <Title>' format. See the =elfeed-curate-org-content-title--default= function.                                  |
 | =elfeed-curate-org-html-options=           | #+OPTIONS: html-style:nil toc:nil num:nil f:nil html-postamble:nil html-preamble:nil | Set html format options. Default is no styles, TOC, section numbering, footer.                                                               |
-| =elfeed-curate-export-dir=                 | "~/"                                                                                 | Export the org and html content to this directory.                                                                                           |
+| =elfeed-curate-export-dir=                 | ~/                                                                                   | Export the org and html content to this directory.                                                                                           |
 | =elfeed-curate-org-file-name=              | (concat elfeed-curate-export-dir "export.org")                                       | Generated org file name.                                                                                                                     |
-| =elfeed-curate-org-export-backend=         | 'html                                                                                | "Select export format. Can be one of:                                                                                                        |
-ascii - Export to plain ASCII text.
-html - Export to HTML.
-latex - Export to LaTeX.
-md - Export to Markdown.
-odt - Export to OpenDocument Text.
-pdf - Export to PDF (requires additional setup).|
-| =elfeed-curate-group-exclude-tag-list= | (list 'unread 'star elfeed-curate-annotation-tag) | List of tags to exclude from the group list. These are typically non-subject categories. |
+| =elfeed-curate-org-export-backend=         | 'html                                                                                | Select export format. Can be one of:                                                                                                         |
+|                                            |                                                                                      | =ascii= - Export to plain ASCII text.                                                                                                        |
+|                                            |                                                                                      | =html= - Export to HTML.                                                                                                                     |
+|                                            |                                                                                      | =latex= - Export to LaTeX.                                                                                                                   |
+|                                            |                                                                                      | =md= - Export to Markdown.                                                                                                                   |
+|                                            |                                                                                      | =odt= - Export to OpenDocument Text.                                                                                                         |
+|                                            |                                                                                      | =pdf= - Export to PDF (requires additional setup).                                                                                           |
+| =elfeed-curate-group-exclude-tag-list=     | (list 'unread 'star elfeed-curate-annotation-tag)                                    | List of tags to exclude from the group list. These are typically non-subject categories.                                                     |

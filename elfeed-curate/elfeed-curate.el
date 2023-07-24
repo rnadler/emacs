@@ -34,6 +34,10 @@
 (require 'elfeed)
 (require 'org)
 
+(defgroup elfeed-curate ()
+  "Curate Elfeed content."
+  :group 'comm)
+
 (defun elfeed-curate-plist-keys (plist)
   "Return a list of keys from the given property list PLIST."
   (let (keys)
@@ -52,8 +56,10 @@
   "Save the content from the recursive edit buffer to an entry annotation.")
 (defvar elfeed-curate-abort-keys "C-c C-k"
   "Abort the recursive edit session without saving the annotation.")
-(defvar elfeed-curate-title-length 60
-  "Maximum length of the entry title to show in the annotation edit buffer.")
+(defcustom elfeed-curate-title-length 60
+  "Maximum length of the entry title to show in the annotation edit buffer."
+  :group 'elfeed-curate
+  :type 'integer)
 (defvar elfeed-curate-annotation-key :rdn/annotation
   "Elfeed meta data key to store annotations.")
 (defvar elfeed-curate-annotation-tag 'ann
@@ -132,10 +138,8 @@ pdf - Export to PDF (requires additional setup).")
 
 (defun elfeed-curate-tag-to-group-name (tag)
   "Convert TAG to a human readable title string.
-Split on '-' and capitalize each word. e.g. tag-name --> Tag Name"
-  (capitalize (replace-regexp-in-string "-" " " (format "%s" tag))))
-
-;;(elfeed-curate-tag-to-group-name "health-it")
+Split on '_' and capitalize each word. e.g. tag-name --> Tag Name"
+  (capitalize (replace-regexp-in-string "_" " " (format "%s" tag))))
 
 (defun elfeed-curate-add-org-group (title entries)
   "Add a group TITLE of elfeed ENTRIES to the org buffer."

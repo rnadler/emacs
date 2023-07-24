@@ -9,7 +9,7 @@
   (should (string-equal (elfeed-curate-tag-to-group-name nil) "Nil"))
   (should (string-equal (elfeed-curate-tag-to-group-name '(one two three)) "(One Two Three)"))
   (should (string-equal (elfeed-curate-tag-to-group-name "singleword") "Singleword"))
-  (should (string-equal (elfeed-curate-tag-to-group-name "this-is-four-words") "This Is Four Words")))
+  (should (string-equal (elfeed-curate-tag-to-group-name "this_is_four_words") "This Is Four Words")))
 
 (provide 'elfeed-curate-tests)
 
