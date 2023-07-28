@@ -101,6 +101,7 @@
   ;; elfeed-curate key bindings
   (define-key elfeed-search-mode-map "a" #'elfeed-curate-edit-entry-annoation)
   (define-key elfeed-search-mode-map "x" #'elfeed-curate-export-entries)
+  (define-key elfeed-show-mode-map "a" #'elfeed-curate-edit-entry-annoation)
   )
 
 ;; elfeed-curate (WIP)

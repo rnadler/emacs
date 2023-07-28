@@ -3,6 +3,7 @@
 *** [[https://bobonmedicaldevicesoftware.com/blog/feed/][Bob on Medical Device Software]]
 *** [[http://feeds.feedburner.com/Medgadget][Medgadget]]
 *** [[https://www.google.com/alerts/feeds/00675895880009107218/7602843549073834453][Medical Device Software]]
+*** [[https://www.medtechdive.com/feeds/news][MedTechDive]]
 ** Web :web:
 *** [[http://feeds.feedburner.com/ScottHanselman][Scott Hanselman's Computer Zen]]
 *** [[http://blog.stackoverflow.com/feed/][stackoverflow]]
@@ -38,7 +39,9 @@
 -  [[https://irreal.org/blog/?feed=rss2][Irreal]]
 -  [[https://sachachua.com/blog/feed/][Sacha Chua]]
 -  [[https://pragmaticemacs.wordpress.com/feed/][Pragmatic Emacs]]
-***  [[https://cestlaz.github.io/rss.xml][C'est la Z]]
+*** [[https://cestlaz.github.io/rss.xml][C'est la Z]]
+*** [[https://systemcrafters.net/rss/news.xml][System Crafters News]]
+*** [[http://funcall.blogspot.com/feeds/posts/default][Abstract Heresies]]
 ** Science :science:
 *** [[http://blog.wired.com/wiredscience/rss.xml][Science Latest]]
 -  [[http://feeds.feedburner.com/Scienceroll][ScienceRoll]]

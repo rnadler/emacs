@@ -74,8 +74,8 @@ See the elfeed-curate-org-content-title--default function.")
 (defvar elfeed-curate-org-html-options "#+OPTIONS: html-style:nil toc:nil num:nil f:nil html-postamble:nil html-preamble:nil"
   "Set html format options. Default is no styles, TOC, section numbering, footer.")
 (defvar elfeed-curate-export-dir "~/"
-  "Export the org and html content to this directory.")
-(defvar elfeed-curate-org-file-name (concat elfeed-curate-export-dir "export.org")
+  "Export the org and exported (e.g. html) content to this directory.")
+(defvar elfeed-curate-org-file-name  "export.org"
   "Generated org file name.")
 (defvar elfeed-curate-org-export-backend 'html
   "Select export format. Can be one of:
@@ -89,6 +89,10 @@ pdf - Export to PDF (requires additional setup).")
   "Extension of the exported file.")
 (defvar elfeed-curate-group-exclude-tag-list (list 'unread 'star elfeed-curate-annotation-tag)
   "List of tags to exclude from the group list. These are typically non-subject categories.")
+
+(defun elfeed-curate--org-file-path ()
+  "File path for the generated org file."
+  (concat elfeed-curate-export-dir elfeed-curate-org-file-name))
 
 (defun elfeed-curate-current-date-string ()
     "The current date string."
@@ -203,19 +207,19 @@ Split on '_' and capitalize each word. e.g. tag-name --> Tag Name"
 (defun elfeed-curate-edit-entry-annoation ()
   "Edit selected entry annotation."
   (interactive)
-  (let* ((entry (elfeed-search-selected :single))
+  (let* ((is-search (string-equal (buffer-name) (buffer-name (elfeed-search-buffer))))
+         (entry (if is-search (elfeed-search-selected :single) elfeed-show-entry))
          (current-annotation (elfeed-curate-get-entry-annotation entry))
          (new-annotation (elfeed-curate-edit-annotation (elfeed-entry-title entry) current-annotation)))
     (when (not (string-equal new-annotation current-annotation))
-      (elfeed-curate-set-entry-annotation entry new-annotation))
-  ))
+      (elfeed-curate-set-entry-annotation entry new-annotation))))
 
 ;;;###autoload
 (defun elfeed-curate-export-entries ()
   "Write all displayed Elfeed entries to an export file."
   (interactive)
   (let* ((groups (elfeed-curate-group-org-entries elfeed-search-entries))
-         (org-file (expand-file-name elfeed-curate-org-file-name)))
+         (org-file (expand-file-name (elfeed-curate--org-file-path))))
     (with-temp-file org-file
       (when elfeed-curate-org-content-title-function
         (insert (funcall elfeed-curate-org-content-title-function elfeed-curate-org-title)))

@@ -41,15 +41,19 @@ If you use both MELPA and =use-package=, you can use this, too:
 
 * Custom key bindings
 
-The *annotate* and *export* functions need to be bound to keys
-in =elfeed-search-mode-map=:
+The *annotate* function works in both search and show modes while
+the *export* function works only in search mode.  The keys in
+the =elfeed-search-mode-map= and =elfeed-show-mode-map= maps can
+be bound as shown here:
 
 #+begin_src emacs-lisp
 (use-package elfeed-curate
   :ensure
   :bind (:map elfeed-search-mode-map
               ("a" . elfeed-curate-edit-entry-annoation)
-              ("x" . elfeed-curate-export-entries)))
+              ("x" . elfeed-curate-export-entries))
+        (:map elfeed-show-mode-map
+              ("a" . elfeed-curate-edit-entry-annoation)))
 #+end_src
 
 The [[https://github.com/doomemacs/doomemacs][Doom]] configuration would be:
@@ -67,7 +71,8 @@ The [[https://github.com/doomemacs/doomemacs][Doom]] configuration would be:
   ;; Your custom Elfeed configuration.
   ;; elfeed-curate key bindings:
   (define-key elfeed-search-mode-map "a" #'elfeed-curate-edit-entry-annoation)
-  (define-key elfeed-search-mode-map "x" #'elfeed-curate-export-entries))
+  (define-key elfeed-search-mode-map "x" #'elfeed-curate-export-entries)
+  (define-key elfeed-show-mode-map "a" #'elfeed-curate-edit-entry-annoation))
 #+end_src
 
 * Customization
