@@ -38,6 +38,76 @@
   "Curate Elfeed content."
   :group 'comm)
 
+;; Customizations
+
+(defcustom elfeed-curate-title-length 60
+  "Maximum length of the entry title to show in the annotation edit buffer."
+  :group 'elfeed-curate
+  :type 'integer)
+
+(defcustom elfeed-curate-annotation-key :rdn/annotation
+  "Elfeed meta data key to store annotations."
+  :group 'elfeed-curate
+  :type 'symbol)
+
+(defcustom elfeed-curate-annotation-tag 'ann
+  "Tag used to indicate that annotation has been added to an entry."
+  :group 'elfeed-curate
+  :type 'symbol)
+
+(defcustom elfeed-curate-org-content-title-function #'elfeed-curate-org-content-title--default
+  "Function used to create the title content.
+This will likely need to be changed for different export formats.
+The default is for HTML output"
+  :group 'elfeed-curate
+  :type 'function)
+
+(defcustom elfeed-curate-org-title "Content of Interest"
+  "The TITLE part of the '<Date> <Title>' format.
+See the `elfeed-curate-org-content-title--default` function."
+  :group 'elfeed-curate
+  :type 'string)
+
+(defcustom elfeed-curate-org-html-options "#+OPTIONS: html-style:nil toc:nil num:nil f:nil html-postamble:nil html-preamble:nil"
+  "Set html format options. Default is no styles, TOC, section numbering, footer."
+  :group 'elfeed-curate
+  :type 'string)
+
+(defcustom elfeed-curate-export-dir "~/"
+  "Export the org and exported (e.g. html) content to this directory."
+  :group 'elfeed-curate
+  :type 'directory)
+
+(defcustom elfeed-curate-org-export-backend 'html
+  "Select export format. Can be one of:
+ascii - Export to plain ASCII text.
+html - Export to HTML.
+latex - Export to LaTeX.
+md - Export to Markdown.
+odt - Export to OpenDocument Text.
+pdf - Export to PDF (requires additional setup)."
+  :group 'elfeed-curate
+  :type '(choice (const ascii) (const html) (const latex) (const md) (const odt) (const pdf)))
+
+(defcustom elfeed-curate-group-exclude-tag-list (list 'unread 'star elfeed-curate-annotation-tag)
+  "List of tags to exclude from the group list.
+These are typically non-subject categories."
+  :group 'elfeed-curate
+  :type '(repeat symbol))
+
+;; Variables
+
+(defvar elfeed-curate-exit-keys "C-c C-c"
+  "Save the content from the recursive edit buffer to an entry annotation.")
+
+(defvar elfeed-curate-abort-keys "C-c C-k"
+  "Abort the recursive edit session without saving the annotation.")
+
+(defvar elfeed-curate-org-file-name  "export.org"
+  "Generated org file name.")
+
+;; Code
+
 (defun elfeed-curate-plist-keys (plist)
   "Return a list of keys from the given property list PLIST."
   (let (keys)
@@ -52,43 +122,9 @@
       string
     (substring string 0 limit)))
 
-(defvar elfeed-curate-exit-keys "C-c C-c"
-  "Save the content from the recursive edit buffer to an entry annotation.")
-(defvar elfeed-curate-abort-keys "C-c C-k"
-  "Abort the recursive edit session without saving the annotation.")
-(defcustom elfeed-curate-title-length 60
-  "Maximum length of the entry title to show in the annotation edit buffer."
-  :group 'elfeed-curate
-  :type 'integer)
-(defvar elfeed-curate-annotation-key :rdn/annotation
-  "Elfeed meta data key to store annotations.")
-(defvar elfeed-curate-annotation-tag 'ann
-  "Tag used to indicate that annotation has been added to an entry.")
-(defvar elfeed-curate-org-content-title-function #'elfeed-curate-org-content-title--default
-  "Function used to create the title content.
-This will likely need to be changed for different export formats.
-The default is for HTML output")
-(defvar elfeed-curate-org-title "Content of Note"
-  "The TITLE part of the '<Date> <Title>' format.
-See the elfeed-curate-org-content-title--default function.")
-(defvar elfeed-curate-org-html-options "#+OPTIONS: html-style:nil toc:nil num:nil f:nil html-postamble:nil html-preamble:nil"
-  "Set html format options. Default is no styles, TOC, section numbering, footer.")
-(defvar elfeed-curate-export-dir "~/"
-  "Export the org and exported (e.g. html) content to this directory.")
-(defvar elfeed-curate-org-file-name  "export.org"
-  "Generated org file name.")
-(defvar elfeed-curate-org-export-backend 'html
-  "Select export format. Can be one of:
-ascii - Export to plain ASCII text.
-html - Export to HTML.
-latex - Export to LaTeX.
-md - Export to Markdown.
-odt - Export to OpenDocument Text.
-pdf - Export to PDF (requires additional setup).")
-(defvar elfeed-curate-export-file-extension (format "%s" elfeed-curate-org-export-backend)
-  "Extension of the exported file.")
-(defvar elfeed-curate-group-exclude-tag-list (list 'unread 'star elfeed-curate-annotation-tag)
-  "List of tags to exclude from the group list. These are typically non-subject categories.")
+(defun elfeed-curate-export-file-extension ()
+  "Extension of the exported file."
+  (format "%s" elfeed-curate-org-export-backend))
 
 (defun elfeed-curate--org-file-path ()
   "File path for the generated org file."
@@ -100,7 +136,7 @@ pdf - Export to PDF (requires additional setup).")
 
 (defun elfeed-curate-export-file-name ()
   "Exported file name."
-  (concat elfeed-curate-export-dir (elfeed-curate-current-date-string) "-export." elfeed-curate-export-file-extension))
+  (format "%s%s-export.%s" elfeed-curate-export-dir (elfeed-curate-current-date-string) (elfeed-curate-export-file-extension)))
 
 (defun elfeed-curate-org-content-title--default (title)
   "Get the default TITLE content."
@@ -126,7 +162,9 @@ pdf - Export to PDF (requires additional setup).")
          (tag-func (if txt 'elfeed-tag 'elfeed-untag)))
     (elfeed-meta--put entry elfeed-curate-annotation-key txt)
     (funcall tag-func entry elfeed-curate-annotation-tag)
-    (elfeed-search-update-entry entry)))
+    (save-excursion
+      (with-current-buffer (elfeed-search-buffer)
+        (elfeed-search-update-entry entry)))))
 
 (defun  elfeed-curate-add-org-entry (entry)
   "Add an elfeed ENTRY to the org buffer."
