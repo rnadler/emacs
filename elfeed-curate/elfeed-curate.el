@@ -45,8 +45,8 @@
   :group 'elfeed-curate
   :type 'integer)
 
-(defcustom elfeed-curate-annotation-key :rdn/annotation
-  "Elfeed meta data key to store annotations."
+(defcustom elfeed-curate-annotation-key :my/annotation
+  "Elfeed database meta data key to store annotations."
   :group 'elfeed-curate
   :type 'symbol)
 
@@ -220,10 +220,13 @@ Split on '_' and capitalize each word. e.g. tag-name --> Tag Name"
 (defun elfeed-curate-edit-annotation (title default-string)
   "Edit annotation string for the group TITLE with the DEFAULT-STRING."
   (with-temp-buffer
-    (setq buffer-read-only nil)
     (org-mode)
+    (when (fboundp 'org-superstar-mode) (org-superstar-mode))
+    (when (fboundp 'org-modern-mode) (org-modern-mode))
+    (when (fboundp 'prettify-symbols-mode) (prettify-symbols-mode))
+    (setq buffer-read-only nil)
     (outline-show-all)
-    (rename-buffer "*annotation*" t)
+    (rename-buffer "CAPTURE-annotation.org" t)
     (insert default-string)
     (goto-char (point-min))
     (let ((title-str (propertize (concat "Annotate '" (elfeed-curate-truncate-string title elfeed-curate-title-length) "'")
