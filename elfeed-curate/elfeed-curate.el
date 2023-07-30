@@ -29,16 +29,16 @@
 ;;
 ;; See https://github.com/rnadler/elfeed-curate for usage details.
 
-;;; Code:
-
 (require 'elfeed)
 (require 'org)
+
+;;; Code:
 
 (defgroup elfeed-curate ()
   "Curate Elfeed content."
   :group 'comm)
 
-;; Customizations
+;;; Customizations:
 
 (defcustom elfeed-curate-title-length 60
   "Maximum length of the entry title to show in the annotation edit buffer."
@@ -95,7 +95,7 @@ These are typically non-subject categories."
   :group 'elfeed-curate
   :type '(repeat symbol))
 
-;; Variables
+;;; Variables:
 
 (defvar elfeed-curate-exit-keys "C-c C-c"
   "Save the content from the recursive edit buffer to an entry annotation.")
@@ -106,7 +106,7 @@ These are typically non-subject categories."
 (defvar elfeed-curate-org-file-name  "export.org"
   "Generated org file name.")
 
-;; Code
+;;; Functions:
 
 (defun elfeed-curate-plist-keys (plist)
   "Return a list of keys from the given property list PLIST."

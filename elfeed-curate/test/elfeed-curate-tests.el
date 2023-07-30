@@ -11,6 +11,11 @@
   (should (string-equal (elfeed-curate-tag-to-group-name "singleword") "Singleword"))
   (should (string-equal (elfeed-curate-tag-to-group-name "this_is_four_words") "This Is Four Words")))
 
+(defvar groups (list 'group1 '(a b c d) 'group2 `(x y z)))
+
+(ert-deftest count-group-ertries-test ()
+  (should (= 7 (elfeed-curate-elfeed-entry-count groups))))
+
 (provide 'elfeed-curate-tests)
 
 ;;; elfeed-curate-tests.el ends here
