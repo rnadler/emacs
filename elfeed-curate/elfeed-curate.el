@@ -55,21 +55,20 @@
   :group 'elfeed-curate
   :type 'symbol)
 
-(defcustom elfeed-curate-org-content-title-function #'elfeed-curate-org-content-title--default
-  "Function used to create the title content.
-This will likely need to be changed for different export formats.
-The default is for HTML output"
+(defcustom elfeed-curate-org-content-header-function #'elfeed-curate-org-content-header--default
+  "Function used to create the header (options and title) content.
+The default is for HTML output."
   :group 'elfeed-curate
   :type 'function)
 
 (defcustom elfeed-curate-org-title "Content of Interest"
-  "The TITLE part of the '<Date> <Title>' format.
-See the `elfeed-curate-org-content-title--default` function."
+  "The TITLE part of the 'DATE TITLE' format.
+See the `elfeed-curate-org-content-header--default` function."
   :group 'elfeed-curate
   :type 'string)
 
-(defcustom elfeed-curate-org-html-options "#+OPTIONS: html-style:nil toc:nil num:nil f:nil html-postamble:nil html-preamble:nil"
-  "Set html format options. Default is no styles, TOC, section numbering, footer."
+(defcustom elfeed-curate-org-options "html-style:nil toc:nil num:nil f:nil html-postamble:nil html-preamble:nil"
+  "Set format options. Default is for an HTML export: no styles, TOC, section numbering, footer."
   :group 'elfeed-curate
   :type 'string)
 
@@ -138,12 +137,12 @@ These are typically non-subject categories."
   "Exported file name."
   (format "%s%s-export.%s" elfeed-curate-export-dir (elfeed-curate-current-date-string) (elfeed-curate-export-file-extension)))
 
-(defun elfeed-curate-org-content-title--default (title)
-  "Get the default TITLE content."
-  (format "%s
-#+BEGIN_EXPORT html
-<h1>%s %s</h1>
-#+END_EXPORT\n" elfeed-curate-org-html-options (elfeed-curate-current-date-string) title))
+(defun elfeed-curate-org-content-header--default (title)
+  "Get the default header (options and TITLE) content."
+  (format "#+OPTIONS: %s
+#+TITLE: %s %s\n"
+          elfeed-curate-org-options
+          (elfeed-curate-current-date-string) title))
 
 (defun elfeed-curate-concat-authors (entry)
   "Return a string of all authors concatenated for the given ENTRY."
@@ -262,8 +261,8 @@ Split on '_' and capitalize each word. e.g. tag-name --> Tag Name"
   (let* ((groups (elfeed-curate-group-org-entries elfeed-search-entries))
          (org-file (expand-file-name (elfeed-curate--org-file-path))))
     (with-temp-file org-file
-      (when elfeed-curate-org-content-title-function
-        (insert (funcall elfeed-curate-org-content-title-function elfeed-curate-org-title)))
+      (when elfeed-curate-org-content-header-function
+        (insert (funcall elfeed-curate-org-content-header-function elfeed-curate-org-title)))
       (dolist (key (elfeed-curate-plist-keys groups))
         (elfeed-curate-add-org-group key (plist-get groups key)))
       (let ((out-file-name (elfeed-curate-export-file-name)))
