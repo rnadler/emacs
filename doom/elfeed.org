@@ -13,6 +13,7 @@
 - [[http://feeds.feedburner.com/typepad/sethsmainblog][Seth's Blog]]
 - [[https://hnrss.org/frontpage][Hacker News]]
 - See [[https://hnrss.github.io/][Hacker News RSS]]
+*** [[https://newsletter.devmoh.co/feed][Devmoh]]
 ** Software :software:
 *** [[http://feeds.feedburner.com/d0od][OMG! Ubuntu!]]
 -  [[http://samsaffron.com/posts.rss][Sam Saffron]]
