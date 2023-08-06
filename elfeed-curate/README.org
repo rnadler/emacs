@@ -56,6 +56,7 @@ be bound as shown here:
               ("x" . elfeed-curate-export-entries))
         (:map elfeed-show-mode-map
               ("a" . elfeed-curate-edit-entry-annoation)
+              ("m" . elfeed-curate-toggle-star)
               ("q" . kill-buffer-and-window)))
 #+end_src
 
@@ -75,7 +76,9 @@ The [[https://github.com/doomemacs/doomemacs][Doom]] configuration would be:
   ;; elfeed-curate key bindings:
   (define-key elfeed-search-mode-map "a" #'elfeed-curate-edit-entry-annoation)
   (define-key elfeed-search-mode-map "x" #'elfeed-curate-export-entries)
+  (define-key elfeed-search-mode-map "m" #'elfeed-curate-toggle-star)
   (define-key elfeed-show-mode-map   "a" #'elfeed-curate-edit-entry-annoation)
+  (define-key elfeed-show-mode-map   "m" #'elfeed-curate-toggle-star)
   (define-key elfeed-show-mode-map   "q" #'kill-buffer-and-window))
 #+end_src
 The show window =q= key override with =kill-buffer-and-window= seems to behave better than just
@@ -90,6 +93,7 @@ Here are the variables that can be customized:
 | =elfeed-curate-title-length=                | 60                                                                         | Maximum length of the entry title to show in the annotation edit buffer.                                     |
 | =elfeed-curate-annotation-key=              | :my/annotation                                                             | Elfeed database meta data key to store annotations.                                                          |
 | =elfeed-curate-annotation-tag=              | 'ann                                                                       | Tag used to indicate that annotation has been added to an entry.                                             |
+| =elfeed-curate-star-tag=                    | 'star                                                                      | Tag used to indicate that annotation has been `starred`.                                                     |
 | =elfeed-curate-org-content-header-function= | #'elfeed-curate-org-content-header--default                                | Function used to create the header (options and title) content. The default is for HTML output.              |
 | =elfeed-curate-org-title=                   | Content of Note                                                            | The TITLE part of the '<Date> <Title>' format. See the =elfeed-curate-org-content-header--default= function. |
 | =elfeed-curate-org-options=                 | #html-style:nil toc:nil num:nil f:nil html-postamble:nil html-preamble:nil | Set org document format options. Default is for an HTML export: no styles, TOC, section numbering, footer.   |
@@ -97,8 +101,7 @@ Here are the variables that can be customized:
 | =elfeed-curate-org-export-backend=          | 'html                                                                      | Select export format. Can be one of:                                                                         |
 |                                             |                                                                            | =ascii= - Export to plain ASCII text.                                                                        |
 |                                             |                                                                            | =html= - Export to HTML.                                                                                     |
-|                                             |                                                                            | =latex= - Export to LaTeX.                                                                                   |
 |                                             |                                                                            | =md= - Export to Markdown.                                                                                   |
 |                                             |                                                                            | =odt= - Export to OpenDocument Text.                                                                         |
 |                                             |                                                                            | =pdf= - Export to PDF (requires additional setup).                                                           |
-| =elfeed-curate-group-exclude-tag-list=      | (list 'unread 'star elfeed-curate-annotation-tag)                          | List of tags to exclude from the group list. These are typically non-subject categories.                     |
+| =elfeed-curate-group-exclude-tag-list=      | (list 'unread elfeed-curate-star-tag elfeed-curate-annotation-tag)         | List of tags to exclude from the group list. These are typically non-subject categories.                     |

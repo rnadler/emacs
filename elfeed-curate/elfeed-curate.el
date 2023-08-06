@@ -55,6 +55,11 @@
   :group 'elfeed-curate
   :type 'symbol)
 
+(defcustom elfeed-curate-star-tag 'star
+  "Tag used to indicate that annotation has been `starred`."
+  :group 'elfeed-curate
+  :type 'symbol)
+
 (defcustom elfeed-curate-org-content-header-function #'elfeed-curate-org-content-header--default
   "Function used to create the header (options and title) content.
 The default is for HTML output."
@@ -88,7 +93,7 @@ pdf - Export to PDF (requires additional setup)."
   :group 'elfeed-curate
   :type '(choice (const ascii) (const html) (const latex) (const md) (const odt) (const pdf)))
 
-(defcustom elfeed-curate-group-exclude-tag-list (list 'unread 'star elfeed-curate-annotation-tag)
+(defcustom elfeed-curate-group-exclude-tag-list (list 'unread elfeed-curate-star-tag elfeed-curate-annotation-tag)
   "List of tags to exclude from the group list.
 These are typically non-subject categories."
   :group 'elfeed-curate
@@ -155,15 +160,19 @@ These are typically non-subject categories."
   (let ((annotation (elfeed-meta entry elfeed-curate-annotation-key)))
     (if annotation annotation "")))
 
-(defun elfeed-curate-set-entry-annotation (entry annotation)
-  "Set ANNOTATION on an ENTRY."
-  (let* ((txt (if (= (length annotation) 0) nil annotation))
-         (tag-func (if txt 'elfeed-tag 'elfeed-untag)))
-    (elfeed-meta--put entry elfeed-curate-annotation-key txt)
-    (funcall tag-func entry elfeed-curate-annotation-tag)
+(defun elfeed-curate--update-tag (entry tag add-tag)
+  "Update the TAG on an ENTRY. ADD-TAG determines whether to tag or untag."
+  (let ((tag-func (if add-tag 'elfeed-tag 'elfeed-untag)))
+    (funcall tag-func entry tag)
     (save-excursion
       (with-current-buffer (elfeed-search-buffer)
         (elfeed-search-update-entry entry)))))
+
+(defun elfeed-curate-set-entry-annotation (entry annotation)
+  "Set ANNOTATION on an ENTRY."
+  (let ((txt (if (= (length annotation) 0) nil annotation)))
+    (elfeed-meta--put entry elfeed-curate-annotation-key txt)
+    (elfeed-curate--update-tag entry elfeed-curate-annotation-tag txt)))
 
 (defun  elfeed-curate-add-org-entry (entry)
   "Add an elfeed ENTRY to the org buffer."
@@ -243,12 +252,71 @@ Split on '_' and capitalize each word. e.g. tag-name --> Tag Name"
     (recursive-edit)
     (buffer-substring-no-properties (point-min) (point-max))))
 
+(defun elfeed-curate--get-entry ()
+  "Gets the current entry from either the search or show buffer"
+  (let ((is-search (string-equal (buffer-name) (buffer-name (elfeed-search-buffer)))))
+    (if is-search (elfeed-search-selected :single) elfeed-show-entry)))
+
+(defun elfeed-curate--open-in-external-app (fname)
+  "Open FNAME in external app.
+Simplified version of: `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_ext_apps.html`"
+  (interactive)
+  (let ((xfileList (list (expand-file-name fname))))
+    (cond
+     ((string-equal system-type "windows-nt")
+      (let ((xoutBuf (get-buffer-create "*xah open in external app*"))
+            (xcmdlist (list "PowerShell" "-Command" "Invoke-Item" "-LiteralPath")))
+        (mapc
+         (lambda (x)
+           (message "%s" x)
+           (apply 'start-process (append (list "xah open in external app" xoutBuf) xcmdlist (list (format "'%s'" (if (string-match "'" x) (replace-match "`'" t t x) x))) nil)))
+         xfileList)))
+     ((string-equal system-type "darwin")
+      (mapc (lambda (xfpath) (shell-command (concat "open " (shell-quote-argument xfpath)))) xfileList))
+     ((string-equal system-type "gnu/linux")
+      (mapc (lambda (xfpath)
+              (call-process shell-file-name nil 0 nil
+                            shell-command-switch
+                            (format "%s %s" "xdg-open" (shell-quote-argument xfpath)))) xfileList))
+     ((string-equal system-type "berkeley-unix")
+      (mapc (lambda (xfpath) (let ((process-connection-type nil)) (start-process "" nil "xdg-open" xfpath))) xfileList)))))
+
+;;;###autoload
+(defun elfeed-curate-reconcile-annotations ()
+  "Ensure all selected entries have the correct annotation tags.
+1. Add the specified annotation tag if annotation exists.
+2. Remove annotation tag if annotation does not exist."
+  (interactive)
+  (elfeed-search-update t)
+  (let ((add-count 0)
+        (remove-count 0)
+        (total-count 0)
+        (entries (elfeed-search-selected)))
+    (dolist (entry entries)
+      (let ((has-ann (/= (length (elfeed-curate-get-entry-annotation entry)) 0))
+            (has-tag (memq elfeed-curate-annotation-tag (elfeed-entry-tags entry))))
+        (setq total-count (1+ total-count))
+        (cond
+         ((and has-ann (not has-tag))
+          (setq add-count (1+ add-count))
+          (elfeed-curate--update-tag entry elfeed-curate-annotation-tag t))
+         ((and has-tag (not has-ann))
+          (setq remove-count (1+ remove-count))
+          (elfeed-curate--update-tag entry elfeed-curate-annotation-tag nil)))))
+    (message (format "Annotation tags reconciled for %d entries: %d added, %d removed" total-count add-count remove-count))))
+
+;;;###autoload
+(defun elfeed-curate-toggle-star ()
+  (interactive)
+  (let* ((entry (elfeed-curate--get-entry))
+         (add-tag (not (memq elfeed-curate-star-tag (elfeed-entry-tags entry)))))
+    (elfeed-curate--update-tag entry elfeed-curate-star-tag add-tag)))
+
 ;;;###autoload
 (defun elfeed-curate-edit-entry-annoation ()
   "Edit selected entry annotation."
   (interactive)
-  (let* ((is-search (string-equal (buffer-name) (buffer-name (elfeed-search-buffer))))
-         (entry (if is-search (elfeed-search-selected :single) elfeed-show-entry))
+  (let* ((entry (elfeed-curate--get-entry))
          (current-annotation (elfeed-curate-get-entry-annotation entry))
          (new-annotation (elfeed-curate-edit-annotation (elfeed-entry-title entry) current-annotation)))
     (when (not (string-equal new-annotation current-annotation))
@@ -268,8 +336,7 @@ Split on '_' and capitalize each word. e.g. tag-name --> Tag Name"
       (let ((out-file-name (elfeed-curate-export-file-name)))
         (delete-file out-file-name)
         (org-export-to-file elfeed-curate-org-export-backend out-file-name)
-        (save-window-excursion
-          (async-shell-command (concat "xdg-open " out-file-name)))
+        (elfeed-curate--open-in-external-app out-file-name)
         (message "Exported %d Elfeed groups (%d total entries) to %s"
                  (/ (length groups) 2) (elfeed-curate-elfeed-entry-count groups) out-file-name)))))
 
