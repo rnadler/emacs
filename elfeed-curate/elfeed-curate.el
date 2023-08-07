@@ -29,6 +29,7 @@
 ;;
 ;; See https://github.com/rnadler/elfeed-curate for usage details.
 
+(require 'cl-lib)
 (require 'elfeed)
 (require 'org)
 
@@ -155,13 +156,21 @@ These are typically non-subject categories."
     (mapconcat
      (lambda (author) (plist-get author :name)) authors ", ")))
 
+(defun elfeed-curate-concat-other-groups (entry group)
+  "Return a string of all other groups (not GROUP) concatenated for the given ENTRY."
+  (let* ((tags (elfeed-entry-tags entry))
+         (tags (delq group tags))
+         (tags (cl-remove-if (lambda (tag) (memq tag elfeed-curate-group-exclude-tag-list)) tags)))
+    (mapconcat
+     (lambda (tag) (elfeed-curate-tag-to-group-name tag)) tags ", ")))
+
 (defun elfeed-curate-get-entry-annotation (entry)
   "Get annotation from an ENTRY."
   (let ((annotation (elfeed-meta entry elfeed-curate-annotation-key)))
     (if annotation annotation "")))
 
 (defun elfeed-curate--update-tag (entry tag add-tag)
-  "Update the TAG on an ENTRY. ADD-TAG determines whether to tag or untag."
+  "Update the TAG on an ENTRY. ADD-TAG determine whether to tag or untag."
   (let ((tag-func (if add-tag 'elfeed-tag 'elfeed-untag)))
     (funcall tag-func entry tag)
     (save-excursion
@@ -174,15 +183,17 @@ These are typically non-subject categories."
     (elfeed-meta--put entry elfeed-curate-annotation-key txt)
     (elfeed-curate--update-tag entry elfeed-curate-annotation-tag txt)))
 
-(defun  elfeed-curate-add-org-entry (entry)
-  "Add an elfeed ENTRY to the org buffer."
+(defun  elfeed-curate-add-org-entry (entry group)
+  "Add an elfeed ENTRY in GROUP to the org buffer."
   (let* ((annotation (elfeed-curate-get-entry-annotation entry))
          (authors (elfeed-curate-concat-authors entry))
-         (authors-str (if (= (length authors) 0) "" (concat " (" authors ")"))))
-    (insert (format "- [[%s][%s]]%s\n"
+         (authors-str (if (= (length authors) 0) "" (concat " (" authors ")")))
+         (other-groups (elfeed-curate-concat-other-groups entry group))
+         (groups-str (if (= (length other-groups) 0) "" (concat " **[" other-groups "]**"))))
+    (insert (format "- [[%s][%s]]%s%s\n"
                     (elfeed-entry-link entry)
                     (elfeed-entry-title entry)
-                    authors-str))
+                    authors-str groups-str))
     (when (> (length annotation) 0)
       (insert (format "%s\n" annotation)))))
 
@@ -191,23 +202,24 @@ These are typically non-subject categories."
 Split on '_' and capitalize each word. e.g. tag-name --> Tag Name"
   (capitalize (replace-regexp-in-string "_" " " (format "%s" tag))))
 
-(defun elfeed-curate-add-org-group (title entries)
-  "Add a group TITLE of elfeed ENTRIES to the org buffer."
-  (insert (format "* %s\n" (elfeed-curate-tag-to-group-name title)))
+(defun elfeed-curate-add-org-group (group entries)
+  "Add a GROUP of elfeed ENTRIES to the org buffer."
+  (insert (format "* %s\n" (elfeed-curate-tag-to-group-name group)))
   (dolist (entry entries)
-    (elfeed-curate-add-org-entry entry)))
+    (elfeed-curate-add-org-entry entry group)))
 
 (defun elfeed-curate-group-org-entries (entries)
   "Create a plist of grouped ENTRIES."
   (let (groups)
     (dolist (entry entries)
       (let ((tags (elfeed-entry-tags entry)))
-        (dolist (tag tags)
+        (cl-dolist (tag tags)
           (when (not (memq tag elfeed-curate-group-exclude-tag-list))
             (progn
               (when (not (plist-member groups tag))
                 (setq groups (plist-put groups tag ())))
-              (push entry (plist-get groups tag)))))))
+              (push entry (plist-get groups tag))
+              (cl-return))))))
     groups))
 
 (defun elfeed-curate-elfeed-entry-count (groups)
@@ -307,6 +319,7 @@ Simplified version of: `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_
 
 ;;;###autoload
 (defun elfeed-curate-toggle-star ()
+  "Toggle `elfeed-curate-star-tag' on the current entry in either the search or show buffer."
   (interactive)
   (let* ((entry (elfeed-curate--get-entry))
          (add-tag (not (memq elfeed-curate-star-tag (elfeed-entry-tags entry)))))
@@ -331,14 +344,14 @@ Simplified version of: `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_
     (with-temp-file org-file
       (when elfeed-curate-org-content-header-function
         (insert (funcall elfeed-curate-org-content-header-function elfeed-curate-org-title)))
-      (dolist (key (elfeed-curate-plist-keys groups))
-        (elfeed-curate-add-org-group key (plist-get groups key)))
+      (dolist (group (elfeed-curate-plist-keys groups))
+        (elfeed-curate-add-org-group group (plist-get groups group)))
       (let ((out-file-name (elfeed-curate-export-file-name)))
         (delete-file out-file-name)
         (org-export-to-file elfeed-curate-org-export-backend out-file-name)
         (elfeed-curate--open-in-external-app out-file-name)
         (message "Exported %d Elfeed groups (%d total entries) to %s"
-                 (/ (length groups) 2) (elfeed-curate-elfeed-entry-count groups) out-file-name)))))
+                 (length (elfeed-curate-plist-keys groups)) (elfeed-curate-elfeed-entry-count groups) out-file-name)))))
 
 (provide 'elfeed-curate)
 
