@@ -210,16 +210,22 @@ Split on '_' and capitalize each word. e.g. tag-name --> Tag Name"
 
 (defun elfeed-curate-group-org-entries (entries)
   "Create a plist of grouped ENTRIES."
-  (let (groups)
+  (let ((groups)
+        (no-group-count 0))
     (dolist (entry entries)
-      (let ((tags (elfeed-entry-tags entry)))
+      (let ((tags (elfeed-entry-tags entry))
+            (pushed))
         (cl-dolist (tag tags)
           (when (not (memq tag elfeed-curate-group-exclude-tag-list))
             (progn
               (when (not (plist-member groups tag))
                 (setq groups (plist-put groups tag ())))
               (push entry (plist-get groups tag))
-              (cl-return))))))
+              (setq pushed t)
+              (cl-return))))
+        (when (not pushed) (setq no-group-count (1+ no-group-count)))))
+    (when (> no-group-count 0)
+      (message (format "WARNING: %d entries were not added to a group!" no-group-count)))
     groups))
 
 (defun elfeed-curate-elfeed-entry-count (groups)
@@ -295,16 +301,14 @@ Simplified version of: `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_
 
 ;;;###autoload
 (defun elfeed-curate-reconcile-annotations ()
-  "Ensure all selected entries have the correct annotation tags.
+  "Ensure all database entries have the correct annotation tags.
 1. Add the specified annotation tag if annotation exists.
 2. Remove annotation tag if annotation does not exist."
   (interactive)
-  (elfeed-search-update t)
   (let ((add-count 0)
         (remove-count 0)
-        (total-count 0)
-        (entries (elfeed-search-selected)))
-    (dolist (entry entries)
+        (total-count 0))
+    (with-elfeed-db-visit (entry _)
       (let ((has-ann (/= (length (elfeed-curate-get-entry-annotation entry)) 0))
             (has-tag (memq elfeed-curate-annotation-tag (elfeed-entry-tags entry))))
         (setq total-count (1+ total-count))

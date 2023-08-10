@@ -22,7 +22,7 @@ Two new functions are available to support this workflow:
 - =elfeed-curate-export-entries= (=x= key) exports all selected entries in the =*elfeed-search*= buffer to the desired publication format.
   The newly generated file is also opened with the associated application (a browser for HTML).
 *** Utilities
-- Use =M-x elfeed-curate-reconcile-annotations= to reconcile annotated entries. It ensures all selected entries have the correct annotation tags.
+- Use =M-x elfeed-curate-reconcile-annotations= to ensure all database entries have the correct annotation tags.
 
 * Usage
 
