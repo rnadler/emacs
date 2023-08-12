@@ -61,6 +61,13 @@
   :group 'elfeed-curate
   :type 'symbol)
 
+(defcustom elfeed-curate-no-group-tag 'no_category
+  "Tag used to indicate that an entry has no group tag.
+The entry will be added to this group in the export.
+Set to nil to not display these entries."
+  :group 'elfeed-curate
+  :type 'symbol)
+
 (defcustom elfeed-curate-org-content-header-function #'elfeed-curate-org-content-header--default
   "Function used to create the header (options and title) content.
 The default is for HTML output."
@@ -105,11 +112,17 @@ These are typically non-subject categories."
 (defvar elfeed-curate-exit-keys "C-c C-c"
   "Save the content from the recursive edit buffer to an entry annotation.")
 
+(defvar elfeed-curate-delete-keys "C-c C-d"
+  "Delete the content from the recursive edit buffer and abort the edit session.")
+
 (defvar elfeed-curate-abort-keys "C-c C-k"
   "Abort the recursive edit session without saving the annotation.")
 
 (defvar elfeed-curate-org-file-name  "export.org"
   "Generated org file name.")
+
+(defvar elfeed-curate-capture-buffer-name "CAPTURE-annotation.org"
+  "Annotation capture buffer name.")
 
 ;;; Functions:
 
@@ -208,70 +221,80 @@ Split on '_' and capitalize each word. e.g. tag-name --> Tag Name"
   (dolist (entry entries)
     (elfeed-curate-add-org-entry entry group)))
 
+(defmacro elfeed-curate--add-entry-to-group (groups entry tag)
+  "Add an ENTRY to the GROUPS plist with the group TAG."
+  `(progn
+     (when (not (plist-member ,groups ,tag))
+       (setq ,groups (plist-put ,groups ,tag ())))
+     (push ,entry (plist-get ,groups ,tag))))
+
 (defun elfeed-curate-group-org-entries (entries)
   "Create a plist of grouped ENTRIES."
-  (let ((groups)
-        (no-group-count 0))
+  (let (groups)
     (dolist (entry entries)
       (let ((tags (elfeed-entry-tags entry))
             (pushed))
         (cl-dolist (tag tags)
           (when (not (memq tag elfeed-curate-group-exclude-tag-list))
             (progn
-              (when (not (plist-member groups tag))
-                (setq groups (plist-put groups tag ())))
-              (push entry (plist-get groups tag))
+              (elfeed-curate--add-entry-to-group groups entry tag)
               (setq pushed t)
               (cl-return))))
-        (when (not pushed) (setq no-group-count (1+ no-group-count)))))
-    (when (> no-group-count 0)
-      (message (format "WARNING: %d entries were not added to a group!" no-group-count)))
-    groups))
+        (when (and (not pushed) elfeed-curate-no-group-tag)
+          (elfeed-curate--add-entry-to-group groups entry elfeed-curate-no-group-tag))))
+      groups))
 
 (defun elfeed-curate-elfeed-entry-count (groups)
   "Count total entries in all GROUPS."
   (let ((count 0))
     (dolist (key (elfeed-curate-plist-keys groups))
-      (setq count (+ count (length (plist-get groups key)))))
+      (cl-incf count (length (plist-get groups key))))
     count))
 
 
-(defun elfeed-curate-annotation-keymap ()
+(defun elfeed-curate--annotation-keymap ()
   "Create a keymap for the annotation buffer."
   (let ((km (make-sparse-keymap)))
     (define-key km (kbd elfeed-curate-exit-keys) 'exit-recursive-edit)
     (define-key km (kbd elfeed-curate-abort-keys) 'abort-recursive-edit)
+    (define-key km (kbd elfeed-curate-delete-keys)
+                (lambda ()
+                  (interactive)
+                  (erase-buffer)
+                  (exit-recursive-edit)))
+
     km))
 
+(defmacro elfeed-curate--key-emphasis (keys)
+  "Propertize the given KEYS with emphasis."
+  `'(:eval (propertize ,keys 'face 'mode-line-emphasis)))
+
 (defun elfeed-curate-edit-annotation (title default-string)
-  "Edit annotation string for the group TITLE with the DEFAULT-STRING."
+  "Edit annotation string for the group TITLE with the DEFAULT-STRING.
+Returns the annotation buffer content."
   (with-temp-buffer
     (org-mode)
-    (when (fboundp 'org-superstar-mode) (org-superstar-mode))
-    (when (fboundp 'org-modern-mode) (org-modern-mode))
-    (when (fboundp 'prettify-symbols-mode) (prettify-symbols-mode))
     (setq buffer-read-only nil)
     (outline-show-all)
-    (rename-buffer "CAPTURE-annotation.org" t)
+    (rename-buffer elfeed-curate-capture-buffer-name t)
     (insert default-string)
-    (goto-char (point-min))
+    (goto-char (point-max))
     (let ((title-str (propertize (concat "Annotate '" (elfeed-curate-truncate-string title elfeed-curate-title-length) "'")
                                  'face 'mode-line-buffer-id)))
       (setq header-line-format
           (list
            title-str
-           " --> Save: '"
-           '(:eval (propertize elfeed-curate-exit-keys 'face 'mode-line-emphasis))
-           "', Abort: '"
-           '(:eval (propertize elfeed-curate-abort-keys 'face 'mode-line-emphasis))
+           " --> Save: '" (elfeed-curate--key-emphasis elfeed-curate-exit-keys)
+           "', Delete: '" (elfeed-curate--key-emphasis elfeed-curate-delete-keys)
+           "', Abort: '"  (elfeed-curate--key-emphasis elfeed-curate-abort-keys)
            "'")))
     (switch-to-buffer (current-buffer))
-    (use-local-map (elfeed-curate-annotation-keymap))
+    (use-local-map (elfeed-curate--annotation-keymap))
     (recursive-edit)
     (buffer-substring-no-properties (point-min) (point-max))))
 
 (defun elfeed-curate--get-entry ()
-  "Gets the current entry from either the search or show buffer"
+  "Gets the current entry from either the search or show buffer."
   (let ((is-search (string-equal (buffer-name) (buffer-name (elfeed-search-buffer)))))
     (if is-search (elfeed-search-selected :single) elfeed-show-entry)))
 
@@ -307,19 +330,24 @@ Simplified version of: `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_
   (interactive)
   (let ((add-count 0)
         (remove-count 0)
-        (total-count 0))
+        (total-count 0)
+        (ann-count 0))
     (with-elfeed-db-visit (entry _)
       (let ((has-ann (/= (length (elfeed-curate-get-entry-annotation entry)) 0))
             (has-tag (memq elfeed-curate-annotation-tag (elfeed-entry-tags entry))))
-        (setq total-count (1+ total-count))
+        (cl-incf total-count)
         (cond
+         ((and has-ann has-tag)
+          (cl-incf ann-count))
          ((and has-ann (not has-tag))
-          (setq add-count (1+ add-count))
+          (cl-incf add-count)
+          (cl-incf ann-count)
           (elfeed-curate--update-tag entry elfeed-curate-annotation-tag t))
          ((and has-tag (not has-ann))
-          (setq remove-count (1+ remove-count))
+          (cl-incf remove-count)
           (elfeed-curate--update-tag entry elfeed-curate-annotation-tag nil)))))
-    (message (format "Annotation tags reconciled for %d entries: %d added, %d removed" total-count add-count remove-count))))
+    (message (format "Annotation tags reconciled for %d entries: %d added, %d removed, %d total annoations"
+                     total-count add-count remove-count ann-count))))
 
 ;;;###autoload
 (defun elfeed-curate-toggle-star ()
