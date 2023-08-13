@@ -90,6 +90,11 @@ See the `elfeed-curate-org-content-header--default` function."
   :group 'elfeed-curate
   :type 'directory)
 
+(defcustom elfeed-curate-show-group-count t
+  "Flag to enable showing the count of each group in the exported output."
+  :group 'elfeed-curate
+  :type 'boolean)
+
 (defcustom elfeed-curate-org-export-backend 'html
   "Select export format. Can be one of:
 ascii - Export to plain ASCII text.
@@ -149,7 +154,7 @@ These are typically non-subject categories."
   (concat elfeed-curate-export-dir elfeed-curate-org-file-name))
 
 (defun elfeed-curate-current-date-string ()
-    "The current date string."
+  "The current date string."
   (format-time-string "%d-%B-%Y" (current-time)))
 
 (defun elfeed-curate-export-file-name ()
@@ -184,7 +189,7 @@ These are typically non-subject categories."
 
 (defun elfeed-curate--update-tag (entry tag add-tag)
   "Update the TAG on an ENTRY. ADD-TAG determine whether to tag or untag."
-  (let ((tag-func (if add-tag 'elfeed-tag 'elfeed-untag)))
+  (let ((tag-func (if add-tag 'elfeed-tag-1 'elfeed-untag-1)))
     (funcall tag-func entry tag)
     (save-excursion
       (with-current-buffer (elfeed-search-buffer)
@@ -193,7 +198,9 @@ These are typically non-subject categories."
 (defun elfeed-curate-set-entry-annotation (entry annotation)
   "Set ANNOTATION on an ENTRY."
   (let ((txt (if (= (length annotation) 0) nil annotation)))
-    (elfeed-meta--put entry elfeed-curate-annotation-key txt)
+    ;;(elfeed-meta--put entry elfeed-curate-annotation-key txt)
+    (setf (elfeed-entry-meta entry)
+          (plist-put (elfeed-entry-meta entry) elfeed-curate-annotation-key txt))
     (elfeed-curate--update-tag entry elfeed-curate-annotation-tag txt)))
 
 (defun  elfeed-curate-add-org-entry (entry group)
@@ -208,7 +215,9 @@ These are typically non-subject categories."
                     (elfeed-entry-title entry)
                     authors-str groups-str))
     (when (> (length annotation) 0)
-      (insert (format "%s\n" annotation)))))
+      ; Try to keep annotation content under the entry link.
+      (insert (format "  %s\n"
+                      (replace-regexp-in-string "\n" "\n  " annotation))))))
 
 (defun elfeed-curate-tag-to-group-name (tag)
   "Convert TAG to a human readable title string.
@@ -217,7 +226,9 @@ Split on '_' and capitalize each word. e.g. tag-name --> Tag Name"
 
 (defun elfeed-curate-add-org-group (group entries)
   "Add a GROUP of elfeed ENTRIES to the org buffer."
-  (insert (format "* %s\n" (elfeed-curate-tag-to-group-name group)))
+  (let ((count-str (if elfeed-curate-show-group-count
+                       (format " (%d)" (length entries)) "")))
+    (insert (format "* %s%s\n" (elfeed-curate-tag-to-group-name group) count-str)))
   (dolist (entry entries)
     (elfeed-curate-add-org-entry entry group)))
 
@@ -239,7 +250,7 @@ Split on '_' and capitalize each word. e.g. tag-name --> Tag Name"
             (progn
               (elfeed-curate--add-entry-to-group groups entry tag)
               (setq pushed t)
-              (cl-return))))
+              (cl-return)))) ; An entry is only added to one group
         (when (and (not pushed) elfeed-curate-no-group-tag)
           (elfeed-curate--add-entry-to-group groups entry elfeed-curate-no-group-tag))))
       groups))
