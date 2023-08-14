@@ -187,9 +187,15 @@ These are typically non-subject categories."
   (let ((annotation (elfeed-meta entry elfeed-curate-annotation-key)))
     (if annotation annotation "")))
 
+(defun elfeed-curate--show-entry (msg entry tag)
+  "DEBUG: Show an ENTRY with MSG."
+  (message (format "%s [%s]: %s tags: %s" msg tag
+                   (if entry (elfeed-entry-title entry) "?")
+                   (if entry (elfeed-entry-tags entry) "?"))))
+
 (defun elfeed-curate--update-tag (entry tag add-tag)
   "Update the TAG on an ENTRY. ADD-TAG determine whether to tag or untag."
-  (let ((tag-func (if add-tag 'elfeed-tag-1 'elfeed-untag-1)))
+  (let ((tag-func (if add-tag 'elfeed-tag 'elfeed-untag)))
     (funcall tag-func entry tag)
     (save-excursion
       (with-current-buffer (elfeed-search-buffer)
@@ -261,7 +267,6 @@ Split on '_' and capitalize each word. e.g. tag-name --> Tag Name"
     (dolist (key (elfeed-curate-plist-keys groups))
       (cl-incf count (length (plist-get groups key))))
     count))
-
 
 (defun elfeed-curate--annotation-keymap ()
   "Create a keymap for the annotation buffer."
@@ -345,7 +350,7 @@ Simplified version of: `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_
         (ann-count 0))
     (with-elfeed-db-visit (entry _)
       (let ((has-ann (/= (length (elfeed-curate-get-entry-annotation entry)) 0))
-            (has-tag (memq elfeed-curate-annotation-tag (elfeed-entry-tags entry))))
+            (has-tag (elfeed-tagged-p elfeed-curate-annotation-tag entry)))
         (cl-incf total-count)
         (cond
          ((and has-ann has-tag)
@@ -385,7 +390,7 @@ Simplified version of: `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_
   (let* ((groups (elfeed-curate-group-org-entries elfeed-search-entries))
          (org-file (expand-file-name (elfeed-curate--org-file-path))))
     (with-temp-file org-file
-      (when elfeed-curate-org-content-header-function
+      (when (functionp elfeed-curate-org-content-header-function)
         (insert (funcall elfeed-curate-org-content-header-function elfeed-curate-org-title)))
       (dolist (group (elfeed-curate-plist-keys groups))
         (elfeed-curate-add-org-group group (plist-get groups group)))

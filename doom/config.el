@@ -90,8 +90,9 @@
   ;; From http://pragmaticemacs.com/emacs/star-and-unstar-articles-in-elfeed/
   (defalias 'elfeed-toggle-star
     (elfeed-expose #'elfeed-search-toggle-all 'star))
-  (eval-after-load 'elfeed-search
-    '(define-key elfeed-search-mode-map (kbd "m") 'elfeed-toggle-star))
+  ;; (eval-after-load 'elfeed-search
+  ;;   '(define-key elfeed-search-mode-map (kbd "m") 'elfeed-toggle-star))
+  (define-key elfeed-search-mode-map "m" #'elfeed-toggle-star)
   ;; face for starred articles
   (defface elfeed-search-star-title-face '((t :foreground "#f77")) "Marks a starred Elfeed entry.")
   (push '(star elfeed-search-star-title-face) elfeed-search-face-alist)
@@ -101,8 +102,13 @@
   ;; elfeed-curate key bindings
   (define-key elfeed-search-mode-map "a" #'elfeed-curate-edit-entry-annoation)
   (define-key elfeed-search-mode-map "x" #'elfeed-curate-export-entries)
+  ;;(define-key elfeed-search-mode-map "m" #'elfeed-curate-toggle-star)  ;; like the toggle-all better
   (define-key elfeed-show-mode-map "a" #'elfeed-curate-edit-entry-annoation)
-  )
+  (define-key elfeed-show-mode-map "m" #'elfeed-curate-toggle-star)
+  (define-key elfeed-show-mode-map "q" #'kill-buffer-and-window)
+  (add-hook 'elfeed-tag-hooks (lambda (entry tag) (elfeed-curate--show-entry "Add tag" (car entry) tag)))
+  (add-hook 'elfeed-untag-hooks  (lambda (entry tag) (elfeed-curate--show-entry "Remove tag" (car entry) tag)))
+)
 
 ;; elfeed-curate (WIP)
 ;; See Installing a private local package: https://github.com/doomemacs/doomemacs/issues/1213
