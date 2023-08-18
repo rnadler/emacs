@@ -189,9 +189,9 @@ These are typically non-subject categories."
 
 (defun elfeed-curate--show-entry (msg entry tag)
   "DEBUG: Show an ENTRY with MSG."
-  (message (format "%s [%s]: %s tags: %s" msg tag
-                   (if entry (elfeed-entry-title entry) "?")
-                   (if entry (elfeed-entry-tags entry) "?"))))
+  (let ((title (if (null entry) "?" (elfeed-entry-title entry)))
+        (tags  (if (null entry) "?" (elfeed-entry-tags entry))))
+    (message "%s %s: %s tags: %s" msg tag title tags)))
 
 (defun elfeed-curate--update-tag (entry tag add-tag)
   "Update the TAG on an ENTRY. ADD-TAG determine whether to tag or untag."
@@ -362,8 +362,8 @@ Simplified version of: `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_
          ((and has-tag (not has-ann))
           (cl-incf remove-count)
           (elfeed-curate--update-tag entry elfeed-curate-annotation-tag nil)))))
-    (message (format "Annotation tags reconciled for %d entries: %d added, %d removed, %d total annoations"
-                     total-count add-count remove-count ann-count))))
+    (message "Annotation tags reconciled for %d entries: %d added, %d removed, %d total annoations"
+                     total-count add-count remove-count ann-count)))
 
 ;;;###autoload
 (defun elfeed-curate-toggle-star ()
