@@ -227,7 +227,7 @@ These are typically non-subject categories."
 
 (defun elfeed-curate-tag-to-group-name (tag)
   "Convert TAG to a human readable title string.
-Split on '_' and capitalize each word. e.g. tag-name --> Tag Name"
+Split on '_' and capitalize each word. e.g. tag_name --> Tag Name"
   (capitalize (replace-regexp-in-string "_" " " (format "%s" tag))))
 
 (defun elfeed-curate-add-org-group (group entries)
@@ -235,8 +235,7 @@ Split on '_' and capitalize each word. e.g. tag-name --> Tag Name"
   (let ((count-str (if elfeed-curate-show-group-count
                        (format " (%d)" (length entries)) "")))
     (insert (format "* %s%s\n" (elfeed-curate-tag-to-group-name group) count-str)))
-  (dolist (entry entries)
-    (elfeed-curate-add-org-entry entry group)))
+  (mapc (lambda (entry) (elfeed-curate-add-org-entry entry group)) entries))
 
 (defmacro elfeed-curate--add-entry-to-group (groups entry tag)
   "Add an ENTRY to the GROUPS plist with the group TAG."
@@ -244,6 +243,22 @@ Split on '_' and capitalize each word. e.g. tag-name --> Tag Name"
      (when (not (plist-member ,groups ,tag))
        (setq ,groups (plist-put ,groups ,tag ())))
      (push ,entry (plist-get ,groups ,tag))))
+
+(defun elfeed-curate--find-no-group-entries ()
+    "Find all entries that are not part of a group."
+    (interactive)
+    (let ((entry-list ()))
+      (with-elfeed-db-visit (entry _)
+        (let ((tags (elfeed-entry-tags entry))
+              (pushed))
+        (cl-dolist (tag tags)
+          (when (not (memq tag elfeed-curate-group-exclude-tag-list))
+            (progn
+              (setq pushed t)
+              (cl-return))))
+        (when (not pushed)
+          (push entry entry-list))))
+      (message "%d entries not in a group." (length entry-list))))
 
 (defun elfeed-curate-group-org-entries (entries)
   "Create a plist of grouped ENTRIES."
@@ -261,12 +276,10 @@ Split on '_' and capitalize each word. e.g. tag-name --> Tag Name"
           (elfeed-curate--add-entry-to-group groups entry elfeed-curate-no-group-tag))))
       groups))
 
-(defun elfeed-curate-elfeed-entry-count (groups)
+(defun elfeed-curate--group-entries-count (groups)
   "Count total entries in all GROUPS."
-  (let ((count 0))
-    (dolist (key (elfeed-curate-plist-keys groups))
-      (cl-incf count (length (plist-get groups key))))
-    count))
+  (apply '+ (mapcar (lambda (key) (length (plist-get groups key)))
+                    (elfeed-curate-plist-keys groups))))
 
 (defun elfeed-curate--annotation-keymap ()
   "Create a keymap for the annotation buffer."
@@ -388,18 +401,18 @@ Simplified version of: `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_
   "Write all displayed Elfeed entries to an export file."
   (interactive)
   (let* ((groups (elfeed-curate-group-org-entries elfeed-search-entries))
+         (group-keys (elfeed-curate-plist-keys groups))
          (org-file (expand-file-name (elfeed-curate--org-file-path))))
     (with-temp-file org-file
       (when (functionp elfeed-curate-org-content-header-function)
         (insert (funcall elfeed-curate-org-content-header-function elfeed-curate-org-title)))
-      (dolist (group (elfeed-curate-plist-keys groups))
-        (elfeed-curate-add-org-group group (plist-get groups group)))
+      (mapc (lambda (group-key) (elfeed-curate-add-org-group group-key (plist-get groups group-key))) group-keys)
       (let ((out-file-name (elfeed-curate-export-file-name)))
         (delete-file out-file-name)
         (org-export-to-file elfeed-curate-org-export-backend out-file-name)
         (elfeed-curate--open-in-external-app out-file-name)
         (message "Exported %d Elfeed groups (%d total entries) to %s"
-                 (length (elfeed-curate-plist-keys groups)) (elfeed-curate-elfeed-entry-count groups) out-file-name)))))
+                 (length group-keys) (elfeed-curate--group-entries-count groups) out-file-name)))))
 
 (provide 'elfeed-curate)
 
