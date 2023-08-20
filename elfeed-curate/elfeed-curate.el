@@ -402,17 +402,20 @@ Simplified version of: `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_
   (interactive)
   (let* ((groups (elfeed-curate-group-org-entries elfeed-search-entries))
          (group-keys (elfeed-curate-plist-keys groups))
-         (org-file (expand-file-name (elfeed-curate--org-file-path))))
-    (with-temp-file org-file
-      (when (functionp elfeed-curate-org-content-header-function)
-        (insert (funcall elfeed-curate-org-content-header-function elfeed-curate-org-title)))
-      (mapc (lambda (group-key) (elfeed-curate-add-org-group group-key (plist-get groups group-key))) group-keys)
-      (let ((out-file-name (elfeed-curate-export-file-name)))
-        (delete-file out-file-name)
-        (org-export-to-file elfeed-curate-org-export-backend out-file-name)
-        (elfeed-curate--open-in-external-app out-file-name)
-        (message "Exported %d Elfeed groups (%d total entries) to %s"
-                 (length group-keys) (elfeed-curate--group-entries-count groups) out-file-name)))))
+         (org-file (expand-file-name (elfeed-curate--org-file-path)))
+         (total-entries (elfeed-curate--group-entries-count groups)))
+    (if (= total-entries 0)
+        (message "elfeed-curate: There are no entries to export!")
+      (with-temp-file org-file
+        (when (functionp elfeed-curate-org-content-header-function)
+          (insert (funcall elfeed-curate-org-content-header-function elfeed-curate-org-title)))
+        (mapc (lambda (group-key) (elfeed-curate-add-org-group group-key (plist-get groups group-key))) group-keys)
+        (let ((out-file-name (elfeed-curate-export-file-name)))
+          (delete-file out-file-name)
+          (org-export-to-file elfeed-curate-org-export-backend out-file-name)
+          (elfeed-curate--open-in-external-app out-file-name)
+          (message "Exported %d Elfeed groups (%d total entries) to %s"
+                   (length group-keys) total-entries out-file-name))))))
 
 (provide 'elfeed-curate)
 

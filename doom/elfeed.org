@@ -35,6 +35,7 @@
 *** [[https://codepunk.io/rss.xml][CodePunk]]
 *** [[http://planet.clojure.in/atom.xml][Planet Clojure]]
 - [[https://clojure.org/feed.xml][Clojure Deref]]
+*** [[https://blog.cleancoder.com/atom.xml][The Clean Code Blog]]
 ** Emacs :emacs:
 *** [[https://planet.emacslife.com/atom.xml][Planet Emacslife]]
 -  [[https://irreal.org/blog/?feed=rss2][Irreal]]
