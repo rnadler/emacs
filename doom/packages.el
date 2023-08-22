@@ -67,7 +67,6 @@
 (package! elfeed-goodies :disable t)
 (package! code-review :disable t)
 
-(package! blamer :recipe (:host github :repo "artawower/blamer.el"))
 (package! org-modern)
 (unpin! org-roam)
 (package! org-roam-ui)

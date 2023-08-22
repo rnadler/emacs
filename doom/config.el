@@ -79,6 +79,19 @@
 
 ;; Elfeed
 (global-set-key (kbd "C-x w") 'elfeed)
+
+(defun my/elfeed-clean-title (title)
+  "Clean string TITLE."
+  (->> title
+       (string-replace "<b>" "")
+       (string-replace "</b>" "")))
+
+(defun my/elfeed-clean-entry (entry)
+  "Clean the title of an ENTRY"
+  (let ((title (elfeed-entry-title entry)))
+    (setf (elfeed-entry-title entry)
+          (my/elfeed-clean-title title))))
+
 (after! elfeed
   (setq-default elfeed-search-filter "+unread")
   (setq elfeed-sort-order 'ascending)
@@ -108,13 +121,12 @@
   (define-key elfeed-show-mode-map "q" #'kill-buffer-and-window)
   (add-hook 'elfeed-tag-hooks (lambda (entry tag) (elfeed-curate--show-entry "Add tag" (car entry) tag)))
   (add-hook 'elfeed-untag-hooks  (lambda (entry tag) (elfeed-curate--show-entry "Remove tag" (car entry) tag)))
+
+  (add-hook 'elfeed-new-entry-hook #'my/elfeed-clean-entry)
 )
 
 ;; elfeed-curate (WIP)
-;; See Installing a private local package: https://github.com/doomemacs/doomemacs/issues/1213
-;; From ~/.doom.d/lisp (new directory):
-;; $ ln -s ~/Projects/emacs/elfeed-curate/elfeed-curate.el ./elfeed-curate.el
-(load! "lisp/elfeed-curate.el")
+(load! "~/Projects/emacs/elfeed-curate/elfeed-curate.el")
 
 ;; Sunrise Commander
 (after! sunrise
@@ -418,21 +430,6 @@ If FRAME is omitted or nil, use currently selected frame."
 
 ;; magit-delta
 ;;(add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1)))
-
-;; Blamer
-(use-package blamer
-  :defer 20
-  :custom
-  (blamer-idle-time 0.3)
-  (blamer-min-offset 70)
-  :custom-face
-  (blamer-face ((t :foreground "#7a88cf"
-                    :background nil
-                    :height 140
-                    :italic t)))
-  ;;:config
-  ;;(global-blamer-mode t)
-  )
 
 ;; REBL: https://github.com/RobertARandolph/cider-rebl
 ;; Similar to C-x C-e, but sends to REBL
