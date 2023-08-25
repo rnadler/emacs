@@ -87,16 +87,19 @@
   (->> title
        (string-replace "<b>" "")
        (string-replace "</b>" "")
-       (string-replace "&#39;" "'")))
+       (string-replace "&#39;" "'")
+       (string-replace "&amp;" "&")
+       (string-replace "&lt;" "<")
+       (string-replace "&gt;" ">")
+       (string-replace "&quot;" "\"")))
 
-;; (my/elfeed-clean-title "<b>USA&#39;s</b> Merative")
+;; (my/elfeed-clean-title "<b>USA&#39;s</b> Merative &amp; That &lt;code&gt; &quot;Quoted&quot;")
 
 (defun my/elfeed-clean-entry (entry)
   "Clean the title of an ENTRY"
-  (when (functionp 'elfeed-entry-title)
-    (let ((title (elfeed-entry-title entry)))
+  (let ((title (elfeed-entry-title entry)))
       (setf (elfeed-entry-title entry)
-            (my/elfeed-clean-title title)))))
+            (my/elfeed-clean-title title))))
 
 (after! elfeed
   (setq-default elfeed-search-filter "+unread")
