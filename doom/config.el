@@ -78,19 +78,25 @@
             'magit-process-password-auth-source))
 
 ;; Elfeed
+;; https://github.com/skeeto/elfeed/issues/292
+(eval-when-compile (require 'elfeed))
 (global-set-key (kbd "C-x w") 'elfeed)
 
 (defun my/elfeed-clean-title (title)
   "Clean string TITLE."
   (->> title
        (string-replace "<b>" "")
-       (string-replace "</b>" "")))
+       (string-replace "</b>" "")
+       (string-replace "&#39;" "'")))
+
+;; (my/elfeed-clean-title "<b>USA&#39;s</b> Merative")
 
 (defun my/elfeed-clean-entry (entry)
   "Clean the title of an ENTRY"
-  (let ((title (elfeed-entry-title entry)))
-    (setf (elfeed-entry-title entry)
-          (my/elfeed-clean-title title))))
+  (when (functionp 'elfeed-entry-title)
+    (let ((title (elfeed-entry-title entry)))
+      (setf (elfeed-entry-title entry)
+            (my/elfeed-clean-title title)))))
 
 (after! elfeed
   (setq-default elfeed-search-filter "+unread")

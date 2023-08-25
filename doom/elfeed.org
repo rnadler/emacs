@@ -4,6 +4,7 @@
 *** [[http://feeds.feedburner.com/Medgadget][Medgadget]]
 *** [[https://www.google.com/alerts/feeds/00675895880009107218/7602843549073834453][Medical Device Software]]
 *** [[https://www.medtechdive.com/feeds/news][MedTechDive]]
+*** [[https://api.medicalfuturist.com/feed/][The Medical Futurist]]
 ** Web :web:
 *** [[http://feeds.feedburner.com/ScottHanselman][Scott Hanselman's Computer Zen]]
 *** [[http://blog.stackoverflow.com/feed/][stackoverflow]]
@@ -36,6 +37,7 @@
 *** [[http://planet.clojure.in/atom.xml][Planet Clojure]]
 - [[https://clojure.org/feed.xml][Clojure Deref]]
 *** [[https://blog.cleancoder.com/atom.xml][The Clean Code Blog]]
+*** [[http://feeds.feedburner.com/ThePragmaticEngineer][The Pragmatic Engineer]]
 ** Emacs :emacs:
 *** [[https://planet.emacslife.com/atom.xml][Planet Emacslife]]
 -  [[https://irreal.org/blog/?feed=rss2][Irreal]]
