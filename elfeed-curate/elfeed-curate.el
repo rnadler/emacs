@@ -147,7 +147,7 @@ These are typically non-subject categories."
 
 (defun elfeed-curate-export-file-extension ()
   "Extension of the exported file."
-  (format "%s" elfeed-curate-org-export-backend))
+  (symbol-name elfeed-curate-org-export-backend))
 
 (defun elfeed-curate--org-file-path ()
   "File path for the generated org file."
@@ -230,9 +230,10 @@ These are typically non-subject categories."
 Split on '_' and capitalize each word. e.g. tag_name --> Tag Name"
   (capitalize (replace-regexp-in-string "_" " " (format "%s" tag))))
 
-(defun elfeed-curate-add-org-group (group entries)
-  "Add a GROUP of elfeed ENTRIES to the org buffer."
-  (let ((count-str (if elfeed-curate-show-group-count
+(defun elfeed-curate-add-org-group (group entries show-group-count)
+  "Add a GROUP of elfeed ENTRIES to the org buffer.
+Show the group count if SHOW-GROUP-COUNT is not nil."
+  (let ((count-str (if show-group-count
                        (format " (%d)" (length entries)) "")))
     (insert (format "* %s%s\n" (elfeed-curate-tag-to-group-name group) count-str)))
   (mapc (lambda (entry) (elfeed-curate-add-org-entry entry group)) entries))
@@ -398,7 +399,8 @@ Simplified version of: `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_
 
 ;;;###autoload
 (defun elfeed-curate-export-entries ()
-  "Write all displayed Elfeed entries to an export file."
+  "Write all displayed Elfeed entries to an export file.
+Use prefix key (`C-u`) to turn off showing the group count if it's enabled."
   (interactive)
   (let* ((groups (elfeed-curate-group-org-entries elfeed-search-entries))
          (group-keys (elfeed-curate-plist-keys groups))
@@ -409,7 +411,9 @@ Simplified version of: `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_
       (with-temp-file org-file
         (when (functionp elfeed-curate-org-content-header-function)
           (insert (funcall elfeed-curate-org-content-header-function elfeed-curate-org-title)))
-        (mapc (lambda (group-key) (elfeed-curate-add-org-group group-key (plist-get groups group-key))) group-keys)
+        (let ((show-group-count (and elfeed-curate-show-group-count (null current-prefix-arg))))
+          (mapc (lambda (group-key)
+                  (elfeed-curate-add-org-group group-key (plist-get groups group-key) show-group-count)) group-keys))
         (let ((out-file-name (elfeed-curate-export-file-name)))
           (delete-file out-file-name)
           (org-export-to-file elfeed-curate-org-export-backend out-file-name)

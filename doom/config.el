@@ -94,6 +94,7 @@
        (string-replace "&quot;" "\"")))
 
 ;; (my/elfeed-clean-title "<b>USA&#39;s</b> Merative &amp; That &lt;code&gt; &quot;Quoted&quot;")
+;; (setq elfeed-curate-org-export-backend 'html)
 
 (defun my/elfeed-clean-entry (entry)
   "Clean the title of an ENTRY"
@@ -128,8 +129,8 @@
   (define-key elfeed-show-mode-map "a" #'elfeed-curate-edit-entry-annoation)
   (define-key elfeed-show-mode-map "m" #'elfeed-curate-toggle-star)
   (define-key elfeed-show-mode-map "q" #'kill-buffer-and-window)
-  (add-hook 'elfeed-tag-hooks (lambda (entry tag) (elfeed-curate--show-entry "Add tag" (car entry) tag)))
-  (add-hook 'elfeed-untag-hooks  (lambda (entry tag) (elfeed-curate--show-entry "Remove tag" (car entry) tag)))
+  ;;(add-hook 'elfeed-tag-hooks (lambda (entry tag) (elfeed-curate--show-entry "Add tag" (car entry) tag)))
+  ;;(add-hook 'elfeed-untag-hooks  (lambda (entry tag) (elfeed-curate--show-entry "Remove tag" (car entry) tag)))
 
   (add-hook 'elfeed-new-entry-hook #'my/elfeed-clean-entry)
 )
