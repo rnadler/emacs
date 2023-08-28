@@ -91,7 +91,8 @@ See the `elfeed-curate-org-content-header--default` function."
   :type 'directory)
 
 (defcustom elfeed-curate-show-group-count t
-  "Flag to enable showing the count of each group in the exported output."
+  "Flag to enable showing the count of each group in the exported output.
+If a prefix argument is used before the export (`C-u x`), the count will not be shown."
   :group 'elfeed-curate
   :type 'boolean)
 
@@ -309,10 +310,11 @@ Returns the annotation buffer content."
     (rename-buffer elfeed-curate-capture-buffer-name t)
     (insert default-string)
     (goto-char (point-max))
-    (let ((title-str (propertize (concat "Annotate '" (elfeed-curate-truncate-string title elfeed-curate-title-length) "'")
+    (let ((title-str (propertize (concat " '" (elfeed-curate-truncate-string title elfeed-curate-title-length) "'")
                                  'face 'mode-line-buffer-id)))
       (setq header-line-format
           (list
+           (elfeed-curate--key-emphasis "Annotate")
            title-str
            " --> Save: '" (elfeed-curate--key-emphasis elfeed-curate-exit-keys)
            "', Delete: '" (elfeed-curate--key-emphasis elfeed-curate-delete-keys)
