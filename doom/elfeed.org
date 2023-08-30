@@ -38,6 +38,8 @@
 - [[https://clojure.org/feed.xml][Clojure Deref]]
 *** [[https://blog.cleancoder.com/atom.xml][The Clean Code Blog]]
 *** [[http://feeds.feedburner.com/ThePragmaticEngineer][The Pragmatic Engineer]]
+*** [[https://seroter.com/feed/][Richard Seroter's Architecture Musings]]
+*** [[https://habr.com/en/rss/articles/?fl=en][Habr]]
 ** Emacs :emacs:
 *** [[https://planet.emacslife.com/atom.xml][Planet Emacslife]]
 -  [[https://irreal.org/blog/?feed=rss2][Irreal]]
