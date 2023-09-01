@@ -48,6 +48,7 @@
 *** [[https://cestlaz.github.io/rss.xml][C'est la Z]]
 *** [[https://systemcrafters.net/rss/news.xml][System Crafters News]]
 *** [[http://funcall.blogspot.com/feeds/posts/default][Abstract Heresies]]
+*** [[https://jeffbowman.writeas.com/feed/][Bowmansarrow]]
 ** Science :science:
 *** [[http://blog.wired.com/wiredscience/rss.xml][Science Latest]]
 -  [[http://feeds.feedburner.com/Scienceroll][ScienceRoll]]
