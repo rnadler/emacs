@@ -40,6 +40,9 @@
 *** [[http://feeds.feedburner.com/ThePragmaticEngineer][The Pragmatic Engineer]]
 *** [[https://seroter.com/feed/][Richard Seroter's Architecture Musings]]
 *** [[https://habr.com/en/rss/articles/?fl=en][Habr]]
+*** [[https://registerspill.thorstenball.com/feed][Register Spill]]
+*** [[https://werat.dev/index.xml][werat.dev]]
+*** [[https://matduggan.com/rss/][matduggan.com]]
 ** Emacs :emacs:
 *** [[https://planet.emacslife.com/atom.xml][Planet Emacslife]]
 -  [[https://irreal.org/blog/?feed=rss2][Irreal]]
