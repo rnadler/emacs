@@ -127,7 +127,7 @@ These are typically non-subject categories."
 (defvar elfeed-curate-org-file-name  "export.org"
   "Generated org file name.")
 
-(defvar elfeed-curate-capture-buffer-name "CAPTURE-annotation.org"
+(defvar elfeed-curate-capture-buffer-name "*elfeed-curate-annotation*"
   "Annotation capture buffer name.")
 
 ;;; Functions:
@@ -306,6 +306,7 @@ Returns the annotation buffer content."
   (with-temp-buffer
     (org-mode)
     (setq buffer-read-only nil)
+    (hide-mode-line-mode)
     (outline-show-all)
     (rename-buffer elfeed-curate-capture-buffer-name t)
     (insert default-string)
@@ -322,6 +323,7 @@ Returns the annotation buffer content."
            "'")))
     (switch-to-buffer (current-buffer))
     (use-local-map (elfeed-curate--annotation-keymap))
+    (font-lock-mode)
     (recursive-edit)
     (buffer-substring-no-properties (point-min) (point-max))))
 
