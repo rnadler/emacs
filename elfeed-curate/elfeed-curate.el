@@ -85,7 +85,7 @@ See the `elfeed-curate-org-content-header--default` function."
   :group 'elfeed-curate
   :type 'string)
 
-(defcustom elfeed-curate-export-dir "~/"
+(defcustom elfeed-curate-export-dir "~/org"
   "Export the org and exported (e.g. html) content to this directory."
   :group 'elfeed-curate
   :type 'directory)
@@ -152,15 +152,17 @@ These are typically non-subject categories."
 
 (defun elfeed-curate--org-file-path ()
   "File path for the generated org file."
-  (concat elfeed-curate-export-dir elfeed-curate-org-file-name))
+  (concat (file-name-as-directory elfeed-curate-export-dir) elfeed-curate-org-file-name))
 
 (defun elfeed-curate-current-date-string ()
-  "The current date string."
-  (format-time-string "%d-%B-%Y" (current-time)))
+  "The current date string as DD-MMM-YYYY."
+  (format-time-string "%d-%b-%Y" (current-time)))
 
 (defun elfeed-curate-export-file-name ()
   "Exported file name."
-  (format "%s%s-export.%s" elfeed-curate-export-dir (elfeed-curate-current-date-string) (elfeed-curate-export-file-extension)))
+  (format "%s%s-export.%s"
+          (file-name-as-directory elfeed-curate-export-dir)
+          (elfeed-curate-current-date-string) (elfeed-curate-export-file-extension)))
 
 (defun elfeed-curate-org-content-header--default (title)
   "Get the default header (options and TITLE) content."
@@ -247,7 +249,7 @@ Show the group count if SHOW-GROUP-COUNT is not nil."
      (push ,entry (plist-get ,groups ,tag))))
 
 (defun elfeed-curate--find-no-group-entries ()
-    "Find all entries that are not part of a group."
+    "Utility to find all entries that are not part of a group."
     (interactive)
     (let ((entry-list ()))
       (with-elfeed-db-visit (entry _)
