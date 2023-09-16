@@ -161,6 +161,10 @@
 
 (setq diredp-hide-details-initially-flag nil)
 (diredp-toggle-find-file-reuse-dir 1)
+;; https://www.emacs.dyerdwelling.family/emacs/emacs--dired-going-up-directories__emacs_linux/
+(define-key dired-mode-map (kbd "M-u") 'dired-up-directory)
+(fset 'file-up-dir (kmacro [?\C-x ?d return ] 0 "%d"))
+(global-set-key (kbd "M-u") 'file-up-dir)
 
 (defun my/disable-line-numbers (&optional _)
   (display-line-numbers-mode -1))

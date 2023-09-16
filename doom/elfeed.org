@@ -43,6 +43,10 @@
 *** [[https://registerspill.thorstenball.com/feed][Register Spill]]
 *** [[https://werat.dev/index.xml][werat.dev]]
 *** [[https://matduggan.com/rss/][matduggan.com]]
+*** [[https://cutlefish.substack.com/feed][The Beautiful Mess]]
+*** [[https://longform.asmartbear.com/index.xml][A Smart Bear]]
+*** [[https://www.serverlesslife.com/rss.xml][Serverless Life]]
+*** [[https://www.elastictier.com/feed][elastic tier newsletter]]
 ** Emacs :emacs:
 *** [[https://planet.emacslife.com/atom.xml][Planet Emacslife]]
 -  [[https://irreal.org/blog/?feed=rss2][Irreal]]
