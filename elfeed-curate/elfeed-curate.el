@@ -113,6 +113,16 @@ These are typically non-subject categories."
   :group 'elfeed-curate
   :type '(repeat symbol))
 
+(defcustom elfeed-curate-hugo-base-dir nil
+  "Base directroy of the hugo project. Used for 'md exports."
+  :group 'elfeed-curate
+  :type 'directory)
+
+(defcustom elfeed-curate-hugo-section "posts"
+  "Hugo section name. Posts will be written to elfeed-curate-hugo-base-dir/content/<section>."
+  :group 'elfeed-curate
+  :type 'string)
+
 ;;; Variables:
 
 (defvar elfeed-curate-exit-keys "C-c C-c"
@@ -158,11 +168,47 @@ These are typically non-subject categories."
   "The current date string as DD-MMM-YYYY."
   (format-time-string "%d-%b-%Y" (current-time)))
 
+(defun elfeed-curate--is-hugo? ()
+  "Processing a Hugo md file."
+  (and (equal elfeed-curate-org-export-backend 'md)
+       elfeed-curate-hugo-base-dir))
+
+(defun elfeed-curate--export-path ()
+  "Export path based on export type and hugo settings."
+  (let ((path (if (elfeed-curate--is-hugo?)
+                  (format "%scontent/%s"
+                          (file-name-as-directory elfeed-curate-hugo-base-dir)
+                          elfeed-curate-hugo-section)
+                  elfeed-curate-export-dir)))
+    (file-name-as-directory path)))
+
 (defun elfeed-curate-export-file-name ()
   "Exported file name."
   (format "%s%s-export.%s"
-          (file-name-as-directory elfeed-curate-export-dir)
+          (elfeed-curate--export-path)
           (elfeed-curate-current-date-string) (elfeed-curate-export-file-extension)))
+
+(defun elfeed-curate--hugo-toml-headers (title)
+  "Simple toml headers for hugo settings with TITLE."
+  (if (null elfeed-curate-hugo-base-dir)
+      ""
+    (format "+++
+title = '%s %s'
+date = '%s'
+draft = false
++++\n"
+            (elfeed-curate-current-date-string) title
+            (format-time-string "%Y-%m-%dT%T%z" (current-time)))))
+
+(defun elfeed-curate--hugo-post-process (file)
+  "Add Hugo toml header to md FILE."
+  (when (elfeed-curate--is-hugo?)
+    (with-temp-buffer
+      (insert-file-contents file)
+      (goto-char (point-min))
+      (insert (elfeed-curate--hugo-toml-headers elfeed-curate-org-title))
+      (write-file file)))
+  file)
 
 (defun elfeed-curate-org-content-header--default (title)
   "Get the default header (options and TITLE) content."
@@ -422,8 +468,10 @@ Use prefix key (`C-u`) to turn off showing the group count if it's enabled."
                   (elfeed-curate-add-org-group group-key (plist-get groups group-key) show-group-count)) group-keys))
         (let ((out-file-name (elfeed-curate-export-file-name)))
           (delete-file out-file-name)
-          (org-export-to-file elfeed-curate-org-export-backend out-file-name)
-          (elfeed-curate--open-in-external-app out-file-name)
+          (org-export-to-file elfeed-curate-org-export-backend out-file-name
+            nil nil nil nil nil #'elfeed-curate--hugo-post-process)
+          (when (not (elfeed-curate--is-hugo?))
+            (elfeed-curate--open-in-external-app out-file-name))
           (message "Exported %d Elfeed groups (%d total entries) to %s"
                    (length group-keys) total-entries out-file-name))))))
 
