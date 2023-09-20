@@ -5,6 +5,8 @@
 *** [[https://www.google.com/alerts/feeds/00675895880009107218/7602843549073834453][Medical Device Software]]
 *** [[https://www.medtechdive.com/feeds/news][MedTechDive]]
 *** [[https://api.medicalfuturist.com/feed/][The Medical Futurist]]
+*** [[https://www.technologyhq.org/category/health-and-care/feed/][Health and Care Archives - TechnologyHQ]]
+
 ** Web :web:
 *** [[http://feeds.feedburner.com/ScottHanselman][Scott Hanselman's Computer Zen]]
 *** [[http://blog.stackoverflow.com/feed/][stackoverflow]]
@@ -47,6 +49,7 @@
 *** [[https://longform.asmartbear.com/index.xml][A Smart Bear]]
 *** [[https://www.serverlesslife.com/rss.xml][Serverless Life]]
 *** [[https://www.elastictier.com/feed][elastic tier newsletter]]
+*** [[https://www.architecture-weekly.com/feed][Architecture Weekly]]
 ** Emacs :emacs:
 *** [[https://planet.emacslife.com/atom.xml][Planet Emacslife]]
 -  [[https://irreal.org/blog/?feed=rss2][Irreal]]

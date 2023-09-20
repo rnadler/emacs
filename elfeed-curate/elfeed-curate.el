@@ -114,7 +114,7 @@ These are typically non-subject categories."
   :type '(repeat symbol))
 
 (defcustom elfeed-curate-hugo-base-dir nil
-  "Base directroy of the hugo project. Used for 'md exports."
+  "Base directory of the Hugo project. Used for 'md exports."
   :group 'elfeed-curate
   :type 'directory)
 
