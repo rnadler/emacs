@@ -59,6 +59,7 @@ This is the elfeed search window showing the starred entries to be exported. The
   [[screenshots/elfeed-curate-export-content.png]]
 
   The exported content (as HTML here) shows how entries are grouped (based on tag name) and some annotation examples.
+  The same content exported to Hugo is here: [[https://bobonmedicaldevicesoftware.com/coi/posts/21-sep-2023-export/][21-Sep-2023 Content of Interest]].
 
 * Prerequisites
 
