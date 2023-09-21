@@ -18,6 +18,11 @@ feed entries. The new functions available to support the curation workflow are:
   edit annotation text to an entry. Annotations can have org mode formatting and
   are saved in the =elfeed= database. This function works in both search and
   show mode.
+
+  When an annotation is added a custom tag (=elfeed-curate-annotation-tag=,
+  default is =ann=) is also added to the entry. This provides an indication in
+  the search window which entries have annotations and can also be used as a
+  filter (=+ann=).
 *** Entry selection
 - =elfeed-curate-toggle-star= (=m= key) is a convenience function that allows
   starring entries from the show buffer. See [[https://pragmaticemacs.wordpress.com/2016/09/16/star-and-unstar-articles-in-elfeed/][Star and unstar articles in elfeed]].
@@ -25,11 +30,26 @@ feed entries. The new functions available to support the curation workflow are:
 - =elfeed-curate-export-entries= (=x= key) exports all entries in the
   =*elfeed-search*= buffer to the desired publication format (see
   =elfeed-curate-org-export-backend=). The newly generated file is also opened
-  with the associated application (e.g. a browser for HTML). The subject categories
-  are based on the entry tag names.
+  with the associated application (e.g. a browser for HTML). Exporting directly
+  to Hugo (Markdown plus front matter) is also supported.
+
+  The subject categories are based on the entry tag names (see details below).
 *** Utilities
 - Use =M-x elfeed-curate-reconcile-annotations= to ensure all database entries
   have the correct annotation tags.
+
+* Content Publication
+My preferred curation workflow is simple.
+1. If an entry has *content of interest*, =star= it and add annotation if desired.
+2. Publish all starred entries.
+3. (optional) Tag all starred entries with a new date-based publication tag
+   (e.g. + pub_DDMMYY). Then remove all of the star tags.
+
+This is the elfeed search window showing starred entries to be exported. The entries with annotations (=ann=) are highlighted.
+  [[screenshots/elfeed-curate-search-content.png]]
+
+The exported content (as HTML) from the selected (starred) entries. This shows how entries are grouped and annotation examples.
+  [[screenshots/elfeed-curate-export-content.png]]
 
 * Prerequisites
 
@@ -97,15 +117,16 @@ killing the buffer), but is optional. Your mileage may vary.
 
 ** Annotation Window
 
-- Annotation edit window
+Annotation edit window:
 [[screenshots/elfeed-curate-ann-window.png]]
 
-- Exported annotation
+Exported annotation:
 [[screenshots/elfeed-curate-ann-export.png]]
 
 The =a= key (=elfeed-curate-edit-entry-annoation=) will display an org-mode
-buffer for editing annotation content. Annotation can be added to an entry in both elfeed search and show mode. Most org-mode formatting will be exported
-properly, but may differ depending on the export format.
+buffer for editing annotation content. Annotation can be added to an entry in
+from both the elfeed search and show windows. Most org-mode formatting will be
+exported properly, but may differ depending on the export format.
 
 The following key combinations are used to exit the annotation buffer:
 
@@ -140,7 +161,7 @@ The =x= key (=elfeed-curate-export-entries=) take the following actions:
 4. The exported content is then displayed.
    * If the format is Markdown (=md=) and =elfeed-curate-hugo-base-dir= is
      specified the exported markdown is written to the specified content section
-     (=elfeed-curate-hugo-section=). The Hugo development server should
+     (=elfeed-curate-hugo-section=). The Hugo development server will
      automatically detect the change and display the new content.
    * In all other cases, the exported content will attempt to be displayed via
      =elfeed-curate--open-in-external-app= (=xdg-open= in most cases).
