@@ -38,18 +38,26 @@ feed entries. The new functions available to support the curation workflow are:
 - Use =M-x elfeed-curate-reconcile-annotations= to ensure all database entries
   have the correct annotation tags.
 
-* Content Publication
-My preferred curation workflow is simple.
-1. If an entry has *content of interest*, =star= it and add annotation if desired.
-2. Publish all starred entries.
-3. (optional) Tag all starred entries with a new date-based publication tag
-   (e.g. + pub_DDMMYY). Then remove all of the star tags.
+* Curation Workflow
+My preferred workflow is as follows:
+1. If an entry has *content of interest*, =star= (=m= key) it and add annotation
+   (=a= key) if desired.
+2. Publish all starred entries (=x= key). This can be repeated as often as is
+   needed to ensure that the exported content is to your liking.
+3. (optional) Previously published entries can be tracked by tagging all starred
+   entries with a new date-based publication tag (e.g. =+ pub_DDMMYY=).
+4. Remove all of the =star= tags.
 
-This is the elfeed search window showing starred entries to be exported. The entries with annotations (=ann=) are highlighted.
+That's it. The Elfeed filtering capabilities can provide many other entry
+selection criteria (e.g. time-based), but so far I've found the workflow above
+to be simple and concise.
+
+This is the elfeed search window showing the starred entries to be exported. The entries with annotations (=ann=) are highlighted.
+
   [[screenshots/elfeed-curate-search-content.png]]
-
-The exported content (as HTML) from the selected (starred) entries. This shows how entries are grouped and annotation examples.
   [[screenshots/elfeed-curate-export-content.png]]
+
+  The exported content (as HTML) shows how entries are grouped (based on tag name) and some annotation examples.
 
 * Prerequisites
 
@@ -121,7 +129,8 @@ Annotation edit window:
 [[screenshots/elfeed-curate-ann-window.png]]
 
 Exported annotation:
-[[screenshots/elfeed-curate-ann-export.png]]
+
+[[screenshots/elfeed-curate-ann-export.png]]xs
 
 The =a= key (=elfeed-curate-edit-entry-annoation=) will display an org-mode
 buffer for editing annotation content. Annotation can be added to an entry in
