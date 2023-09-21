@@ -237,7 +237,9 @@ draft = false
     (if annotation annotation "")))
 
 (defun elfeed-curate--show-entry (msg entry tag)
-  "DEBUG: Show an ENTRY with MSG."
+  "DEBUG: Show an ENTRY with MSG. Use:
+(add-hook 'elfeed-tag-hooks (lambda (entry tag) (elfeed-curate--show-entry \"Add tag\" (car entry) tag)))
+(add-hook 'elfeed-untag-hooks  (lambda (entry tag) (elfeed-curate--show-entry \"Remove tag\" (car entry) tag)))"
   (let ((title (if (null entry) "?" (elfeed-entry-title entry)))
         (tags  (if (null entry) "?" (elfeed-entry-tags entry))))
     (message "%s %s: %s tags: %s" msg tag title tags)))

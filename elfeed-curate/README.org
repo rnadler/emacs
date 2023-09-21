@@ -20,18 +20,19 @@ feed entries. The new functions available to support the curation workflow are:
   show mode.
 
   When an annotation is added a custom tag (=elfeed-curate-annotation-tag=,
-  default is =ann=) is also added to the entry. This provides an indication in
-  the search window which entries have annotations and can also be used as a
-  filter (=+ann=).
+  default is =ann=) is also added to the entry. This shows which entries have
+  annotations in the search window and can also be used as a filter (=s +ann=).
 *** Entry selection
 - =elfeed-curate-toggle-star= (=m= key) is a convenience function that allows
   starring entries from the show buffer. See [[https://pragmaticemacs.wordpress.com/2016/09/16/star-and-unstar-articles-in-elfeed/][Star and unstar articles in elfeed]].
-*** Publication
-- =elfeed-curate-export-entries= (=x= key) exports all entries in the
+  =elfeed-curate-star-tag= (default is =star=) can be used to change the tag
+  name.
+*** Publication (Exporting)
+- =elfeed-curate-export-entries= (=x= key) exports entries in the
   =*elfeed-search*= buffer to the desired publication format (see
   =elfeed-curate-org-export-backend=). The newly generated file is also opened
   with the associated application (e.g. a browser for HTML). Exporting directly
-  to Hugo (Markdown plus front matter) is also supported.
+  to Hugo (Markdown plus Front matter) is also supported.
 
   The subject categories are based on the entry tag names (see details below).
 *** Utilities
@@ -42,7 +43,7 @@ feed entries. The new functions available to support the curation workflow are:
 My preferred workflow is as follows:
 1. If an entry has *content of interest*, =star= (=m= key) it and add annotation
    (=a= key) if desired.
-2. Publish all starred entries (=x= key). This can be repeated as often as is
+2. Export all starred entries (=x= key). This can be repeated as often as is
    needed to ensure that the exported content is to your liking.
 3. (optional) Previously published entries can be tracked by tagging all starred
    entries with a new date-based publication tag (e.g. =+ pub_DDMMYY=).
@@ -57,7 +58,7 @@ This is the elfeed search window showing the starred entries to be exported. The
   [[screenshots/elfeed-curate-search-content.png]]
   [[screenshots/elfeed-curate-export-content.png]]
 
-  The exported content (as HTML) shows how entries are grouped (based on tag name) and some annotation examples.
+  The exported content (as HTML here) shows how entries are grouped (based on tag name) and some annotation examples.
 
 * Prerequisites
 
@@ -118,9 +119,18 @@ The [[https://github.com/doomemacs/doomemacs][Doom]] configuration would be:
   (define-key elfeed-show-mode-map   "m" #'elfeed-curate-toggle-star)
   (define-key elfeed-show-mode-map   "q" #'kill-buffer-and-window))
 #+end_src
-The show window =q= key override with =kill-buffer-and-window= seems to behave better than the default behavior (just
-killing the buffer), but is optional. Your mileage may vary.
+I had issues closing the show window after the annotation buffer was displayed
+there. Not sure what the root cause was (is), but overriding the =q= key with
+=kill-buffer-and-window= seems to have solved the problem. This needs more
+investigation.
 
+
+*** Disclaimers
+
+- I have only tested this with Emacs 29.1, both bare-bones and with Doom. The
+  code is compatible back to Emacs 25.1 and Elfeed is the only dependency so
+  there's a good chance this will work out of the box on most modern systems.
+-
 * Usage
 
 ** Annotation Window
@@ -130,12 +140,15 @@ Annotation edit window:
 
 Exported annotation:
 
-[[screenshots/elfeed-curate-ann-export.png]]xs
+[[screenshots/elfeed-curate-ann-export.png]]
 
 The =a= key (=elfeed-curate-edit-entry-annoation=) will display an org-mode
-buffer for editing annotation content. Annotation can be added to an entry in
-from both the elfeed search and show windows. Most org-mode formatting will be
-exported properly, but may differ depending on the export format.
+buffer for managing annotation content. Annotation can be added, edited, and
+deleted for an entry from both the elfeed search and show windows. The
+annotation tag (=ann=) will be added or removed automatically.
+
+Most org-mode formatting will be exported properly, but may differ depending on
+the export format.
 
 The following key combinations are used to exit the annotation buffer:
 
@@ -147,15 +160,16 @@ The following key combinations are used to exit the annotation buffer:
 
 ** Export Behavior
 
-The =x= key (=elfeed-curate-export-entries=) take the following actions:
+The =x= key (=elfeed-curate-export-entries=) takes the following actions:
 
-1. Takes all displayed or highlighted search entries and groups them based on their tagging.
+1. Groups all displayed or selected search entries based on their tagging.
    * Tags are converted to group headings by replacing =_= characters with a
-     space and capitalizing all words. E.g. the =med_dev= tag will become "Med
-     Dev".
+     space and capitalizing all words. E.g. the =med_dev= tag becomes "Med Dev".
+   * If one or more authors are available from the feed, they will be listed
+     next to the link in parentheses: (Author 1, Author 2, ...).
    * An entry will only be displayed in one group. If the entry is in multiple
      groups, the other groups will be shown in bold brackets (*[Group 2, Group
-     3,...]*).
+     3,...]*) next to the exported link.
    * Use =elfeed-curate-no-group-tag= to determine how entries that do not
      belong to any group are treated. By default, they are added to the "No
      Category" group.
@@ -163,13 +177,13 @@ The =x= key (=elfeed-curate-export-entries=) take the following actions:
      prefix argument is used before the export (=C-u x=), the count will not be
      shown. The count can be permanently removed by setting
      =elfeed-curate-show-group-count= to =nil=.
-2. This content is exported to an =org= file (=elfeed-curate-export-dir=/export.org).
+2. The grouped content is exported to an =org= file (=elfeed-curate-export-dir=/export.org).
    * Use =elfeed-curate-org-options= to specify custom org file options.
-3. This =org= (export.org) content is then convert to the desired export format
-   specified by =elfeed-curate-org-export-backend=.
+3. The =export.org= file is then converted to the desired export format specified by
+   =elfeed-curate-org-export-backend=.
 4. The exported content is then displayed.
    * If the format is Markdown (=md=) and =elfeed-curate-hugo-base-dir= is
-     specified the exported markdown is written to the specified content section
+     specified the exported Markdown is written to the specified content section
      (=elfeed-curate-hugo-section=). The Hugo development server will
      automatically detect the change and display the new content.
    * In all other cases, the exported content will attempt to be displayed via
