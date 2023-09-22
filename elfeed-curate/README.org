@@ -43,15 +43,16 @@ feed entries. The new functions available to support the curation workflow are:
 My preferred workflow is as follows:
 1. If an entry has *content of interest*, =star= (=m= key) it and add annotation
    (=a= key) if desired.
-2. Export all starred entries (=x= key). This can be repeated as often as is
-   needed to ensure that the exported content is to your liking.
+2. Select all starred entries (=s +star=) and export them (=x= key). This can be
+   repeated as often as is needed to ensure that the exported content is to your
+   liking.
 3. (optional) Previously published entries can be tracked by tagging all starred
    entries with a new date-based publication tag (e.g. =+ pub_DDMMYY=).
-4. Remove all of the =star= tags.
+4. Remove all of the star tags (=m= key or =- star=).
 
 That's it. The Elfeed filtering capabilities can provide many other entry
 selection criteria (e.g. time-based), but so far I've found the workflow above
-to be simple and concise.
+to be simple and efficient.
 
 This is the elfeed search window showing the starred entries to be exported. The entries with annotations (=ann=) are highlighted.
 
@@ -63,7 +64,7 @@ This is the elfeed search window showing the starred entries to be exported. The
 
 * Prerequisites
 
-This package depends on =elfeed= being installed.
+This package only depends on =org= and =elfeed= being installed.
 
 * Installation
 
@@ -129,9 +130,11 @@ investigation.
 *** Disclaimers
 
 - I have only tested this with Emacs 29.1, both bare-bones and with Doom. The
-  code is compatible back to Emacs 25.1 and Elfeed is the only dependency so
-  there's a good chance this will work out of the box on most modern systems.
--
+  code is compatible back to Emacs 25.1 and Org/Elfeed are the only
+  dependencies, so there's a good chance this will work out of the box on most
+  modern systems.
+- Testing of the export backends has been limited to mostly HTML and Markdown.
+
 * Usage
 
 ** Annotation Window
@@ -203,6 +206,7 @@ Here are the variables that can be customized:
 | =elfeed-curate-no-group-tag=                | 'no_category                                                               | Tag used to indicate that an entry has no group tag. The entry will be added to this group in the export. Set to nil to not display these entries.            |
 | =elfeed-curate-org-content-header-function= | #'elfeed-curate-org-content-header--default                                | Function used to create the header (options and title) content. The default is for HTML output.                                                               |
 | =elfeed-curate-org-title=                   | Content of Note                                                            | The TITLE part of the '<Date> <Title>' format. See the =elfeed-curate-org-content-header--default= function.                                                  |
+| =elfeed-curate-date-format=                 | "%d-%b-%Y"                                                                 | The date format used in the title.                                                                                                                            |
 | =elfeed-curate-org-options=                 | #html-style:nil toc:nil num:nil f:nil html-postamble:nil html-preamble:nil | Set org document format options. Default is for an HTML export: no styles, TOC, section numbering, footer.                                                    |
 | =elfeed-curate-export-dir=                  | ~/org                                                                      | Export the org and html content to this directory.                                                                                                            |
 | =elfeed-curate-org-export-backend=          | 'html                                                                      | Select export format. Can be one of:                                                                                                                          |

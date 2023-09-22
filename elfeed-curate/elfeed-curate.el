@@ -80,6 +80,11 @@ See the `elfeed-curate-org-content-header--default` function."
   :group 'elfeed-curate
   :type 'string)
 
+(defcustom elfeed-curate-date-format "%d-%b-%Y"
+  "The date format used in the title."
+  :group 'elfeed-curate
+  :type 'string)
+
 (defcustom elfeed-curate-org-options "html-style:nil toc:nil num:nil f:nil html-postamble:nil html-preamble:nil"
   "Set format options. Default is for an HTML export: no styles, TOC, section numbering, footer."
   :group 'elfeed-curate
@@ -165,8 +170,8 @@ These are typically non-subject categories."
   (concat (file-name-as-directory elfeed-curate-export-dir) elfeed-curate-org-file-name))
 
 (defun elfeed-curate-current-date-string ()
-  "The current date string as DD-MMM-YYYY."
-  (format-time-string "%d-%b-%Y" (current-time)))
+  "The current date string."
+  (format-time-string elfeed-curate-date-format (current-time)))
 
 (defun elfeed-curate--is-hugo? ()
   "Processing a Hugo md file."
@@ -225,7 +230,7 @@ draft = false
 
 (defun elfeed-curate-concat-other-groups (entry group)
   "Return a string of all other groups (not GROUP) concatenated for the given ENTRY."
-  (let* ((tags (elfeed-entry-tags entry))
+  (let* ((tags (copy-sequence (elfeed-entry-tags entry)))
          (tags (delq group tags))
          (tags (cl-remove-if (lambda (tag) (memq tag elfeed-curate-group-exclude-tag-list)) tags)))
     (mapconcat
