@@ -94,7 +94,16 @@
        (string-replace "&quot;" "\"")))
 
 ;; (my/elfeed-clean-title "<b>USA&#39;s</b> Merative &amp; That &lt;code&gt; &quot;Quoted&quot;")
-;; (setq elfeed-curate-org-export-backend 'md)
+;; (setq elfeed-curate-org-export-backend 'html)
+
+;; (with-current-buffer (elfeed-search-buffer)
+;;   (let* ((groups (elfeed-curate-group-org-entries elfeed-search-entries))
+;;         (group-keys (elfeed-curate-plist-keys groups)))
+;;     (with-current-buffer (generate-new-buffer "*curate-temp*")
+;;       (mapc (lambda (group-key) (elfeed-curate-add-org-group group-key (plist-get groups group-key) t)) group-keys))
+;;     ;;(elfeed-curate--group-entries-count groups)
+;;     ))
+
 ;; Hugo deploy:
 ;; $ sudo apt-get install ncftp
 ;; $ hugo
@@ -138,11 +147,12 @@
   ;;(add-hook 'elfeed-untag-hooks  (lambda (entry tag) (elfeed-curate--show-entry   "Remove tag" (car entry) tag)))
 
   (add-hook 'elfeed-new-entry-hook #'my/elfeed-clean-entry)
+  ;;(setq elfeed-curate-org-export-backend 'md)
   (setq elfeed-curate-hugo-base-dir "~/Projects/content-of-interest/")
 )
 
 ;; elfeed-curate (WIP)
-(load! "~/Projects/emacs/elfeed-curate/elfeed-curate.el")
+(load! "~/Projects/elfeed-curate/elfeed-curate.el")
 
 ;; Sunrise Commander
 (after! sunrise
