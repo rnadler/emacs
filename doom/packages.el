@@ -75,3 +75,4 @@
 (package! elfeed-webkit)
 ;;(package! elfeed-curate)
 (unpin! (:lang clojure))
+(unpin! (:app irc))
