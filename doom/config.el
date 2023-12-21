@@ -91,6 +91,7 @@
 
 (defun my-nickserv-password (server)
   (my-fetch-password :user "bobn" :machine "irc.libera.chat"))
+
 ;; machine irc.libera.chat login bobn password Jb0! port 6667
 ;; (my-nickserv-password "")
 
@@ -102,7 +103,7 @@
       :nick "bobn"
       :nickserv-nick "bobn"
       :nickserv-password my-nickserv-password
-      :channels ("#emacs" "#lobsters"))))
+      :channels ("#lobsters"))))
 
 ;; Elfeed
 ;; https://github.com/skeeto/elfeed/issues/292
@@ -273,6 +274,49 @@ If FRAME is omitted or nil, use currently selected frame."
 
 ;; Beacon
 (beacon-mode 1)
+
+;; Treesitter support
+;; https://www.masteringemacs.org/article/how-to-get-started-tree-sitter
+(setq treesit-language-source-alist
+   '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+     (cmake "https://github.com/uyha/tree-sitter-cmake")
+     (java "https://github.com/tree-sitter/tree-sitter-java")
+     (ruby "https://github.com/tree-sitter/tree-sitter-ruby")
+     (css "https://github.com/tree-sitter/tree-sitter-css")
+     (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
+     (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+     (html "https://github.com/tree-sitter/tree-sitter-html")
+     (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+     (json "https://github.com/tree-sitter/tree-sitter-json")
+     (make "https://github.com/alemuller/tree-sitter-make")
+     (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+     (python "https://github.com/tree-sitter/tree-sitter-python")
+     (clojure "https://github.com/sogaiu/tree-sitter-clojure")
+     (toml "https://github.com/tree-sitter/tree-sitter-toml")
+     (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+     (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+     (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+
+;; (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
+
+(setq major-mode-remap-alist
+ '((yaml-mode . yaml-ts-mode)
+   (bash-mode . bash-ts-mode)
+   ;; (clojure-mode . clojure-ts-mode)
+   ;; (clojurescript-mode . clojure-ts-mode)
+   ;; (emacs-lisp-mode . emacs-lisp-ts-mode)
+   ;; (web-mode . html-ts-mode)
+   (dockerfile-mode . dockerfile-ts-mode)
+   (sh-mode . bash-ts-mode)
+   (ruby-mode . ruby-ts-mode)
+   (js2-mode . js-ts-mode)
+   (rjsx-mode . js-ts-mode)
+   (java-mode . java-ts-mode)
+   (typescript-mode . typescript-ts-mode)
+   (typescript-tsx-mode . tsx-ts-mode)
+   (json-mode . json-ts-mode)
+   (css-mode . css-ts-mode)
+   (python-mode . python-ts-mode)))
 
 ;; Org-roam v1
 ;; https://org-roam.github.io/org-roam/manual/Installation-_00281_0029.html#Installation-_00281_002
