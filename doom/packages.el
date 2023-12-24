@@ -73,6 +73,7 @@
 (package! org-modern-indent :recipe (:host github :repo "jdtsmith/org-modern-indent"))
 (package! dired-du)
 (package! elfeed-webkit)
+(package! clojure-ts-mode)
 ;;(package! elfeed-curate)
 (unpin! (:lang clojure))
 (unpin! (:app irc))

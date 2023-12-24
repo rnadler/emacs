@@ -291,7 +291,6 @@ If FRAME is omitted or nil, use currently selected frame."
      (make "https://github.com/alemuller/tree-sitter-make")
      (markdown "https://github.com/ikatyang/tree-sitter-markdown")
      (python "https://github.com/tree-sitter/tree-sitter-python")
-     (clojure "https://github.com/sogaiu/tree-sitter-clojure")
      (toml "https://github.com/tree-sitter/tree-sitter-toml")
      (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
      (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
@@ -302,8 +301,8 @@ If FRAME is omitted or nil, use currently selected frame."
 (setq major-mode-remap-alist
  '((yaml-mode . yaml-ts-mode)
    (bash-mode . bash-ts-mode)
-   ;; (clojure-mode . clojure-ts-mode)
-   ;; (clojurescript-mode . clojure-ts-mode)
+   (clojure-mode . clojure-ts-mode)
+   (clojurescript-mode . clojurescript-ts-mode)
    ;; (emacs-lisp-mode . emacs-lisp-ts-mode)
    ;; (web-mode . html-ts-mode)
    (dockerfile-mode . dockerfile-ts-mode)
