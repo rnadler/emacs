@@ -246,7 +246,10 @@ If FRAME is omitted or nil, use currently selected frame."
 (after! org
   (load! "./org-config.el")
   (setq org-execute-file-search-functions nil
-        org-agenda-current-time-string "⬅ now ─────────────────────────────────────────────────"))
+        org-agenda-current-time-string "⬅ now ─────────────────────────────────────────────────")
+  (org-link-set-parameters  "copy"
+                            :follow (lambda (link) (kill-new link))
+                            :export (lambda (_ desc &rest _) desc)))
 (after! org-modern
   ;; (setq org-modern-hide-stars nil) ; adds extra indentation
   ;; (setq org-modern-table nil)
