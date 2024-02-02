@@ -77,33 +77,14 @@
   (add-hook 'magit-process-find-password-functions
             'magit-process-password-auth-source))
 
-;; IRC
-
-(defun my-fetch-password (&rest params)
-  (require 'auth-source)
-  (let ((match (car (apply 'auth-source-search params))))
-    (if match
-        (let ((secret (plist-get match :secret)))
-          (if (functionp secret)
-              (funcall secret)
-            secret))
-      (error "Password not found for %S" params))))
-
-(defun my-nickserv-password (server)
-  (my-fetch-password :user "bobn" :machine "irc.libera.chat"))
-
-;; machine irc.libera.chat login bobn password Jb0! port 6667
-;; (my-nickserv-password "")
-
-(after! circe
-  (set-irc-server! "Libera Chat"
-    `(:tls t
-      :host "irc.libera.chat"
-      :port 6697
-      :nick "bobn"
-      :nickserv-nick "bobn"
-      :nickserv-password my-nickserv-password
-      :channels ("#lobsters"))))
+;; Copilot
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
 ;; Elfeed
 ;; https://github.com/skeeto/elfeed/issues/292

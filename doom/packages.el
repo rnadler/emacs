@@ -76,4 +76,4 @@
 (package! clojure-ts-mode)
 ;;(package! elfeed-curate)
 (unpin! (:lang clojure))
-(unpin! (:app irc))
+(package! copilot :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el" "dist")))
