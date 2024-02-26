@@ -18,24 +18,32 @@
           (progn
             (message "field: %s mods=%s" (treesit-node-text n)
                      (mapconcat (lambda (mod) (treesit-node-text (cdr mod)))
-                                (treesit-query-capture (treesit-node-parent node) mod-query) ", ")
-                     )
-            ;; (message "field: %s sibs=%s" (treesit-node-text n)
-            ;;          (prin1-to-string (treesit-node-children (treesit-node-parent node))))
+                                (treesit-query-capture (treesit-node-parent node) mod-query) ", "))
             (cl-return))
-          )))
-    )
-  )
+          )))))
 
 (defun parse-class (class-nodes)
   (message "class child count = %d" (treesit-node-child-count class-nodes))
   (cl-dolist (child (treesit-node-children class-nodes))
     (java-field-name (treesit-node-children child))))
 
-(let* ((parser (treesit-parser-create 'java (get-buffer
-                                             "FlowGenSummaryDataProperties.java"  ;; "FlowGenSettings.java"
-                                             )))
-       (root-node (treesit-parser-root-node parser))
-       (class-nodes (treesit-search-subtree root-node "class_body")))
-  (parse-class class-nodes)
-  )
+(defun parse-buffer (buffer)
+  (let* ((parser (treesit-parser-create 'java buffer))
+         (root-node (treesit-parser-root-node parser))
+         (class-nodes (treesit-search-subtree root-node "class_body")))
+    (parse-class class-nodes)))
+
+;; ------------------------------------------------------------
+;; Execute the parser
+
+(setq java-file
+      "FlowGenSettings.java"
+      ;; "FlowGenSummaryDataProperties.java"
+      ;; "FlowGenClimateSummaryDataProperties.java"
+      ;; "FlowGenVentilatorSettings.java"
+      )
+
+(let ((buffer (get-buffer java-file)))
+  (if (null buffer)
+      (message "%s buffer not found!" java-file)
+    (parse-buffer buffer)))
