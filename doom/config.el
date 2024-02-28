@@ -96,6 +96,11 @@
   (->> title
        (string-replace "<b>" "")
        (string-replace "</b>" "")
+       (string-replace "<sub>" "")
+       (string-replace "</sub>" "")
+       (string-replace "<i>" "")
+       (string-replace "</i>" "")
+       (string-replace "&#xa0;" " ")
        (string-replace "&#39;" "'")
        (string-replace "&amp;" "&")
        (string-replace "&lt;" "<")
