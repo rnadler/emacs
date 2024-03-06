@@ -306,6 +306,35 @@ If FRAME is omitted or nil, use currently selected frame."
    (css-mode . css-ts-mode)
    (python-mode . python-ts-mode)))
 
+;; Python scons support
+(add-to-list 'auto-mode-alist '("SConstruct" . python-mode))
+(add-to-list 'auto-mode-alist '("SConscript" . python-mode))
+
+;; https://www.emacs.dyerdwelling.family/emacs/20240305160708-emacs--unified-interface-for-switching-contexts/
+;; 05-Mar-2024
+(defun my/switch-to-thing ()
+  "Switch to a buffer, open a recent file, jump to a bookmark, or change the theme from a unified interface."
+  (interactive)
+  (let* ((buffers (mapcar #'buffer-name (buffer-list)))
+         (recent-files recentf-list)
+         (bookmarks (bookmark-all-names))
+         (themes (custom-available-themes))
+         (all-options (append buffers recent-files bookmarks
+                              (mapcar (lambda (theme) (concat "Theme: " (symbol-name theme))) themes)))
+         (selection (completing-read "Switch to: "
+                                     (lambda (str pred action)
+                                       (if (eq action 'metadata)
+                                           '(metadata . ((category . file)))
+                                         (complete-with-action action all-options str pred)))
+                                     nil t nil 'file-name-history)))
+    (pcase selection
+      ((pred (lambda (sel) (member sel buffers))) (switch-to-buffer selection))
+      ((pred (lambda (sel) (member sel bookmarks))) (bookmark-jump selection))
+      ((pred (lambda (sel) (string-prefix-p "Theme: " sel)))
+       (load-theme (intern (substring selection (length "Theme: "))) t))
+      (_ (find-file selection)))))
+(global-set-key (kbd "C-x t") 'my/switch-to-thing)
+
 ;; Org-roam v1
 ;; https://org-roam.github.io/org-roam/manual/Installation-_00281_0029.html#Installation-_00281_002
 ;; WSL chrome startup
