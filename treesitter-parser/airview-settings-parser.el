@@ -1,5 +1,5 @@
 
-;; Use treesitter to parse Java source code and extract field names and properties
+;; Use treesitter to parse Java source code and extract ECO database field names and properties
 
 (require 'cl-lib)
 (require 'json)
@@ -26,31 +26,50 @@
 
 ;; (to-snakecase "cheyneStokesRespirationMinutes")
 
+(defun ncp-unique (ncp-list)
+  "Return a list of unique NCP name elements for NCP-LIST."
+  (let ((ncp-unique ()))
+    (dolist (ncp ncp-list)
+      (dolist (suffix (reverse (split-string ncp "\\.")))
+        (unless (member suffix ncp-unique)
+          (push suffix ncp-unique))))
+    ncp-unique))
+
+(defun ncp-unique-list (ncp-list)
+  "List of unique NCP VAL/SET names from NCP-LIST."
+  (let ((selected '("Set" "Val"))
+        (lst (reverse (ncp-unique ncp-list)))
+        (rv ()))
+    (cl-dolist (x lst)
+      (if (member x selected)
+          (let ((rstr (mapconcat #'identity rv "."))
+                (sel (seq-filter (lambda (v) (member v lst)) selected)))
+            (cl-return (mapcar (lambda (y) (concat y "." rstr)) sel))))
+          (push x rv)))
+    )
+
+;; (ncp-unique-list '("Val.AI"))
+;; (ncp-unique-list '("iVAPS.Set.AutoEPAP" "iVAPS.Val.AutoEPAP" "Val.AutoEPAP"))
+;; (ncp-unique-list '("iVAPS.Set.MaxPS" "iVAPS.Val.MaxPS" "Val.iVAPS.MaxPS"))
+;; (ncp-unique-list '("CPAP.Set.Ramp.RampEnable" "CPAP.Val.Ramp.RampEnable" "AutoSet.Set.Ramp.RampEnable" "AutoSet.Val.Ramp.RampEnable"))
+
+(defun find-values (regex string)
+  "Return all matches of REGEX in STRING."
+  (let ((matches ()))
+    (while (string-match regex string)
+      (push (match-string 1 string) matches)
+      (setq string (substring string (match-end 0))))
+    (reverse matches)))
+
 (defun ecp-values (mods-str)
   "Get the ECP values"
-  (let ((string mods-str)
-        (regex "value = \"\\(.*\\)\",")
-        (rv '()))
-    (while (string-match regex string)
-      (add-to-list 'rv (substring (match-string 1 string) 0 3))
-      (setq string (substring string (match-end 0))))
-    rv))
+  (find-values "value = \"\\(.*?\\)\"" mods-str))
 
-(defun remove-char-from-string (char string)
-  "Remove CHAR from STRING."
-  (replace-regexp-in-string (regexp-quote char) "" string))
+;; (ecp-values "@AcronymMap(value = \"AFC\", clazz = SettingsComfortMode.class, method = \"fromSettingsComfortMode\")")
 
 (defun  ncp-suffixes(mods-str)
   "Get the NCP suffixes from MODS-STR"
-  (let ((regex "'.*Val\\.\\(.*\\)'")
-        (string mods-str)
-        (pos 0)        ; string marker
-        (matches ()))  ; return list
-    (while (string-match regex string pos)
-      (push (remove-char-from-string "'" (match-string 0 string)) matches)
-      (setq pos (match-end 0)))
-    (setq matches (reverse matches))
-    matches))
+  (ncp-unique-list (find-values "'\\(.*?\\)'" mods-str)))
 
 ;; (ncp-suffixes "@Enumerated(STRING), @JsonPathProperty(path = \"$.['iVAPS.Set.AutoEPAP', 'iVAPS.Val.AutoEPAP', 'Val.AutoEPAP']\"),")
 ;; (ncp-suffixes "@JsonPathProperty(path = \"$.['iVAPS.Set.MaxPS', 'iVAPS.Val.MaxPS', 'Val.iVAPS.MaxPS']\"),")
@@ -58,7 +77,6 @@
 ;; (ncp-suffixes "@JsonPathProperty(path = \"$.['Val.Leak.50', 'Val.LeakVented.50']\"),")
 ;; (ncp-suffixes "@JsonPathProperty(path = \"$.['Val.RespRate.5']\"),")
 ;; (ncp-suffixes "@JsonPathProperty(path = \"$.['Val.Leak.Max']\"),")
-
 
 (defun field-to-column (field mods-str)
   "Get the @Column name attribute from MODS-STR or the snakecase FIELD name"
@@ -70,6 +88,7 @@
 ;; (field-to-column "defaultName" " @column(name = \"snake_case_name\")")
 
 (defun java-field-name (nodes)
+  "Return a list of field attribute from NODES. Return nil if no NCP or ECP is found."
   (cl-dolist (node nodes)
     (let ((qres (treesit-query-capture node field-query)))
       (when (not (null qres))
@@ -92,8 +111,8 @@
           )))))
 
 (defun parse-class (class-nodes)
-  (message "class child count = %d" (treesit-node-child-count class-nodes))
-  (mapcar (lambda (child) (java-field-name (treesit-node-children child))) (treesit-node-children class-nodes)))
+    (mapcar (lambda (child) (java-field-name (treesit-node-children child)))
+            (treesit-node-children class-nodes)))
 
 (defun parse-buffer (buffer)
   (let* ((parser (treesit-parser-create 'java buffer))
@@ -115,24 +134,33 @@
 
 (setq java-files
       '(
-       ("FlowGenSettings.java" . 'flow_gen_settings)
-       ("FlowGenVentilatorSettings.java" . 'flow_gen_ventilatory_settings)
-       ("FlowGenSummaryDataProperties.java" . 'flow_gen_summary_data)
-       ("FlowGenClimateSummaryDataProperties.java" . 'flow_gen_summary_data)
+       ("FlowGenSettings.java" .                     "flow_gen_settings")
+       ("FlowGenVentilatorSettings.java" .           "flow_gen_ventilatory_settings")
+       ("FlowGenSummaryDataProperties.java" .        "flow_gen_summary_data")
+       ("FlowGenClimateSummaryDataProperties.java" . "flow_gen_summary_data")
       ))
 
 (defun open-file-buffer (fpath file-name)
   (when (null (get-buffer file-name))
     (find-file-noselect (concat fpath file-name))))
 
-(dolist (f java-files) (open-file-buffer java-classes-dir (car f)))
-
-(setq java-file (car (car java-files))) ;; settings
-(setq summary-java-file (car (nth 2 java-files))) ;; summary data
-(setq vent-java-file (car (nth 1 java-files))) ;; vent data
-
-(let ((buffer (get-buffer java-file)))
-  (if (null buffer)
-      (message "%s buffer not found!" java-file)
-    (write-json-to-file (delq nil (parse-buffer buffer)) "test.json")
+(defun process-java-file (java-file)
+  (let* ((file-name (car java-file))
+         (_ (open-file-buffer java-classes-dir file-name))
+         (buffer (get-buffer file-name)))
+    (if (null buffer)
+        (message "%s buffer not found!" file-name)
+      (delq nil (parse-buffer buffer)))
     ))
+
+(defun process-all-java-files ()
+  (let ((data ()))
+    (dolist (f java-files)
+      (let ((table-name (cons 'table (cdr f)))
+            (d (process-java-file f)))
+        (setq d (mapcar (lambda (e) (push table-name e)) d))
+        (setq data (append data d))))
+    (message "Wrote %d records to test.json" (length data))
+    (write-json-to-file data "test.json")))
+
+(process-all-java-files)
