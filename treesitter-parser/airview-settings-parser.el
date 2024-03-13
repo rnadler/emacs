@@ -138,7 +138,7 @@
 (setq java-files
       '(
        ("FlowGenSettings.java" .                     "flow_gen_settings")
-       ("FlowGenVentilatorSettings.java" .           "flow_gen_ventilatory_settings")
+       ("FlowGenVentilatorSettings.java" .           "flow_gen_ventilator_settings")
        ("FlowGenSummaryDataProperties.java" .        "flow_gen_summary_data")
        ("FlowGenClimateSummaryDataProperties.java" . "flow_gen_summary_data")
       ))
