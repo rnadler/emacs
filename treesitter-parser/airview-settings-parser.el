@@ -19,12 +19,14 @@
 (defun to-snakecase (str)
   "Convert camelCase string STR to snake_case."
   (mapconcat #'(lambda (char)
-                 (if (eq (upcase char) char)
-                     (concat "_" (downcase (char-to-string char)))
-                   (char-to-string char)))
+                 (let ((s (char-to-string char)))
+                   (if (and (not (string-match-p "[0-9]" s)) (eq (upcase char) char))
+                       (concat "_" (downcase s))
+                     s)))
              (string-to-list str) ""))
 
 ;; (to-snakecase "cheyneStokesRespirationMinutes")
+;; (to-snakecase "expiratoryPressure95thPercentile")
 
 (defun ncp-unique (ncp-list)
   "Return a list of unique NCP name elements for NCP-LIST."
@@ -131,6 +133,7 @@
 ;; Execute the parser
 
 (setq java-classes-dir "./flowGenClasses/")
+(setq output-file "eco-db-data.json")
 
 (setq java-files
       '(
@@ -160,7 +163,7 @@
             (d (process-java-file f)))
         (setq d (mapcar (lambda (e) (push table-name e)) d))
         (setq data (append data d))))
-    (message "Wrote %d records to test.json" (length data))
-    (write-json-to-file data "test.json")))
+    (message "Wrote %d records to %s" (length data) output-file)
+    (write-json-to-file data output-file)))
 
 (process-all-java-files)
