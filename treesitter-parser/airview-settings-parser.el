@@ -1,5 +1,6 @@
 
-;; Use treesitter to parse Java source code and extract ECO database field names and properties
+;; Use Emacs treesitter to parse Java source code and extract ECO database field names and properties
+;; Usage: M-x eval-buffer
 
 (require 'cl-lib)
 (require 'json)
@@ -89,8 +90,19 @@
 
 ;; (field-to-column "defaultName" " @column(name = \"snake_case_name\")")
 
+(defun field-list (field type column ncp ecp &optional table)
+  "Return a list of field attributes"
+  (let ((rv (list (cons 'field field)
+                  (cons 'type type)
+                  (cons 'column column)
+                  (cons 'ncp ncp)
+                  (cons 'ecp ecp))))
+    (when table (push table rv))
+    rv))
+
 (defun java-field-name (nodes)
-  "Return a list of field attribute from NODES. Return nil if no NCP or ECP is found."
+  "Return a list of field attribute from NODES.
+   Return nil if no NCP or ECP is found."
   (cl-dolist (node nodes)
     (let ((qres (treesit-query-capture node field-query)))
       (when (not (null qres))
@@ -103,14 +115,9 @@
                (ncp (ncp-suffixes mods-str))
                (ecp (ecp-values mods-str)))
             (cl-return (if (or ecp ncp)
-                           (list
-                            (cons 'field field)
-                            (cons 'type (treesit-node-text type))
-                            (cons 'column (field-to-column field mods-str))
-                            (cons 'ncp ncp)
-                            (cons 'ecp ecp))
-                         nil))
-          )))))
+                           (field-list field (treesit-node-text type)
+                                       (field-to-column field mods-str) ncp ecp)
+                         nil)))))))
 
 (defun parse-class (class-nodes)
     (mapcar (lambda (child) (java-field-name (treesit-node-children child)))
@@ -129,20 +136,6 @@
     (json-reformat-region (point-min) (point-max))
     (write-region (point-min) (point-max) file)))
 
-;; ------------------------------------------------------------
-;; Execute the parser
-
-(setq java-classes-dir "./flowGenClasses/")
-(setq output-file "eco-db-data.json")
-
-(setq java-files
-      '(
-       ("FlowGenSettings.java" .                     "flow_gen_settings")
-       ("FlowGenVentilatorSettings.java" .           "flow_gen_ventilator_settings")
-       ("FlowGenSummaryDataProperties.java" .        "flow_gen_summary_data")
-       ("FlowGenClimateSummaryDataProperties.java" . "flow_gen_summary_data")
-      ))
-
 (defun open-file-buffer (fpath file-name)
   (when (null (get-buffer file-name))
     (find-file-noselect (concat fpath file-name))))
@@ -156,10 +149,36 @@
       (delq nil (parse-buffer buffer)))
     ))
 
+(defun table-field (table-name)
+  "Return a field attribute for TABLE-NAME."
+  (cons 'table table-name))
+
+;; ------------------------------------------------------------
+;; Constants
+
+(setq missing-fields
+      (list (field-list "durationMinutes" "Integer" "duration_minutes" '("Val.Duration") '("OND")
+                        (table-field "flow_gen_summary_data"))))
+
+
+(setq java-classes-dir "./flowGenClasses/")
+(setq output-file "eco-db-data.json")
+
+(setq java-files
+      '(
+       ("FlowGenSettings.java" .                     "flow_gen_settings")
+       ("FlowGenVentilatorSettings.java" .           "flow_gen_ventilator_settings")
+       ("FlowGenSummaryDataProperties.java" .        "flow_gen_summary_data")
+       ("FlowGenClimateSummaryDataProperties.java" . "flow_gen_summary_data")
+      ))
+
+;; ------------------------------------------------------------
+;; Execute the parser
+
 (defun process-all-java-files ()
-  (let ((data ()))
+  (let ((data missing-fields))
     (dolist (f java-files)
-      (let ((table-name (cons 'table (cdr f)))
+      (let ((table-name (table-field (cdr f)))
             (d (process-java-file f)))
         (setq d (mapcar (lambda (e) (push table-name e)) d))
         (setq data (append data d))))
