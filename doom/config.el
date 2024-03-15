@@ -335,6 +335,37 @@ If FRAME is omitted or nil, use currently selected frame."
       (_ (find-file selection)))))
 (global-set-key (kbd "C-x t") 'my/switch-to-thing)
 
+;; Custom transient
+;;
+(defun my/fetch-password (&rest params)
+  (require 'auth-source)
+  (let ((match (car (apply 'auth-source-search params))))
+    (if match
+        (let ((secret (plist-get match :secret)))
+          (if (functionp secret)
+              (funcall secret)
+            secret))
+      (error "Password not found for %S" params))))
+
+(defun my/get-password (name machine)
+    "Gets password for user NAME and MACHINE."
+    (let ((password (my/fetch-password :user name :machine machine))
+          (name-pw (concat name "@" machine)))
+      (if password
+          (progn
+            (message "Copied password for %s" name-pw)
+            (kill-new password))
+        (message "Password not found for %s" name-pw))))
+
+(transient-define-prefix tsc-passwords-prefix ()
+  "Transient command for managing passwords."
+  [("r" "rnadler@github.com"
+    (lambda () (interactive) (my/get-password "rnadler" "github.com")))
+   ("b" "Bob-Nadler_resmed@github.com"
+    (lambda () (interactive) (my/get-password "Bob-Nadler_resmed" "github.com")))])
+
+(global-set-key (kbd "C-x j") 'tsc-passwords-prefix)
+
 ;; Org-roam v1
 ;; https://org-roam.github.io/org-roam/manual/Installation-_00281_0029.html#Installation-_00281_002
 ;; WSL chrome startup
