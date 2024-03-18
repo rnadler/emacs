@@ -335,10 +335,12 @@ If FRAME is omitted or nil, use currently selected frame."
       (_ (find-file selection)))))
 (global-set-key (kbd "C-x t") 'my/switch-to-thing)
 
-;; Custom transient
+;; Custom password transient
 ;;
+(require 'auth-source)
+
 (defun my/fetch-password (&rest params)
-  (require 'auth-source)
+  "Fetch the password for the passed PARAMS"
   (let ((match (car (apply 'auth-source-search params))))
     (if match
         (let ((secret (plist-get match :secret)))
@@ -348,7 +350,7 @@ If FRAME is omitted or nil, use currently selected frame."
       (error "Password not found for %S" params))))
 
 (defun my/get-password (name machine)
-    "Gets password for user NAME and MACHINE."
+    "Put password for user NAME and MACHINE on the kill ring."
     (let ((password (my/fetch-password :user name :machine machine))
           (name-pw (concat name "@" machine)))
       (if password
@@ -357,14 +359,46 @@ If FRAME is omitted or nil, use currently selected frame."
             (kill-new password))
         (message "Password not found for %s" name-pw))))
 
-(transient-define-prefix tsc-passwords-prefix ()
-  "Transient command for managing passwords."
-  [("r" "rnadler@github.com"
-    (lambda () (interactive) (my/get-password "rnadler" "github.com")))
-   ("b" "Bob-Nadler_resmed@github.com"
-    (lambda () (interactive) (my/get-password "Bob-Nadler_resmed" "github.com")))])
+(defun my/get-sources ()
+    "Get a list of all sources"
+    (mapcar (lambda (e) (list
+                         (plist-get e :user)
+                         (plist-get e :host)))
+            (auth-source-search :max 100)))
 
-(global-set-key (kbd "C-x j") 'tsc-passwords-prefix)
+(defun my/picker-string (num)
+  "Get list picker string with a 10 character sequence 1..0,a1..a0,b1..b0,..."
+  (let* ((rem (mod num 10))
+         (i (/ num 10)))
+    (format "%s%s"
+            (if (<= num 10) "" (char-to-string (+ ?a (1- i))))
+            (number-to-string rem))))
+
+;; (my/picker-string 11)
+
+(defun my/get-prefix-list ()
+  "Get the prefix list from the password sources."
+  (let ((sources (my/get-sources))
+        (picker 0))
+    (vconcat (mapcar (lambda (source)
+                       (list
+                        (my/picker-string (setq picker (1+ picker)))
+                        (concat (car source) "@" (cadr source))
+                        `(lambda () (interactive) (my/get-password ,(car source) ,(cadr source)))
+                        ))
+                     sources))))
+
+
+(setq my/prefix-list '["Blank list"])
+
+(defun my/passwords-list ()
+  (interactive)
+  (setq my/prefix-list (vconcat '["Get password for"] (my/get-prefix-list)))
+  (transient-define-prefix passwords-list-prefix () my/prefix-list)
+  ;; 'passwords-list-prefix)
+  (passwords-list-prefix))
+
+;; (global-set-key (kbd "C-x j") (my/passwords-list))
 
 ;; Org-roam v1
 ;; https://org-roam.github.io/org-roam/manual/Installation-_00281_0029.html#Installation-_00281_002
