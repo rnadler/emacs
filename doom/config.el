@@ -351,7 +351,7 @@ If FRAME is omitted or nil, use currently selected frame."
 
 (defun my/get-password (name machine)
     "Put password for user NAME and MACHINE on the kill ring."
-    (let ((password (my/fetch-password :user name :machine machine))
+    (let ((password (my/fetch-password :user name :host machine))
           (name-pw (concat name "@" machine)))
       (if password
           (progn
@@ -367,14 +367,15 @@ If FRAME is omitted or nil, use currently selected frame."
             (auth-source-search :max 100)))
 
 (defun my/picker-string (num)
-  "Get list picker string with a 10 character sequence 1..0,a1..a0,b1..b0,..."
+  "Get list picker string with a 10 character sequence 1..0,a1..a0,b1..b0,...
+  This will support 269 entries (1..z9)."
   (let* ((rem (mod num 10))
          (i (/ num 10)))
     (format "%s%s"
             (if (<= num 10) "" (char-to-string (+ ?a (1- i))))
             (number-to-string rem))))
 
-;; (my/picker-string 11)
+;; (my/picker-string 55)
 
 (defun my/get-prefix-list ()
   "Get the prefix list from the password sources."
@@ -388,17 +389,21 @@ If FRAME is omitted or nil, use currently selected frame."
                         ))
                      sources))))
 
+(defvar my/prefix-list nil)
 
-(setq my/prefix-list '["Blank list"])
-
-(defun my/passwords-list ()
+(defun my/password-menu ()
+  "Show the password transient menu."
   (interactive)
-  (setq my/prefix-list (vconcat '["Get password for"] (my/get-prefix-list)))
-  (transient-define-prefix passwords-list-prefix () my/prefix-list)
-  ;; 'passwords-list-prefix)
-  (passwords-list-prefix))
+  (when (not my/prefix-list)
+    (progn
+      (setq my/prefix-list (vconcat '["Get password for"] (my/get-prefix-list)))
+      (eval '(transient-define-prefix password-menu-prefix () my/prefix-list))))
+    (password-menu-prefix))
 
-;; (global-set-key (kbd "C-x j") (my/passwords-list))
+(global-set-key (kbd "C-x j") 'my/password-menu)
+
+;; (setq auth-sources '("~/.authinfo.gpg"))
+;; (auth-source-forget-all-cached)
 
 ;; Org-roam v1
 ;; https://org-roam.github.io/org-roam/manual/Installation-_00281_0029.html#Installation-_00281_002
