@@ -349,47 +349,53 @@ If FRAME is omitted or nil, use currently selected frame."
             secret))
       (error "Password not found for %S" params))))
 
-(defun my/get-password (name machine)
-    "Put password for user NAME and MACHINE on the kill ring."
-    (let ((password (my/fetch-password :user name :host machine))
-          (name-pw (concat name "@" machine)))
+(defun my/get-password (name host)
+    "Put password for user NAME and HOST on the kill ring."
+    (let ((password (my/fetch-password :user name :host host))
+          (name-pw (concat name "@" host)))
       (if password
           (progn
             (message "Copied password for %s" name-pw)
             (kill-new password))
         (message "Password not found for %s" name-pw))))
 
-(defun my/get-sources ()
-    "Get a list of all sources"
-    (mapcar (lambda (e) (list
-                         (plist-get e :user)
-                         (plist-get e :host)))
-            (auth-source-search :max 100)))
-
 (defun my/picker-string (num)
-  "Get list picker string with a 10 character sequence 1..0,a1..a0,b1..b0,...
-  This will support 269 entries (1..z9)."
-  (let* ((rem (mod num 10))
-         (i (/ num 10)))
-    (format "%s%s"
-            (if (<= num 10) "" (char-to-string (+ ?a (1- i))))
-            (number-to-string rem))))
+  "Get list picker string for NUM.
+   The string sequence will be 1..0,a1..a0,b1..b0,...
+   This will support 269 entries (1..z9) before the leading
+   character becomes non-alpha (270 --> '{0')."
+  (let* ((div 10)
+         (rem (mod num div))
+         (i (/ num div)))
+    (format "%s%d"
+            (if (<= num div) "" (char-to-string (+ ?a (1- i))))
+            rem)))
 
-;; (my/picker-string 55)
+;; (my/picker-string 11)
 
 (defun my/get-prefix-list ()
-  "Get the prefix list from the password sources."
-  (let ((sources (my/get-sources))
-        (picker 0))
-    (vconcat (mapcar (lambda (source)
-                       (list
-                        (my/picker-string (setq picker (1+ picker)))
-                        (concat (car source) "@" (cadr source))
-                        `(lambda () (interactive) (my/get-password ,(car source) ,(cadr source)))
-                        ))
-                     sources))))
+  "Get the prefix list from the password sources.
+   Returns a vector of lists."
+  (let ((picker 0))
+    (apply 'vector
+           (mapcar
+            (lambda (source)
+              (let ((user (plist-get source :user))
+                    (host (plist-get source :host)))
+                (list
+                 (my/picker-string (setq picker (1+ picker)))
+                 (concat user "@" host)
+                 `(lambda () (interactive) (my/get-password ,user ,host))
+                 )))
+            (auth-source-search :max 100)))))
 
 (defvar my/prefix-list nil)
+
+(defun my/clear-password-menu ()
+  "Clear the password transient menu."
+  (interactive)
+  (setq my/prefix-list nil)
+  (auth-source-forget-all-cached))
 
 (defun my/password-menu ()
   "Show the password transient menu."
@@ -402,8 +408,7 @@ If FRAME is omitted or nil, use currently selected frame."
 
 (global-set-key (kbd "C-x j") 'my/password-menu)
 
-;; (setq auth-sources '("~/.authinfo.gpg"))
-;; (auth-source-forget-all-cached)
+(setq auth-sources '("~/.authinfo.gpg"))
 
 ;; Org-roam v1
 ;; https://org-roam.github.io/org-roam/manual/Installation-_00281_0029.html#Installation-_00281_002
