@@ -371,7 +371,13 @@ If FRAME is omitted or nil, use currently selected frame."
             (if (<= num div) "" (char-to-string (+ ?a (1- i))))
             rem)))
 
-;; (my/picker-string 11)
+;; (my/picker-string 26)
+
+;; TODO: Break up long list into multiple columns
+(defun my/fake-source-data ()
+  ;; (make-list 100 '(:user "john" :host "example.com"))
+  nil
+  )
 
 (defun my/get-prefix-list ()
   "Get the prefix list from the password sources.
@@ -387,7 +393,7 @@ If FRAME is omitted or nil, use currently selected frame."
                  (concat user "@" host)
                  `(lambda () (interactive) (my/get-password ,user ,host))
                  )))
-            (auth-source-search :max 100)))))
+            (append (auth-source-search :max 100) (my/fake-source-data))))))
 
 (defvar my/prefix-list nil)
 
