@@ -436,6 +436,18 @@ If FRAME is omitted or nil, use currently selected frame."
       (browse-url-generic roam-host)
     (browse-url roam-host)))
 
+;; Org link to dired
+
+(defun org-open-file-with-dired (path)
+  "Open in dired."
+  (let ((d (file-name-directory path))
+        (f (file-name-nondirectory path)))
+    (dired d)
+    (goto-char (point-min))
+    (search-forward f nil t)))
+
+(org-link-set-parameters "dired" :follow 'org-open-file-with-dired)
+
 ;; org-roam-ui (for org-roam v2)
 (use-package! websocket
     :after org-roam)
