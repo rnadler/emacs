@@ -335,84 +335,13 @@ If FRAME is omitted or nil, use currently selected frame."
       (_ (find-file selection)))))
 (global-set-key (kbd "C-x t") 'my/switch-to-thing)
 
-;; Custom password transient
+;; Password Menu
 ;;
-(require 'auth-source)
 
-(defun my/fetch-password (&rest params)
-  "Fetch the password for the passed PARAMS"
-  (let ((match (car (apply 'auth-source-search params))))
-    (if match
-        (let ((secret (plist-get match :secret)))
-          (if (functionp secret)
-              (funcall secret)
-            secret))
-      (error "Password not found for %S" params))))
+(load! "~/Projects/password-menu/password-menu.el")
 
-(defun my/get-password (name host)
-    "Put password for user NAME and HOST on the kill ring."
-    (let ((password (my/fetch-password :user name :host host))
-          (name-pw (concat name "@" host)))
-      (if password
-          (progn
-            (message "Copied password for %s" name-pw)
-            (kill-new password))
-        (message "Password not found for %s" name-pw))))
-
-(defun my/picker-string (num)
-  "Get list picker string for NUM.
-   The string sequence will be 1..0,a1..a0,b1..b0,...
-   This will support 269 entries (1..z9) before the leading
-   character becomes non-alpha (270 --> '{0')."
-  (let* ((div 10)
-         (rem (mod num div))
-         (i (/ num div)))
-    (format "%s%d"
-            (if (<= num div) "" (char-to-string (+ ?a (1- i))))
-            rem)))
-
-;; (my/picker-string 26)
-
-;; TODO: Break up long list into multiple columns
-(defun my/fake-source-data ()
-  ;; (make-list 100 '(:user "john" :host "example.com"))
-  nil
-  )
-
-(defun my/get-prefix-list ()
-  "Get the prefix list from the password sources.
-   Returns a vector of lists."
-  (let ((picker 0))
-    (apply 'vector
-           (mapcar
-            (lambda (source)
-              (let ((user (plist-get source :user))
-                    (host (plist-get source :host)))
-                (list
-                 (my/picker-string (setq picker (1+ picker)))
-                 (concat user "@" host)
-                 `(lambda () (interactive) (my/get-password ,user ,host))
-                 )))
-            (append (auth-source-search :max 100) (my/fake-source-data))))))
-
-(defvar my/prefix-list nil)
-
-(defun my/clear-password-menu ()
-  "Clear the password transient menu."
-  (interactive)
-  (setq my/prefix-list nil)
-  (auth-source-forget-all-cached))
-
-(defun my/password-menu ()
-  "Show the password transient menu."
-  (interactive)
-  (when (not my/prefix-list)
-    (progn
-      (setq my/prefix-list (vconcat '["Get password for"] (my/get-prefix-list)))
-      (eval '(transient-define-prefix password-menu-prefix () my/prefix-list))))
-    (password-menu-prefix))
-
-(global-set-key (kbd "C-x j") 'my/password-menu)
+(global-set-key (kbd "C-x j") 'password-menu-transient)
+(global-set-key (kbd "C-x J") 'password-menu-completing-read)
 
 (setq auth-sources '("~/.authinfo.gpg"))
 
@@ -552,17 +481,12 @@ If FRAME is omitted or nil, use currently selected frame."
  (global-set-key (kbd "C-}") 'sp-unwrap-sexp)
  (show-paren-mode 1))
 
-(use-package! company
+;; corfu
+(use-package! corfu
+  :custom
+  (corfu-scroll-margin 10)
   :init
-  (setq company-idle-delay 0.5)
-  (setq company-show-numbers t)
-  (setq company-tooltip-limit 10)
-  (setq company-minimum-prefix-length 2)
-  (setq company-tooltip-align-annotations t)
-  ;; invert the navigation direction if the the completion popup-isearch-match
-  ;; is displayed on top (happens near the bottom of windows)
-  (setq company-tooltip-flip-when-above t)
-  (global-company-mode))
+  (global-corfu-mode))
 
 ;; TCP Server
 (setq server-auth-key "N#'=2;T_VbOS#<,u~$bue@j1_C=n{/x'#'^vW532`5'OIYkRWGIUxWD.#]g$CC<U")
