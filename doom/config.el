@@ -291,7 +291,7 @@ If FRAME is omitted or nil, use currently selected frame."
  '((yaml-mode . yaml-ts-mode)
    (bash-mode . bash-ts-mode)
    (clojure-mode . clojure-ts-mode)
-   (clojurescript-mode . clojurescript-ts-mode)
+   (clojurescript-mode . clojure-ts-clojurescript-mode)
    ;; (emacs-lisp-mode . emacs-lisp-ts-mode)
    ;; (web-mode . html-ts-mode)
    (dockerfile-mode . dockerfile-ts-mode)
@@ -344,6 +344,25 @@ If FRAME is omitted or nil, use currently selected frame."
 (global-set-key (kbd "C-x J") 'password-menu-completing-read)
 
 (setq auth-sources '("~/.authinfo.gpg"))
+
+;; WSL specific stuff
+;; https://emacsredux.com/blog/2021/12/19/wsl-specific-emacs-configuration/
+(when (and (eq system-type 'gnu/linux)
+           (getenv "WSLENV"))
+  ;; Teach Emacs how to open links in your default Windows browser
+  (let ((cmd-exe "/mnt/c/Windows/System32/cmd.exe")
+        (cmd-args '("/c" "start")))
+    (when (file-exists-p cmd-exe)
+      (setq browse-url-generic-program  cmd-exe
+            browse-url-generic-args     cmd-args
+            browse-url-browser-function 'browse-url-generic
+            search-web-default-browser 'browse-url-generic)))
+  ;; https://emacsredux.com/blog/2021/12/19/using-emacs-on-windows-11-with-wsl2/
+  (defun my/copy-selected-text (start end)
+    (interactive "r")
+    (if (use-region-p)
+        (let ((text (buffer-substring-no-properties start end)))
+          (shell-command (concat "echo '" text "' | clip.exe"))))))
 
 ;; Org-roam v1
 ;; https://org-roam.github.io/org-roam/manual/Installation-_00281_0029.html#Installation-_00281_002
