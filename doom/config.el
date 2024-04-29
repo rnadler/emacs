@@ -45,7 +45,9 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 (setq display-time-default-load-average nil)
-(display-time)
+
+;;(display-time)
+(setq org-hide-emphasis-markers t)
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
 (setq confirm-kill-processes nil)
@@ -242,6 +244,7 @@ If FRAME is omitted or nil, use currently selected frame."
   (setq org-modern-list
    '((?* . "•")
      (?+ . "‣")))
+  (setq org-modern-star 'replace)
   (setq org-modern-todo-faces
       (quote (("TODO" :foreground "red" :weight bold)
               ("NEXT" :foreground "blue" :weight bold)
@@ -615,7 +618,8 @@ If ARG is provided, it sets the counter."
 (add-hook 'cider-mode-hook
           (lambda ()
             (local-set-key (kbd "C-S-x") #'rebl-eval-defun-at-point)
-            (local-set-key (kbd "C-x C-r") #'rebl-eval-last-sexp)))
+            ;;(local-set-key (kbd "C-x C-r") #'rebl-eval-last-sexp)
+            ))
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
