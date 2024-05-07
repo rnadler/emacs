@@ -197,6 +197,11 @@
 (fset 'file-up-dir (kmacro [?\C-x ?d return ] 0 "%d"))
 (global-set-key (kbd "M-u") 'file-up-dir)
 
+;; https://github.com/kickingvegas/casual-dired
+(define-key dired-mode-map (kbd "C-o") 'casual-dired-tmenu)
+(after! casual-dired
+  (setq casual-dired-use-utf8-symbols t))
+
 (defun my/disable-line-numbers (&optional _)
   (display-line-numbers-mode -1))
 

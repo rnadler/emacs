@@ -77,3 +77,5 @@
 ;;(package! elfeed-curate)
 (unpin! (:lang clojure))
 (package! copilot :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el" "dist")))
+;;(package! password-menu)
+(package! casual-dired)
