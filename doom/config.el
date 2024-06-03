@@ -518,8 +518,19 @@ If FRAME is omitted or nil, use currently selected frame."
 (use-package! corfu
   :custom
   (corfu-scroll-margin 10)
-  :init
+  (corfu-cycle t)
+  (corfu-auto t)
+  (corfu-auto-delay 0.1)
+  (corfu-auto-prefix 1)
+    :init
   (global-corfu-mode))
+
+;; cape
+(after! cape
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dict)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
 
 ;; TCP Server
 (setq server-auth-key "N#'=2;T_VbOS#<,u~$bue@j1_C=n{/x'#'^vW532`5'OIYkRWGIUxWD.#]g$CC<U")
