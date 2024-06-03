@@ -80,3 +80,4 @@
 ;;(package! password-menu)
 (package! casual-dired)
 (unpin! elfeed elfeed-org)
+(package! jinx)

@@ -272,6 +272,12 @@ If FRAME is omitted or nil, use currently selected frame."
 ;; Beacon
 (beacon-mode 1)
 
+;; Enchant/jinx
+;; sudo apt-get install libenchant-2-dev pkgconf
+(add-hook 'emacs-startup-hook #'global-jinx-mode)
+(keymap-global-set "M-$" #'jinx-correct)
+(keymap-global-set "C-M-$" #'jinx-languages)
+
 ;; Treesitter support
 ;; https://www.masteringemacs.org/article/how-to-get-started-tree-sitter
 (setq treesit-language-source-alist
