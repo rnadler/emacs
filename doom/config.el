@@ -200,7 +200,7 @@
 ;; https://github.com/kickingvegas/casual-dired
 (define-key dired-mode-map (kbd "C-o") 'casual-dired-tmenu)
 (after! casual-dired
-  (setq casual-dired-use-utf8-symbols t))
+  (setq casual-dired-use-unicode-symbols t))
 
 (defun my/disable-line-numbers (&optional _)
   (display-line-numbers-mode -1))
