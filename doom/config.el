@@ -361,8 +361,12 @@ If FRAME is omitted or nil, use currently selected frame."
 
 ;; WSL specific stuff
 ;; https://emacsredux.com/blog/2021/12/19/wsl-specific-emacs-configuration/
-(when (and (eq system-type 'gnu/linux)
-           (getenv "WSLENV"))
+;;
+(defun my/is-wsl ()
+  (and (eq system-type 'gnu/linux)
+       (getenv "WSLENV")))
+
+(when (my/is-wsl)
   ;; Teach Emacs how to open links in your default Windows browser
   (let ((cmd-exe "/mnt/c/Windows/System32/cmd.exe")
         (cmd-args '("/c" "start")))
@@ -371,24 +375,18 @@ If FRAME is omitted or nil, use currently selected frame."
             browse-url-generic-args     cmd-args
             browse-url-browser-function 'browse-url-generic
             search-web-default-browser 'browse-url-generic)))
-  ;; https://emacsredux.com/blog/2021/12/19/using-emacs-on-windows-11-with-wsl2/
-  (defun my/copy-selected-text (start end)
-    (interactive "r")
-    (if (use-region-p)
-        (let ((text (buffer-substring-no-properties start end)))
-          (shell-command (concat "echo '" text "' | clip.exe"))))))
+  (defun my/wsl-copy-to-clipboard (text &optional push)
+    "Copy TEXT to the Windows clipboard using clip.exe."
+    (let ((process-connection-type nil))
+      (let ((proc (start-process "clip" "*Messages*" "clip.exe")))
+        (process-send-string proc text)
+        (process-send-eof proc))))
+  (setq interprogram-cut-function 'my/wsl-copy-to-clipboard)
+)
 
 ;; Org-roam v1
 ;; https://org-roam.github.io/org-roam/manual/Installation-_00281_0029.html#Installation-_00281_002
-;; WSL chrome startup
-(defconst chrome-exe "/mnt/c/Program Files (x86)/Google/Chrome/Application/chrome.exe")
 (defconst roam-host "http://localhost:8080")
-
-(defun my/is-wsl ()
-  (string= (system-name) "WIN10R90H8MKJ"))
-
-(when (my/is-wsl)
-  (setq browse-url-generic-program chrome-exe))
 
 (defun my/open-org-roam-server (_)
   (interactive)
