@@ -77,7 +77,8 @@
 ;;(setq auth-source-debug t)
 (after! magit
   (add-hook 'magit-process-find-password-functions
-            'magit-process-password-auth-source))
+            'magit-process-password-auth-source)
+  (setq magit-show-long-lines-warning nil))
 
 ;; Copilot
 (use-package! copilot
@@ -148,7 +149,7 @@
   ;; face for starred articles
   (defface elfeed-search-star-title-face '((t :foreground "#f77")) "Marks a starred Elfeed entry.")
   (push '(star elfeed-search-star-title-face) elfeed-search-face-alist)
-  (use-package! elfeed-webkit :bind (:map elfeed-show-mode-map ("x" . elfeed-webkit-toggle)))
+  ;;(use-package! elfeed-webkit :bind (:map elfeed-show-mode-map ("x" . elfeed-webkit-toggle)))
   (defun elfeed-search-format-date (date)
     (format-time-string "%Y-%m-%d %H:%M" (seconds-to-time date)))
   ;; elfeed-curate key bindings
@@ -608,10 +609,10 @@ If ARG is provided, it sets the counter."
       `(
         ("~/Projects/airview-web" . 1)
         ("~/Projects/exchange" . 1)
-        ("~/Projects/eco-builds" . 1)
+        ("~/Projects/airview-eco-builds" . 1)
         ("~/Projects/eco-builds-config" . 1)
-        ("~/Projects/eco-builds-ui" . 1)
-        ("~/Projects/variant-json" . 1)))
+        ("~/Projects/airview-eco-builds-web" . 1)
+        ("~/Projects/airview-variant-json" . 1)))
 
 ;; magit-delta
 ;;(add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1)))

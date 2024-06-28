@@ -72,7 +72,7 @@
 (package! deadgrep)
 (package! org-modern-indent :recipe (:host github :repo "jdtsmith/org-modern-indent"))
 (package! dired-du)
-(package! elfeed-webkit)
+;;(package! elfeed-webkit)
 (package! clojure-ts-mode)
 ;;(package! elfeed-curate)
 (unpin! (:lang clojure))
