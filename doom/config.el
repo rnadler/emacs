@@ -245,12 +245,11 @@ If FRAME is omitted or nil, use currently selected frame."
                             :follow (lambda (link) (kill-new link))
                             :export (lambda (_ desc &rest _) desc)))
 (after! org-modern
-  ;; (setq org-modern-hide-stars nil) ; adds extra indentation
-  ;; (setq org-modern-table nil)
-  (setq org-modern-list
-   '((?* . "•")
-     (?+ . "‣")))
   (setq org-modern-star 'replace)
+  (setq org-modern-checkbox
+        '((?X . "✅")    ;; Completed checkbox
+          (?- . "🟡")    ;; Pending checkbox
+          (?\s . "🔳"))) ;; Empty checkbox
   (setq org-modern-todo-faces
       (quote (("TODO" :foreground "red" :weight bold)
               ("NEXT" :foreground "blue" :weight bold)
