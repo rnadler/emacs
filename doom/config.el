@@ -46,7 +46,10 @@
 (setq display-line-numbers-type t)
 (setq display-time-default-load-average nil)
 
-;;(display-time)
+(after! doom-modeline
+  (setq doom-modeline-time-analogue-clock nil)
+  (display-time))
+
 (setq org-hide-emphasis-markers t)
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
@@ -535,6 +538,7 @@ If FRAME is omitted or nil, use currently selected frame."
 (setq server-host "0.0.0.0")
 (setq server-port "8081")
 (setq server-use-tcp t)
+(server-start)
 
 ;; Rename buffer file
 (defun my/rename-current-file ()
