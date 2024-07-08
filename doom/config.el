@@ -46,9 +46,7 @@
 (setq display-line-numbers-type t)
 (setq display-time-default-load-average nil)
 
-(after! doom-modeline
-  (setq doom-modeline-time-analogue-clock nil)
-  (display-time))
+(display-time)
 
 (setq org-hide-emphasis-markers t)
 (recentf-mode 1)

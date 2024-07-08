@@ -81,3 +81,4 @@
 (package! casual-dired)
 (unpin! elfeed elfeed-org)
 (package! jinx)
+(package! literate-calc-mode)
