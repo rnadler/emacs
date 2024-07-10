@@ -520,9 +520,15 @@ If FRAME is omitted or nil, use currently selected frame."
   (corfu-cycle t)
   (corfu-auto t)
   (corfu-auto-delay 0.1)
-  (corfu-auto-prefix 1)
+  (corfu-auto-prefix 2)
+  (corfu-popupinfo-delay '(0.5 . 0.2))  ; Automatically update info popup after that numver of seconds
+  (corfu-preview-current 'insert) ; insert previewed candidate
+  (corfu-preselect 'prompt)
+  (corfu-on-exact-match nil)
     :init
-  (global-corfu-mode))
+  (global-corfu-mode)
+  (corfu-history-mode)
+  (corfu-popupinfo-mode))
 
 ;; cape
 (after! cape
