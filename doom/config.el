@@ -249,7 +249,7 @@ If FRAME is omitted or nil, use currently selected frame."
   (setq org-modern-star 'replace)
   (setq org-modern-checkbox
         '((?X . "✅")    ;; Completed checkbox
-          (?- . "🟡")    ;; Pending checkbox
+          (?- . "🔆")    ;; Pending checkbox
           (?\s . "🔳"))) ;; Empty checkbox
   (setq org-modern-todo-faces
       (quote (("TODO" :foreground "red" :weight bold)
