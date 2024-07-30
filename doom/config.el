@@ -470,40 +470,19 @@ If FRAME is omitted or nil, use currently selected frame."
   (cljr-add-keybindings-with-prefix "C-c C-c")
   (add-hook 'clojure-mode-hook #'smartparens-strict-mode))
 
-;; LSP
-(after! lsp-mode
-  ;; :commands lsp
-  ;; :hook ((clojure-mode . lsp)
-  ;;        (clojurescript-mode . lsp)
-  ;;        (lsp-mode . lsp-enable-which-key-integration)
-  ;;        ;;(java-mode . lsp)
-  ;;        )
+;; Eglot
+;; npm install -g typescript-language-server typescript
+;; npm install -g pyright
+(use-package! eglot
+  :commands (eglot eglot-ensure)
   :config
-  (setq ;; clojure-lsp is on PATH
-        ;; lsp-clojure-custom-server-command '("bash" "-c" "/usr/bin/clojure-lsp")
-        lsp-headerline-breadcrumb-enable t
-        ;; lsp-lens-enable t
-        ;; lsp-keymap-prefix "C-c l"
-        lsp-enable-file-watchers nil
-        lsp-signature-render-documentation t
-        lsp-signature-auto-activate t
-        lsp-completion-use-last-result nil))
-
-;; (use-package! lsp-ivy
-;;   :commands lsp-ivy-workspace-symbol)
-
-(after! lsp-ui
-  :after lsp-mode
-  :commands lsp-ui-mode
-  :config
-  (setq lsp-ui-peek-list-width 60
-        lsp-ui-doc-enable t
-        lsp-ui-doc-show-with-cursor t
-        lsp-ui-doc-position 'top
-        lsp-ui-doc-max-width 300
-        lsp-ui-doc-max-height 30
-        lsp-ui-peek-fontify 'always
-        lsp-ui-sideline-show-code-actions nil))
+  (add-to-list 'eglot-server-programs '(clojure-mode . ("/usr/local/bin/clojure-lsp" "--stdio")))
+  (add-to-list 'eglot-server-programs '(clojurescript-mode . ("/usr/local/bin/clojure-lsp" "--stdio")))
+  :hook ((js-mode . eglot-ensure)
+         (js-ts-mode . eglot-ensure)
+         (typescript-mode . eglot-ensure)
+         (python-mode . eglot-ensure)
+         (clojure-mode . eglot-ensure)))
 
 ;; Smartparens
 (after! smartparens
@@ -578,6 +557,25 @@ If ARG is provided, it sets the counter."
       (copy-directory file new-file)
       (copy-file file new-file))
     (dired-revert)))
+
+;; https://www.emacs.dyerdwelling.family/emacs/20240728141344-emacs--sending-dired-directories-to-meld/
+(require 'cl-lib)
+(defun my/dired-meld-diff-all-dwim ()
+"Compare all marked directories in all visible Dired buffers using Meld.
+   The order of directories respects the order suggested by `dired-dwim-target`."
+(interactive)
+(let ((files ()))
+  (dolist (window (window-list))
+    (with-current-buffer (window-buffer window)
+      (when (and (derived-mode-p 'dired-mode)
+              (dired-get-marked-files))
+        (setq files (append files (dired-get-marked-files))))))
+  (if (or (<= (length files) 1)
+        (not (cl-every 'file-directory-p files)))
+    (message "Please mark at least two directories.")
+    (apply 'start-process "meld" nil "meld" files))))
+
+(define-key dired-mode-map (kbd "C-c m") 'my/dired-meld-diff-all-dwim)
 
 ;; The key binding doesn't seem to work...
 ;;(define-key dired-mode-map (kbd "C-c d") 'my/dired-duplicate-file)
