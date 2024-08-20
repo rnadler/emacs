@@ -171,15 +171,11 @@
 ;; elfeed-curate (WIP)
 (load! "~/Projects/elfeed-curate/elfeed-curate.el")
 
-;; Sunrise Commander
-(after! sunrise
-  (use-package! sunrise-buttons)
-  (use-package! sunrise-modeline)
-  (use-package! sunrise-popviewer)
-  (setq sr-cursor-follows-mouse nil)
-  ;;(define-key sr-mode-map [mouse-1]        nil)
-  ;;(define-key sr-mode-map [mouse-movement] nil)
-  )
+;; Config diffs
+;; (ediff "~/Projects/emacs/doom/init.el" "~/.doom.d/init.el")
+;; (ediff "~/Projects/emacs/doom/config.el" "~/.doom.d/config.el")
+;; (ediff "~/Projects/emacs/doom/packages.el" "~/.doom.d/packages.el")
+
 (add-to-list 'auto-mode-alist '("\\.srvm\\'" . sr-virtual-mode))
 (global-set-key (kbd "C-x c") 'sunrise-cd)
 
@@ -192,6 +188,9 @@
   (setq all-the-icons-dired-monochrome nil)
   (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$")))
 
+(after! dirvish
+  (setq dirvish-attributes '(nerd-icons file-time))
+  (setq dirvish-mode-line-format '(:left (path) :right (omit index))))
 (setq diredp-hide-details-initially-flag nil)
 (diredp-toggle-find-file-reuse-dir 1)
 ;; https://www.emacs.dyerdwelling.family/emacs/emacs--dired-going-up-directories__emacs_linux/
@@ -298,7 +297,8 @@ If FRAME is omitted or nil, use currently selected frame."
      (toml "https://github.com/tree-sitter/tree-sitter-toml")
      (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
      (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-     (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+     (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+     (typespec "https://github.com/happenslol/tree-sitter-typespec")))
 
 ;; (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
 
