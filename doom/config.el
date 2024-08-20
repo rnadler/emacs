@@ -189,8 +189,8 @@
   (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$")))
 
 (after! dirvish
-  (setq dirvish-attributes '(nerd-icons file-time))
-  (setq dirvish-mode-line-format '(:left (path) :right (omit index))))
+  (setq dirvish-attributes '(nerd-icons collapse)))
+
 (setq diredp-hide-details-initially-flag nil)
 (diredp-toggle-find-file-reuse-dir 1)
 ;; https://www.emacs.dyerdwelling.family/emacs/emacs--dired-going-up-directories__emacs_linux/
