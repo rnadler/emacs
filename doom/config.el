@@ -3,6 +3,7 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
+(load! "./my-funcs.el")
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
@@ -22,12 +23,13 @@
 ;;
 ;;(setq doom-font (font-spec :family "monospace" :size 14))
 ;;
- (setq doom-font (font-spec :family "Ubuntu Mono" :size 16)
-       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 16)
-       doom-big-font (font-spec :family "Ubuntu Mono" :size 24))
-;; (setq doom-font (font-spec :family "Ubuntu Mono" :size 40)
-;;       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 40)
-;;       doom-big-font (font-spec :family "Ubuntu Mono" :size 52))
+(if (my/is-wsl)
+    (setq font-size [16 16 24])
+    (setq font-size [14 14 20]))
+
+ (setq doom-font (font-spec :family "Ubuntu Mono" :size (aref font-size 0))
+       doom-variable-pitch-font (font-spec :family "Ubuntu" :size (aref font-size 1))
+       doom-big-font (font-spec :family "Ubuntu Mono" :size (aref font-size 2)))
 
 (after! doom-themes
   (setq doom-themes-enable-bold t
@@ -58,8 +60,6 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x l") 'display-line-numbers-mode)
 (global-set-key (kbd "C-x t") 'toggle-truncate-lines)
-
-(load! "./my-funcs.el")
 
 ;; https://zck.org/improved-emacs-search
 (setq isearch-lazy-count t)
