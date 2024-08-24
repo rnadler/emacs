@@ -5,6 +5,12 @@
     "~/org"))
 (defconst todo-org-file (concat my-org-directory "/todo.org"))
 (defconst journal-org-file (concat my-org-directory "/journal.org.gpg"))
+(when (not (my/is-wsl))
+    (defconst scripts-org-file (concat my-org-directory "/scripts.org"))
+    (defconst meeting-org-file (concat my-org-directory "/meeting.org"))
+    (defconst archive-org-file (concat my-org-directory "/archive.org"))
+    (defconst ecobuilds-org-file (concat my-org-directory "/ecobuilds.org"))
+)
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-c!" 'org-time-stamp-inactive)
 
