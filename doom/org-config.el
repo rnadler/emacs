@@ -1,8 +1,10 @@
 ;; Org mode
-(defconst my-org-directory "~/org")
+(defconst my-org-directory
+  (if (my/is-wsl)
+      "/mnt/c/Users/rober/OneDrive/org"
+    "~/org"))
 (defconst todo-org-file (concat my-org-directory "/todo.org"))
 (defconst journal-org-file (concat my-org-directory "/journal.org.gpg"))
-(defconst transfer-org-file "/media/sf_healthinformatics/BobN/org/transfer.org")
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-c!" 'org-time-stamp-inactive)
 
@@ -50,8 +52,6 @@
         ;; javascript:location.href = 'org-protocol://capture?template=L&url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title) + '&body='
         ("L" "Protocol Link" entry (file+headline todo-org-file "Inbox")
          "* [[%:link][%:description]] %i\n- %?\nCaptured: %U")
-        ("x" "Transfer" entry (file+headline transfer-org-file "Tasks")
-	       "* TODO %?\n  %i\n  %a\n%T")
 	      ("j" "Journal" entry (file+olp+datetree journal-org-file)
 	       "* %?\nEntered on %U\n  %i\n  %a"))))
 
@@ -70,7 +70,7 @@
          (oldbuff (current-buffer))
          (result ""))
        (org-save-all-org-buffers)
-       (find-file scripts-org-file)
+       (find-file (if (my/is-wsl) todo-org-file scripts-org-file))
        (setq result (ignore-errors (org-sbe ,sbe)))
        (unless (eq (current-buffer) oldbuff) (switch-to-buffer oldbuff))
        (goto-char oldp)
@@ -78,7 +78,8 @@
        (message (concat ,what " complete: " result)))))
 
 (global-set-key (kbd "C-c b") (my/make-save-template 'backup "Backup"))
-(global-set-key (kbd "C-c d") (my/make-save-template 'save_git_diff "Save git diff"))
+(if (not (my/is-wsl))
+    (global-set-key (kbd "C-c d") (my/make-save-template 'save_git_diff "Save git diff")))
 
 (fset 'my-agenda
    (lambda (&optional arg) "Startup my custom agenda." (interactive "p") (kmacro-exec-ring-item (quote ("ap" 0 "%d")) arg)))
@@ -88,10 +89,7 @@
 (setq org-agenda-window-setup 'current-window)
 (setq org-agenda-files (list
 			todo-org-file
-			"~/Projects/emacs/shared.org"
-			transfer-org-file))
-(when (string= (system-name) "bob-x1-carbon")
-    (setq org-agenda-files (delete transfer-org-file org-agenda-files)))
+			"~/Projects/emacs/shared.org"))
 (setq org-refile-targets '((org-agenda-files :maxlevel . 2)))
 (setq org-refile-use-outline-path 'file)
 (setq org-refile-allow-creating-parent-nodes 'confirm)

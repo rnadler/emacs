@@ -59,6 +59,10 @@
 (global-set-key (kbd "C-x l") 'display-line-numbers-mode)
 (global-set-key (kbd "C-x t") 'toggle-truncate-lines)
 
+(defun my/is-wsl ()
+  (and (eq system-type 'gnu/linux)
+       (getenv "WSLENV")))
+
 ;; https://www.emacs.dyerdwelling.family/emacs/20230503211610-emacs--isearch-occur-advice-window-focus/
 ;; The advice-add method doesn't seem to work!
 ;; The hook-based approach (in comment) works!
@@ -125,7 +129,7 @@
 ;; Hugo deploy:
 ;; $ sudo apt-get install ncftp
 ;; $ hugo
-;; $ ncftpput -R -v -u "rdn-cons" ftp.rdn-consulting.com /public_html ./coi
+;; $ ncftpput -R -v -u "hold67" ftp.rdn-consulting.com /public_html ./coi
 
 (defun my/elfeed-clean-entry (entry)
   "Clean the title of an ENTRY"
@@ -175,6 +179,7 @@
 ;; (ediff "~/Projects/emacs/doom/init.el" "~/.doom.d/init.el")
 ;; (ediff "~/Projects/emacs/doom/config.el" "~/.doom.d/config.el")
 ;; (ediff "~/Projects/emacs/doom/packages.el" "~/.doom.d/packages.el")
+;; (ediff "~/Projects/emacs/doom/org-config.el" "~/.doom.d/org-config.el")
 
 (add-to-list 'auto-mode-alist '("\\.srvm\\'" . sr-virtual-mode))
 (global-set-key (kbd "C-x c") 'sunrise-cd)
@@ -363,9 +368,6 @@ If FRAME is omitted or nil, use currently selected frame."
 ;; WSL specific stuff
 ;; https://emacsredux.com/blog/2021/12/19/wsl-specific-emacs-configuration/
 ;;
-(defun my/is-wsl ()
-  (and (eq system-type 'gnu/linux)
-       (getenv "WSLENV")))
 
 (when (my/is-wsl)
   ;; Teach Emacs how to open links in your default Windows browser
