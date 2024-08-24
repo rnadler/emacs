@@ -1,4 +1,5 @@
-;; Org mode
+;; org-config.el -*- lexical-binding: t; -*-
+
 (defconst my-org-directory
   (if (my/is-wsl)
       "/mnt/c/Users/rober/OneDrive/org"
@@ -93,26 +94,52 @@
 (setq org-agenda-dim-blocked-tasks nil)
 (setq org-agenda-compact-blocks t)
 (setq org-agenda-window-setup 'current-window)
-(setq org-agenda-files (list
-			todo-org-file
-			"~/Projects/emacs/shared.org"))
+(setq org-agenda-files (if (my/is-wsl)
+                           (list todo-org-file "~/Projects/emacs/shared.org")
+                         (list todo-org-file meeting-org-file ecobuilds-org-file)))
 (setq org-refile-targets '((org-agenda-files :maxlevel . 2)))
 (setq org-refile-use-outline-path 'file)
 (setq org-refile-allow-creating-parent-nodes 'confirm)
 (setq org-agenda-tags-todo-honor-ignore-options t)
-(setq org-agenda-include-diary nil)
-(setq org-agenda-custom-commands
-      '(("p" "Agenda and Projects"
-         ((agenda "" nil)
-	  (tags-todo "-TODO=\"DONE\"-TODO=\"CANCELLED\""
-		((org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))
-		 (org-agenda-overriding-header "Unscheduled TODO entries:")
-		 (org-agenda-view-columns-initially t)
-		 (org-agenda-sorting-strategy '(tag-up alpha-up))))
-          (tags "project"
-              ((org-agenda-overriding-header "Projects:")
-               (org-tags-match-list-sublevels 'indented)))))
-	))
+
+(cl-defun my/gen-agenda-todo
+   (tag heading &optional (sort '(alpha-up)))
+  "Generate an agenda item"
+  `(tags-todo ,tag
+	      ((org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))
+	       (org-agenda-overriding-header ,heading)
+	       (org-agenda-view-columns-initially t)
+	       (org-agenda-sorting-strategy ',sort))))
+
+(defun my/todo-list ()
+  (cl-loop for (tag heading) in
+	(seq-partition `("arch"      "ARCH tasks:"
+			 "air11"     "AIR11 tasks:"
+			 "ecobuilds" "ECO-BUILDS tasks:"
+			 "dev"       "DEV Unscheduled tasks:") 2)
+	collect (my/gen-agenda-todo tag heading)))
+
+(defun my/p-agenda-projects ()
+  (append '((agenda "" nil))
+	  (my/todo-list)
+	    `(,(my/gen-agenda-todo "-arch-dev-air11-ecobuilds-TODO=\"DONE\"-TODO=\"CANCELLED\"" "Unscheduled TODO entries:" '(tag-up alpha-up)))))
+
+(if (my/is-wsl)
+    (setq org-agenda-custom-commands
+          '(("p" "Agenda and Projects"
+             ((agenda "" nil)
+	      (tags-todo "-TODO=\"DONE\"-TODO=\"CANCELLED\""
+		         ((org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))
+		          (org-agenda-overriding-header "Unscheduled TODO entries:")
+		          (org-agenda-view-columns-initially t)
+		          (org-agenda-sorting-strategy '(tag-up alpha-up))))
+              (tags "project"
+                    ((org-agenda-overriding-header "Projects:")
+                     (org-tags-match-list-sublevels 'indented)))))
+	    ))
+  (setq org-agenda-custom-commands
+        `(("p" "Agenda and Projects" ,(my/p-agenda-projects)))))
+
 (setq org-ellipsis " ▼")
 (add-hook 'org-mode-hook 'my/disable-line-numbers)
 (add-hook 'org-mode-hook 'org-appear-mode)

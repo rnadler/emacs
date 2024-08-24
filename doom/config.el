@@ -59,20 +59,7 @@
 (global-set-key (kbd "C-x l") 'display-line-numbers-mode)
 (global-set-key (kbd "C-x t") 'toggle-truncate-lines)
 
-(defun my/is-wsl ()
-  (and (eq system-type 'gnu/linux)
-       (getenv "WSLENV")))
-
-;; https://www.emacs.dyerdwelling.family/emacs/20230503211610-emacs--isearch-occur-advice-window-focus/
-;; The advice-add method doesn't seem to work!
-;; The hook-based approach (in comment) works!
-(defun my/rename-and-select-occur-buffer ()
-  "Renames the current buffer to *Occur: [term] [buffer]*.
-   Meant to be added to `occur-hook'."
-  (cl-destructuring-bind (search-term _ (buffer-name &rest _)) occur-revert-arguments
-    (pop-to-buffer
-     (rename-buffer (format "*Occur: %s %s*" search-term buffer-name) t))))
-(add-hook 'occur-hook #'my/rename-and-select-occur-buffer)
+(load! "./my-funcs.el")
 
 ;; https://zck.org/improved-emacs-search
 (setq isearch-lazy-count t)
@@ -176,10 +163,12 @@
 (load! "~/Projects/elfeed-curate/elfeed-curate.el")
 
 ;; Config diffs
-;; (ediff "~/Projects/emacs/doom/init.el" "~/.doom.d/init.el")
-;; (ediff "~/Projects/emacs/doom/config.el" "~/.doom.d/config.el")
-;; (ediff "~/Projects/emacs/doom/packages.el" "~/.doom.d/packages.el")
-;; (ediff "~/Projects/emacs/doom/org-config.el" "~/.doom.d/org-config.el")
+;; (my/diff-config "init.el")
+;; (my/diff-config "config.el")
+;; (my/diff-config "packages.el")
+;; (my/diff-config "org-config.el")
+;; (my/diff-config "my-funcs.el")
+
 
 (add-to-list 'auto-mode-alist '("\\.srvm\\'" . sr-virtual-mode))
 (global-set-key (kbd "C-x c") 'sunrise-cd)
