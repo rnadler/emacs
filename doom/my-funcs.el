@@ -151,3 +151,23 @@ If ARG is provided, it sets the counter."
   (if (file-exists-p "/tmp/myGT")
       (async-shell-command "cd /tmp/myGT; cd */.; ./glamoroustoolkit")
       (async-shell-command "mkdir /tmp/myGT; cd /tmp/myGT; wget https://dl.feenk.com/gt/GlamorousToolkitLinux64-release.zip; unzip GlamorousToolkitLinux64-release.zip; cd */.; ./glamoroustoolkit")))
+
+;; Backups
+(cl-defun my/make-save-template (sbe what)
+  `(lambda ()
+     (interactive)
+     (let (
+         (oldp (point))
+         (oldbuff (current-buffer))
+         (result ""))
+       (org-save-all-org-buffers)
+       (find-file (if (my/is-wsl) todo-org-file scripts-org-file))
+       (setq result (ignore-errors (org-sbe ,sbe)))
+       (unless (eq (current-buffer) oldbuff) (switch-to-buffer oldbuff))
+       (goto-char oldp)
+       (when (string= (buffer-name) "*Org Agenda*") (org-agenda-redo-all))
+       (message (concat ,what " complete: " result)))))
+
+(global-set-key (kbd "C-c b") (my/make-save-template 'backup "Backup"))
+(if (not (my/is-wsl))
+    (global-set-key (kbd "C-c d") (my/make-save-template 'save_git_diff "Save git diff")))

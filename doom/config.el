@@ -170,7 +170,6 @@
 ;; (my/diff-config "my-funcs.el")
 
 (add-to-list 'auto-mode-alist '("\\.srvm\\'" . sr-virtual-mode))
-(global-set-key (kbd "C-x c") 'sunrise-cd)
 
 (add-to-list 'auto-mode-alist '("Dockerfile.*\\'" . dockerfile-mode))
 

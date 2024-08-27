@@ -69,24 +69,6 @@
    (emacs-lisp . t)))
 (setq org-agenda-include-diary t)
 (setq org-confirm-babel-evaluate nil)
-(cl-defun my/make-save-template (sbe what)
-  `(lambda ()
-     (interactive)
-     (let (
-         (oldp (point))
-         (oldbuff (current-buffer))
-         (result ""))
-       (org-save-all-org-buffers)
-       (find-file (if (my/is-wsl) todo-org-file scripts-org-file))
-       (setq result (ignore-errors (org-sbe ,sbe)))
-       (unless (eq (current-buffer) oldbuff) (switch-to-buffer oldbuff))
-       (goto-char oldp)
-       (when (string= (buffer-name) "*Org Agenda*") (org-agenda-redo-all))
-       (message (concat ,what " complete: " result)))))
-
-(global-set-key (kbd "C-c b") (my/make-save-template 'backup "Backup"))
-(if (not (my/is-wsl))
-    (global-set-key (kbd "C-c d") (my/make-save-template 'save_git_diff "Save git diff")))
 
 (fset 'my-agenda
    (lambda (&optional arg) "Startup my custom agenda." (interactive "p") (kmacro-exec-ring-item (quote ("ap" 0 "%d")) arg)))
