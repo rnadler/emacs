@@ -79,3 +79,4 @@
 (unpin! elfeed elfeed-org)
 (package! jinx)
 (package! literate-calc-mode)
+(package! casual-agenda)
