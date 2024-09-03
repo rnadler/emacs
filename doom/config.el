@@ -192,19 +192,17 @@
 (global-set-key (kbd "M-u") 'file-up-dir)
 
 ;; https://github.com/kickingvegas/casual-dired
+(setq casual-lib-use-unicode t)
 (use-package! casual-dired
   :ensure nil
-  :config
-  (setq casual-dired-use-unicode-symbols t)
   :bind (:map
          dired-mode-map ("C-o" . casual-dired-tmenu)))
 ;; https://github.com/kickingvegas/casual-agenda
 (use-package! casual-agenda
   :ensure nil
-  :config
-  (setq casual-agenda-use-unicode-symbols t)
   :bind (:map
-         org-agenda-mode-map ("C-o" . casual-agenda-tmenu)))
+         org-agenda-mode-map ("C-o" . casual-agenda-tmenu))
+  :after (org-agenda))
 
 (setq frame-resize-pixelwise t)
 (my/set-initial-frame)
