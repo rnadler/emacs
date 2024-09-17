@@ -64,8 +64,6 @@
 (package! elfeed-goodies :disable t)
 (package! code-review :disable t)
 (package! org-modern)
-(unpin! org-roam)
-(package! org-roam-ui)
 (package! deadgrep)
 (package! org-modern-indent :recipe (:host github :repo "jdtsmith/org-modern-indent"))
 (package! dired-du)

@@ -194,12 +194,10 @@
 ;; https://github.com/kickingvegas/casual-dired
 (setq casual-lib-use-unicode t)
 (use-package! casual-dired
-  :ensure nil
   :bind (:map
          dired-mode-map ("C-o" . casual-dired-tmenu)))
 ;; https://github.com/kickingvegas/casual-agenda
 (use-package! casual-agenda
-  :ensure nil
   :bind (:map
          org-agenda-mode-map ("C-o" . casual-agenda-tmenu))
   :after (org-agenda))
@@ -331,35 +329,7 @@
   (setq interprogram-cut-function 'my/wsl-copy-to-clipboard)
 )
 
-;; Org-roam v1
-;; https://org-roam.github.io/org-roam/manual/Installation-_00281_0029.html#Installation-_00281_002
-(defconst roam-host "http://localhost:8080")
-
-(defun my/open-org-roam-server (_)
-  (interactive)
-  (when (not (get-buffer "*httpd*"))
-    (org-roam-server-mode))
-  (if (my/is-wsl)
-      (browse-url-generic roam-host)
-    (browse-url roam-host)))
-
 (org-link-set-parameters "dired" :follow 'my/org-open-file-with-dired)
-
-;; org-roam-ui (for org-roam v2)
-(use-package! websocket
-    :after org-roam)
-
-(use-package! org-roam-ui
-    :after org-roam ;; or :after org
-;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-;;         a hookable mode anymore, you're advised to pick something yourself
-;;         if you don't care about startup time, use
-;;  :hook (after-init . org-roam-ui-mode)
-    :config
-    (setq org-roam-ui-sync-theme t
-          org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
 
 ;; Clojure
 ;; https://github.com/ericdallo/dotfiles/blob/master/.doom.d/config.el#L99-L134
