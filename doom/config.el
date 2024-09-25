@@ -201,6 +201,9 @@
   :bind (:map
          org-agenda-mode-map ("C-o" . casual-agenda-tmenu))
   :after (org-agenda))
+;; https://github.com/kickingvegas/casual-editkit
+(use-package! casual-editkit
+  :bind (("C-o" . casual-editkit-main-tmenu)))
 
 (setq frame-resize-pixelwise t)
 (my/set-initial-frame)
