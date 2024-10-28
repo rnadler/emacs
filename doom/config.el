@@ -141,7 +141,6 @@
   ;; face for starred articles
   (defface elfeed-search-star-title-face '((t :foreground "#f77")) "Marks a starred Elfeed entry.")
   (push '(star elfeed-search-star-title-face) elfeed-search-face-alist)
-  ;;(use-package! elfeed-webkit :bind (:map elfeed-show-mode-map ("x" . elfeed-webkit-toggle)))
   (defun elfeed-search-format-date (date)
     (format-time-string "%Y-%m-%d %H:%M" (seconds-to-time date)))
   ;; elfeed-curate key bindings
