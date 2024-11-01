@@ -158,7 +158,7 @@
   (setq elfeed-curate-hugo-base-dir "~/Projects/content-of-interest/")
 )
 
-;; elfeed-curate (WIP)
+;; elfeed-curate
 (load! "~/Projects/elfeed-curate/elfeed-curate.el")
 
 ;; Config diffs
@@ -381,6 +381,11 @@
 ;; Eglot
 ;; npm install -g typescript-language-server typescript
 ;; npm install -g pyright
+;; Install jdtls (Java language server)
+;; $ wget http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz
+;; $ mkdir ~/Downloads/jdtls
+;; $ tar -xvzf jdt-language-server-latest.tar.gz -C ~/Downloads/jdtls
+;; $ sudo ln -s ~/Downloads/jdtls/bin/jdtls /usr/local/bin/jdtls
 (use-package! eglot
   :commands (eglot eglot-ensure)
   :config
@@ -390,7 +395,8 @@
          (js-ts-mode . eglot-ensure)
          (typescript-mode . eglot-ensure)
          (python-mode . eglot-ensure)
-         (clojure-mode . eglot-ensure)))
+         (clojure-mode . eglot-ensure)
+         (java-mode . eglot-ensure)))
 
 ;; Smartparens
 (after! smartparens
