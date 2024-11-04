@@ -386,11 +386,18 @@
 ;; $ mkdir ~/Downloads/jdtls
 ;; $ tar -xvzf jdt-language-server-latest.tar.gz -C ~/Downloads/jdtls
 ;; $ sudo ln -s ~/Downloads/jdtls/bin/jdtls /usr/local/bin/jdtls
+
+;; Lombok support
+(setq lombok-version "1.18.34")
+(setq lombok-jar-path (expand-file-name (format "~/.m2/repository/org/projectlombok/lombok/%s/lombok-%s.jar"
+                                                lombok-version lombok-version)))
 (use-package! eglot
   :commands (eglot eglot-ensure)
   :config
   (add-to-list 'eglot-server-programs '(clojure-mode . ("/usr/local/bin/clojure-lsp" "--stdio")))
   (add-to-list 'eglot-server-programs '(clojurescript-mode . ("/usr/local/bin/clojure-lsp" "--stdio")))
+  (add-to-list 'eglot-server-programs
+               `(java-mode . ("jdtls" ,(concat "--jvm-arg=-javaagent:" lombok-jar-path))))
   :hook ((js-mode . eglot-ensure)
          (js-ts-mode . eglot-ensure)
          (typescript-mode . eglot-ensure)
