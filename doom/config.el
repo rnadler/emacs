@@ -394,8 +394,7 @@
 (use-package! eglot
   :commands (eglot eglot-ensure)
   :config
-  (add-to-list 'eglot-server-programs '(clojure-mode . ("/usr/local/bin/clojure-lsp" "--stdio")))
-  (add-to-list 'eglot-server-programs '(clojurescript-mode . ("/usr/local/bin/clojure-lsp" "--stdio")))
+  (add-to-list 'eglot-server-programs `((clojure-mode clojurescript-ts-mode) . ("clojure-lsp")))
   (add-to-list 'eglot-server-programs
                `(java-mode . ("jdtls" ,(concat "--jvm-arg=-javaagent:" lombok-jar-path))))
   :hook ((js-mode . eglot-ensure)
@@ -403,6 +402,7 @@
          (typescript-mode . eglot-ensure)
          (python-mode . eglot-ensure)
          (clojure-mode . eglot-ensure)
+         (clojurescript-ts--mode . eglot-ensure)
          (java-mode . eglot-ensure)))
 
 ;; Smartparens
