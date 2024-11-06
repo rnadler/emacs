@@ -412,16 +412,13 @@
   (modify-syntax-entry ?* ". 23b" typespec-mode-syntax-table)
   (modify-syntax-entry ?\n ">" typespec-mode-syntax-table)
   (setq typespec-font-lock-keywords
-        `((,(regexp-opt '("model" "namespace" "use" "interface" "op" "return" "extends" "import" "using" "is" "alias") 'words) . font-lock-keyword-face)
+        `((,(regexp-opt '("model" "namespace" "use" "interface" "op" "return" "extends" "import" "using" "is" "alias" "enum" "decorator") 'words) . font-lock-keyword-face)
           ("\\<\\(string\\|boolean\\|int32\\|int64\\|float\\|double\\)\\>" . font-lock-type-face)
-          (,(concat "\\(@deprecated\\|@since\\|@internal\\|@@route\\|@useRef\\|@@service\\|"
-                    "@@info\\|@@tag\\|@@server\\|@query\\|@statusCode\\|@body\\|@path\\|"
-                    "@header\\|@format\\|@doc\\|@minValue\\|@maxValue\\|@post\\|@get\\|@put\\|@delete\\)") . font-lock-builtin-face)
+          ("\\(@@?\\)[a-zA-Z0-9_]+" . font-lock-builtin-face)
           ("//.*" . font-lock-comment-face)
           ("/\\*\\(.\\|\n\\)*?\\*/" . font-lock-comment-face)))
   (setq font-lock-defaults '((typespec-font-lock-keywords))))
 (add-to-list 'auto-mode-alist '("\\.tsp\\'" . typespec-mode))
-
 
 ;; Smartparens
 (after! smartparens
