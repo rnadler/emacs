@@ -93,18 +93,26 @@
 	       (org-agenda-view-columns-initially t)
 	       (org-agenda-sorting-strategy ',sort))))
 
+(setq my/task-groups (seq-partition
+                      `("arch"      "ARCH tasks:"
+                        "orion"     "ORION tasks:"
+                        "air11"     "AIR11 tasks:"
+                        "ecobuilds" "ECO-BUILDS tasks:"
+                        "dev"       "DEV Unscheduled tasks:") 2))
+
+(setq my/task-groups-string
+  (mapconcat (lambda (x) (car x)) my/task-groups "-"))
+
 (defun my/todo-list ()
-  (cl-loop for (tag heading) in
-	(seq-partition `("arch"      "ARCH tasks:"
-			 "air11"     "AIR11 tasks:"
-			 "ecobuilds" "ECO-BUILDS tasks:"
-			 "dev"       "DEV Unscheduled tasks:") 2)
+  (cl-loop for (tag heading) in my/task-groups
 	collect (my/gen-agenda-todo tag heading)))
 
 (defun my/p-agenda-projects ()
   (append '((agenda "" nil))
 	  (my/todo-list)
-	    `(,(my/gen-agenda-todo "-arch-dev-air11-ecobuilds-TODO=\"DONE\"-TODO=\"CANCELLED\"" "Unscheduled TODO entries:" '(tag-up alpha-up)))))
+	    `(,(my/gen-agenda-todo
+                (format "-%s-TODO=\"DONE\"-TODO=\"CANCELLED\"" my/task-groups-string)
+                "Unscheduled TODO entries:" '(tag-up alpha-up)))))
 
 (if (my/is-wsl)
     (setq org-agenda-custom-commands
