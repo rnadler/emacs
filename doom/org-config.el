@@ -93,42 +93,35 @@
 	       (org-agenda-view-columns-initially t)
 	       (org-agenda-sorting-strategy ',sort))))
 
-(setq my/task-groups (seq-partition
-                      `("arch"      "ARCH tasks:"
-                        "orion"     "ORION tasks:"
-                        "air11"     "AIR11 tasks:"
-                        "ecobuilds" "ECO-BUILDS tasks:"
-                        "dev"       "DEV Unscheduled tasks:") 2))
+(setq my/task-groups `(("arch"      "ARCH tasks:")
+                       ("orion"     "ORION tasks:")
+                       ("air11"     "AIR11 tasks:")
+                       ("ecobuilds" "ECO-BUILDS tasks:")
+                       ("dev"       "DEV Unscheduled tasks:")))
 
-(setq my/task-groups-string
-  (mapconcat (lambda (x) (car x)) my/task-groups "-"))
+(setq my/wsl-task-groups `(("blog"      "BLOG tasks:")
+                           ("emacs"     "EMACS tasks:")
+                           ("home"      "HOME tasks:")))
 
-(defun my/todo-list ()
-  (cl-loop for (tag heading) in my/task-groups
+(defun my/task-groups-string (groups)
+  (mapconcat (lambda (x) (car x)) groups "-"))
+
+(defun my/todo-list (groups)
+  (cl-loop for (tag heading) in groups
 	collect (my/gen-agenda-todo tag heading)))
 
-(defun my/p-agenda-projects ()
+(defun my/p-agenda-projects (groups)
   (append '((agenda "" nil))
-	  (my/todo-list)
+	  (my/todo-list groups)
 	    `(,(my/gen-agenda-todo
-                (format "-%s-TODO=\"DONE\"-TODO=\"CANCELLED\"" my/task-groups-string)
+                (format "-%s-TODO=\"DONE\"-TODO=\"CANCELLED\"" (my/task-groups-string groups))
                 "Unscheduled TODO entries:" '(tag-up alpha-up)))))
 
-(if (my/is-wsl)
-    (setq org-agenda-custom-commands
-          '(("p" "Agenda and Projects"
-             ((agenda "" nil)
-	      (tags-todo "-TODO=\"DONE\"-TODO=\"CANCELLED\""
-		         ((org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))
-		          (org-agenda-overriding-header "Unscheduled TODO entries:")
-		          (org-agenda-view-columns-initially t)
-		          (org-agenda-sorting-strategy '(tag-up alpha-up))))
-              (tags "project"
-                    ((org-agenda-overriding-header "Projects:")
-                     (org-tags-match-list-sublevels 'indented)))))
-	    ))
-  (setq org-agenda-custom-commands
-        `(("p" "Agenda and Projects" ,(my/p-agenda-projects)))))
+(setq org-agenda-custom-commands
+      `(("p" "Agenda and Projects" ,(my/p-agenda-projects
+                                     (if (my/is-wsl)
+                                         my/wsl-task-groups
+                                       my/task-groups)))))
 
 (setq org-ellipsis " ▼")
 (add-hook 'org-mode-hook 'my/disable-line-numbers)
