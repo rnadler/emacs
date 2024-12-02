@@ -13,7 +13,7 @@
     (defconst ecobuilds-org-file (concat my-org-directory "/ecobuilds.org"))
 )
 (define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-c!" 'org-time-stamp-inactive)
+;;(define-key global-map "\C-c!" 'org-time-stamp-inactive)
 
 (setq org-agenda-start-day "-2d")
 (setq org-agenda-span 7)

@@ -204,6 +204,50 @@
 (use-package! casual-editkit
   :bind (("C-o" . casual-editkit-main-tmenu)))
 
+;; [2024-11-26 Tue] -- Doesn't work with =C-c !=
+;; https://github.com/kickingvegas/casual/blob/main/docs/calendar.org
+(keymap-set  calendar-mode-map "C-o" #'casual-calendar)
+
+(defun my/org-minibuffer-keymap-setup ()
+  (let ((map (current-local-map)))
+    (when map
+      (define-key map (kbd "C-o") 'casual-calendar))))
+
+;; (defun my/add-minibuffer-setup-hook (&rest _args)
+;;   (add-hook 'minibuffer-setup-hook #'my/org-minibuffer-keymap-setup))
+
+;; (defun my/remove-minibuffer-setup-hook (&rest _args)
+;;   (remove-hook 'minibuffer-setup-hook #'my/org-minibuffer-keymap-setup))
+
+;; (defun my/setup-minibuffer-for-func (func)
+;;   (advice-add func :before #'my/add-minibuffer-setup-hook)
+;;   (advice-add func :after #'my/remove-minibuffer-setup-hook))
+
+;; (my/setup-minibuffer-for-func #'org-deadline)
+;; (my/setup-minibuffer-for-func #'org-schedule)
+;; (my/setup-minibuffer-for-func #'org-time-stamp-inactive)
+
+;; Wrapper functions
+(defun my/org-deadline ()
+  (interactive)
+  (minibuffer-with-setup-hook 'my/org-minibuffer-keymap-setup
+    (call-interactively 'org-deadline)))
+
+(defun my/org-schedule ()
+  (interactive)
+  (minibuffer-with-setup-hook 'my/org-minibuffer-keymap-setup
+    (call-interactively 'org-schedule)))
+
+(defun my/org-time-stamp-inactive ()
+  (interactive)
+  (minibuffer-with-setup-hook 'my/org-minibuffer-keymap-setup
+    (call-interactively 'org-time-stamp-inactive)))
+
+(global-set-key (kbd "C-c C-d") 'my/org-deadline)
+(global-set-key (kbd "C-c C-s") 'my/org-schedule)
+(global-set-key (kbd "C-c !") 'my/org-time-stamp-inactive)
+
+
 (setq frame-resize-pixelwise t)
 (my/set-initial-frame)
 (setq confirm-kill-emacs nil)
