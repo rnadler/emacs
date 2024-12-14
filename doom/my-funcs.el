@@ -171,3 +171,8 @@ If ARG is provided, it sets the counter."
 (global-set-key (kbd "C-c b") (my/make-save-template 'backup "Backup"))
 (if (not (my/is-wsl))
     (global-set-key (kbd "C-c d") (my/make-save-template 'save_git_diff "Save git diff")))
+
+(defconst my/org-directory
+  (if (my/is-wsl)
+      "/mnt/c/Users/rober/OneDrive/org"
+    "~/org"))

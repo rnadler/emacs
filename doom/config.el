@@ -383,7 +383,7 @@
   :ensure t
   :init
   ;; Where to store the files?
-  (setq howm-directory "~/org/howm")
+  (setq howm-directory (expand-file-name "howm" my/org-directory))
   (setq howm-home-directory howm-directory)
   (setq howm-keyword-file (expand-file-name ".howm-keys" howm-home-directory))
   (setq howm-history-file (expand-file-name ".howm-history" howm-home-directory))
