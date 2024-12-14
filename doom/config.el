@@ -377,6 +377,34 @@
 
 (org-link-set-parameters "dired" :follow 'my/org-open-file-with-dired)
 
+;; Howm
+
+(use-package! howm
+  :ensure t
+  :init
+  ;; Where to store the files?
+  (setq howm-directory "~/org/howm")
+  (setq howm-home-directory howm-directory)
+  (setq howm-keyword-file (expand-file-name ".howm-keys" howm-home-directory))
+  (setq howm-history-file (expand-file-name ".howm-history" howm-home-directory))
+  ;; What format to use for the files?
+  (setq howm-file-name-format "%Y-%m-%d-%H%M%S.org")
+  (setq howm-view-title-header "*")
+  (setq action-lock-switch-default '("{ }" "{○}" "{◔}" "{◑}" "{◕}" "{●}"))
+  ;; Avoid conflicts with Org-mode by changing Howm's prefix from "C-c ,".
+  (setq howm-prefix (kbd "C-c ;"))
+  ;; Use ripgrep as grep
+  (setq howm-view-use-grep t)
+  (setq howm-view-grep-command "rg")
+  (setq howm-view-grep-option "-nH --no-heading --color never")
+  (setq howm-view-grep-extended-option nil)
+  (setq howm-view-grep-fixed-option "-F")
+  (setq howm-view-grep-expr-option nil)
+  (setq howm-view-grep-file-stdin-option nil)
+  :bind*
+  ;; Conveniently open the Howm menu with "C-c ; ;".
+  ("C-c ; ;" . howm-menu))
+
 ;; Clojure
 ;; https://github.com/ericdallo/dotfiles/blob/master/.doom.d/config.el#L99-L134
 (use-package! cider
