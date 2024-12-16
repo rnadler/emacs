@@ -77,3 +77,5 @@
 (package! jinx)
 (package! literate-calc-mode)
 (package! howm)
+(package! calfw)
+(package! calfw-howm)

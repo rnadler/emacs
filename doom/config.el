@@ -382,18 +382,15 @@
 (use-package! howm
   :ensure t
   :init
-  ;; Where to store the files?
   (setq howm-directory (expand-file-name "howm" my/org-directory))
   (setq howm-home-directory howm-directory)
   (setq howm-keyword-file (expand-file-name ".howm-keys" howm-home-directory))
   (setq howm-history-file (expand-file-name ".howm-history" howm-home-directory))
-  ;; What format to use for the files?
   (setq howm-file-name-format "%Y-%m-%d-%H%M%S.org")
   (setq howm-view-title-header "*")
   (setq action-lock-switch-default '("{ }" "{○}" "{◔}" "{◑}" "{◕}" "{●}"))
-  ;; Avoid conflicts with Org-mode by changing Howm's prefix from "C-c ,".
   (setq howm-prefix (kbd "C-c ;"))
-  ;; Use ripgrep as grep
+  ;; Use ripgrep
   (setq howm-view-use-grep t)
   (setq howm-view-grep-command "rg")
   (setq howm-view-grep-option "-nH --no-heading --color never")
@@ -402,15 +399,24 @@
   (setq howm-view-grep-expr-option nil)
   (setq howm-view-grep-file-stdin-option nil)
   :bind*
-  ;; Conveniently open the Howm menu with "C-c ; ;".
   ("C-c ; ;" . howm-menu))
+  (after! howm
+    (let ((file-name "0000-00-00-000000"))
+      (when (not (string-match-p file-name howm-excluded-file-regexp))
+        (setq howm-excluded-file-regexp  (concat howm-excluded-file-regexp
+                                                 (concat "\\|" file-name "\\.txt")))))
+    (require 'calfw-howm)
+    (cfw:install-howm-schedules)
+    ;; Add to howm-menu (0000-00-00-000000.txt):
+    ;; %here%(cfw:howm-schedule-inline)
+    (define-key howm-mode-map (kbd "M-C") 'cfw:open-howm-calendar))
 
 ;; Clojure
 ;; https://github.com/ericdallo/dotfiles/blob/master/.doom.d/config.el#L99-L134
 (use-package! cider
   :after clojure-mode
   :config
-  (setq cider-ns-refresh-show-log-buffer t
+  (Setq cider-ns-refresh-show-log-buffer t
         cider-show-error-buffer t;'only-in-repl
         cider-font-lock-dynamically '(macro core function var deprecated)
         cider-prompt-for-symbol nil)
