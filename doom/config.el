@@ -402,6 +402,7 @@
   (setq howm-view-grep-fixed-option "-F")
   (setq howm-view-grep-expr-option nil)
   (setq howm-view-grep-file-stdin-option nil)
+  (add-hook 'howm-view-summary-mode-hook 'my/disable-line-numbers)
   :bind*
   ("C-c ; ;" . howm-menu))
   (after! howm
