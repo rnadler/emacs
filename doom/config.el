@@ -389,7 +389,11 @@
   (setq howm-file-name-format "%Y-%m-%d-%H%M%S.org")
   (setq howm-view-title-header "*")
   (setq action-lock-switch-default '("{ }" "{○}" "{◔}" "{◑}" "{◕}" "{●}"))
+  (setq howm-dtime-body-format "%Y-%m-%d %a %H:%M")
   (setq howm-prefix (kbd "C-c ;"))
+  (setq howm-menu-recent-num 10)
+  (custom-set-faces
+   '(howm-reminder-normal-face ((t (:foreground "gray" :background "MidnightBlue" :weight bold)))))
   ;; Use ripgrep
   (setq howm-view-use-grep t)
   (setq howm-view-grep-command "rg")
@@ -408,7 +412,7 @@
     (require 'calfw-howm)
     (cfw:install-howm-schedules)
     ;; Add to howm-menu (0000-00-00-000000.txt):
-    ;; %here%(cfw:howm-schedule-inline)
+    ;;   %here%(cfw:howm-schedule-inline)
     (define-key howm-mode-map (kbd "M-C") 'cfw:open-howm-calendar))
 
 ;; Clojure
