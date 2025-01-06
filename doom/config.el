@@ -190,6 +190,11 @@
 (fset 'file-up-dir (kmacro [?\C-x ?d return ] 0 "%d"))
 (global-set-key (kbd "M-u") 'file-up-dir)
 
+;; Execute from the *elfeed-search* buffer
+(defalias 'elfeed-backup
+   (kmacro "C-x k RET C-x d / h o m e / b o b n / P r o j e c t s / c o n t e n t - o f - i n t e r e s t RET C-c b M-< C-s g e t _ RET ! RET g"))
+
+
 ;; https://github.com/kickingvegas/casual-dired
 (setq casual-lib-use-unicode t)
 (use-package! casual-dired
