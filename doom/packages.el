@@ -79,3 +79,4 @@
 (package! howm)
 (package! calfw)
 (package! calfw-howm)
+(package! android-mode :disable t)
