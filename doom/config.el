@@ -47,6 +47,10 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 (setq display-time-default-load-average nil)
+(global-visual-line-mode +1)
+(setq visible-bell t)
+(global-unset-key (kbd "C-z"))
+(winner-mode +1)
 
 (display-time)
 
