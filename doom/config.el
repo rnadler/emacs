@@ -389,7 +389,6 @@
 ;; Howm
 
 (use-package! howm
-  :ensure t
   :init
   (setq howm-directory (expand-file-name "howm" my/org-directory))
   (setq howm-home-directory howm-directory)
