@@ -80,3 +80,5 @@
 (package! calfw)
 (package! calfw-howm)
 (package! android-mode :disable t)
+(package! typespec-ts-mode)
+;;(package! kubernetes)

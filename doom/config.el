@@ -175,6 +175,16 @@
 (add-to-list 'auto-mode-alist '("\\.srvm\\'" . sr-virtual-mode))
 
 (add-to-list 'auto-mode-alist '("Dockerfile.*\\'" . dockerfile-mode))
+(add-to-list 'auto-mode-alist '("\\.tsp\\'" . typespec-ts-mode))
+
+;; Kubernetes
+;; (after! kubernetes
+;;   :ensure t
+;;   :commands (kubernetes-overview)
+;;   :config
+;;   (setq kubernetes-poll-frequency 3600
+;;         kubernetes-redraw-frequency 3600))
+;; (fset 'k8s 'kubernetes-overview)
 
 (setq make-backup-files nil) ;; stop creating those backup~ files
 
@@ -495,23 +505,6 @@
          (clojure-mode . eglot-ensure)
          (clojurescript-ts--mode . eglot-ensure)
          (java-mode . eglot-ensure)))
-
-;; TypeSpec
-(define-derived-mode typespec-mode prog-mode "TypeSpec"
-  "Major mode for TypeSpec syntax highlighting."
-  (modify-syntax-entry ?/ ". 124" typespec-mode-syntax-table)
-  (modify-syntax-entry ?* ". 23b" typespec-mode-syntax-table)
-  (modify-syntax-entry ?\n ">" typespec-mode-syntax-table)
-  (setq typespec-font-lock-keywords
-        `((,(regexp-opt '("model" "namespace" "use" "interface" "op" "return" "extends" "import" "using" "is" "alias" "enum" "scalar" "const" "union") 'words) . font-lock-keyword-face)
-          ("[a-zA-Z0-9?]+:" . font-lock-keyword-face)
-          ("\\<\\(string\\|boolean\\|integer\\|float32\\|float64\\|plainDate\\|utcDateTime\\|offsetDateTime\\|never\\|bytes\\)\\>" . font-lock-type-face)
-          ("\\(u?\\)int[0-9]+" . font-lock-type-face)
-          ("\\(@@?\\)[a-zA-Z0-9_]+" . font-lock-builtin-face)
-          ("//.*" . font-lock-comment-face)
-          ("/\\*\\(.\\|\n\\)*?\\*/" . font-lock-comment-face)))
-  (setq font-lock-defaults '((typespec-font-lock-keywords))))
-(add-to-list 'auto-mode-alist '("\\.tsp\\'" . typespec-mode))
 
 ;; Smartparens
 (after! smartparens
