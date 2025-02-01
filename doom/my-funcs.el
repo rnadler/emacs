@@ -4,6 +4,9 @@
   (and (eq system-type 'gnu/linux)
        (getenv "WSLENV")))
 
+(defun my/is-k8s-machine ()
+  (string= (system-name) "bobn-ubuntu-2404"))
+
 (defun my/diff-config
     (file)
   (ediff (concat "~/Projects/emacs/doom/" file) (concat "~/.doom.d/" file)))

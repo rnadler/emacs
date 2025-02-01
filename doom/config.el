@@ -52,8 +52,6 @@
 (global-unset-key (kbd "C-z"))
 (winner-mode +1)
 
-(display-time)
-
 (setq org-hide-emphasis-markers t)
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
@@ -177,14 +175,19 @@
 (add-to-list 'auto-mode-alist '("Dockerfile.*\\'" . dockerfile-mode))
 (add-to-list 'auto-mode-alist '("\\.tsp\\'" . typespec-ts-mode))
 
+
+(when (not (my/is-k8s-machine))
+  (display-time))
+
 ;; Kubernetes
-;; (after! kubernetes
-;;   :ensure t
-;;   :commands (kubernetes-overview)
-;;   :config
-;;   (setq kubernetes-poll-frequency 3600
-;;         kubernetes-redraw-frequency 3600))
-;; (fset 'k8s 'kubernetes-overview)
+(when (my/is-k8s-machine)
+  (after! kubernetes
+    :ensure t
+    :commands (kubernetes-overview)
+    :config
+    (setq kubernetes-poll-frequency 3600
+          kubernetes-redraw-frequency 3600))
+  (fset 'k8s 'kubernetes-overview))
 
 (setq make-backup-files nil) ;; stop creating those backup~ files
 
