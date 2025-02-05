@@ -214,6 +214,8 @@
 (defalias 'elfeed-backup
    (kmacro "C-x k RET C-c b C-x d / h o m e / b o b n / P r o j e c t s / c o n t e n t - o f - i n t e r e s t RET M-< C-s g e t _ RET ! RET g"))
 
+;; vterm
+(setq vterm-buffer-name-string "vterm: %s")
 
 ;; https://github.com/kickingvegas/casual-dired
 (setq casual-lib-use-unicode t)
