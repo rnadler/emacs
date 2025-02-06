@@ -84,3 +84,4 @@
 (load! "./my-funcs.el")
 (when (my/is-k8s-machine)
   (package! kubernetes))
+(unpin! (:tools magit))
