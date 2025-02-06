@@ -85,3 +85,4 @@
 (when (my/is-k8s-machine)
   (package! kubernetes))
 (unpin! (:tools magit))
+(package! dirvish :disable t)
