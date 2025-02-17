@@ -70,7 +70,7 @@
 (package! clojure-ts-mode)
 ;;(package! elfeed-curate)
 (unpin! (:lang clojure))
-(package! copilot :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el" "dist")))
+(package! copilot :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
 ;;(package! password-menu)
 (package! casual)
 (unpin! elfeed elfeed-org)
