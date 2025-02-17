@@ -39,6 +39,9 @@
   '(font-lock-keyword-face :slant italic)
   '(default :background "black"))
 
+(after! whitespace
+  (set-face-attribute 'whitespace-tab nil :background "black"))
+
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
