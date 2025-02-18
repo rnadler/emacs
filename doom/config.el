@@ -76,6 +76,7 @@
 (after! magit
   (add-hook 'magit-process-find-password-functions
             'magit-process-password-auth-source)
+  (setopt magit-format-file-function #'magit-format-file-nerd-icons)
   (setq magit-show-long-lines-warning nil))
 
 ;; Copilot
