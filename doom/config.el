@@ -198,17 +198,14 @@
   (fset 'k8s 'kubernetes-overview))
 
 (setq make-backup-files nil) ;; stop creating those backup~ files
+(setq dired-kill-when-opening-new-dired-buffer t)
 
 (setq-default dired-omit-files-p t) ; Buffer-local variable
 (after! dired+
   (setq all-the-icons-dired-monochrome nil)
-  (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$")))
+  (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
+  (setq diredp-hide-details-initially-flag nil))
 
-(after! dirvish
-  (setq dirvish-attributes '(nerd-icons collapse)))
-
-(setq diredp-hide-details-initially-flag nil)
-(diredp-toggle-find-file-reuse-dir 1)
 ;; https://www.emacs.dyerdwelling.family/emacs/emacs--dired-going-up-directories__emacs_linux/
 (define-key dired-mode-map (kbd "M-u") 'dired-up-directory)
 (define-key dired-mode-map (kbd "C-c m") 'my/dired-meld-diff-all-dwim)
