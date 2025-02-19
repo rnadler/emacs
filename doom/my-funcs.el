@@ -179,3 +179,16 @@ If ARG is provided, it sets the counter."
   (if (my/is-wsl)
       "/mnt/c/Users/rober/OneDrive/org"
     "~/org"))
+
+(defun my/kill-all-dired-buffers ()
+  "Kill all Dired buffers"
+  (interactive)
+  (let ((kill-count 0))
+    (dolist (buffer (buffer-list))
+      (when (and (buffer-live-p buffer)
+                 (eq (buffer-local-value 'major-mode buffer) 'dired-mode))
+        (kill-buffer buffer)
+        (setq kill-count (1+ kill-count))))
+    (message "Killed %d Dired buffer(s)" kill-count)))
+
+(global-set-key (kbd "C-c x") 'my/kill-all-dired-buffers)

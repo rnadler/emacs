@@ -84,7 +84,6 @@
   :hook (prog-mode . copilot-mode)
   :config
   (setq warning-suppress-types '((copilot)))
-  (setq! copilot-version "1.272.0")  ;; See https://github.com/copilot-emacs/copilot.el/issues/360
   :bind (:map copilot-completion-map
               ("<tab>" . 'copilot-accept-completion)
               ("TAB" . 'copilot-accept-completion)
