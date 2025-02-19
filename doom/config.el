@@ -202,8 +202,10 @@
 (setq-default dired-omit-files-p t) ; Buffer-local variable
 (after! dired+
   (setq all-the-icons-dired-monochrome nil)
-  (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
   (setq diredp-hide-details-initially-flag nil))
+(after! dired-x
+  (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$")))
+
 
 ;; https://www.emacs.dyerdwelling.family/emacs/emacs--dired-going-up-directories__emacs_linux/
 (define-key dired-mode-map (kbd "M-u") 'dired-up-directory)
