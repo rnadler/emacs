@@ -192,3 +192,12 @@ If ARG is provided, it sets the counter."
     (message "Killed %d Dired buffer(s)" kill-count)))
 
 (global-set-key (kbd "C-c x") 'my/kill-all-dired-buffers)
+
+(defun my/toggle-elfeed-curate-export-backend ()
+  "Toggle the elfeed-curate-org-export-backend between 'html and 'md"
+  (interactive)
+  (if (eq elfeed-curate-org-export-backend 'html)
+      (setq elfeed-curate-org-export-backend 'md)
+    (setq elfeed-curate-org-export-backend 'html))
+  (message "elfeed-curate-org-export-backend is now '%s."
+           (symbol-name elfeed-curate-org-export-backend)))
