@@ -15,9 +15,9 @@
 ;;      directory (for easy access to its source code).
 
 ;; https://github.com/hlissner/doom-emacs/issues/4498
-(when init-file-debug 
-  (require 'benchmark-init)
-  (add-hook 'doom-first-input-hook #'benchmark-init/deactivate))
+;; (when init-file-debug 
+;;  (require 'benchmark-init)
+;;  (add-hook 'doom-first-input-hook #'benchmark-init/deactivate))
 
 ;; emacs 28 deprecation
 ;; (defadvice! shut-up-emacs28 (_msg form &optional _compile-only)
