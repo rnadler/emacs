@@ -32,7 +32,7 @@
               ("HOLD" :foreground "magenta" :weight bold)
               ("CANCELLED" :foreground "forest green" :weight bold))))
 
-(cl-defun my/make/org-capture-template
+(cl-defun my/make-org-capture-template
    (shortcut heading &optional (no-todo nil) (description heading) (category heading) (scheduled t))
   "Quickly produce an org-capture-template."
   `(,shortcut ,description entry
@@ -49,14 +49,17 @@
 
 ;; https://github.com/sprig/org-capture-extension#set-up-handlers-in-emacs
 (setq org-capture-templates
-      (cons (my/make/org-capture-template "b" "Blog")
+      (cons (my/make-org-capture-template "b" "Blog")
 	    '(("t" "Todo" entry (file+headline todo-org-file "Inbox")
 	       "* TODO %?\n  %i\n  %a\n%T")
-        ;; javascript:location.href = 'org-protocol://capture?template=L&url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title) + '&body='
-        ("L" "Protocol Link" entry (file+headline todo-org-file "Inbox")
-         "* [[%:link][%:description]] %i\n- %?\nCaptured: %U")
+;; javascript:location.href = 'org-protocol://capture?template=L&url=' +
+;;    encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title) + '&body='
+              ("L" "Protocol Link" entry (file+headline howm-task-file "Tasks")
+               "** [%<%F>]+ %?\n[[%:link][%:description]] %i\nCaptured: %U")
 	      ("j" "Journal" entry (file+olp+datetree journal-org-file)
-	       "* %?\nEntered on %U\n  %i\n  %a"))))
+	       "* %?\nEntered on %U\n  %i\n  %a")
+              ("h" "Howm task" plain (file+headline howm-task-file "Tasks")
+               "** [%<%F>]+ %?"))))
 
 (org-babel-do-load-languages
  'org-babel-load-languages

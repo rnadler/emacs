@@ -198,6 +198,7 @@
 
 (setq make-backup-files nil) ;; stop creating those backup~ files
 (setq dired-kill-when-opening-new-dired-buffer t)
+(setq dired-movement-style 'cycle)  ;; `cycle' or `bounded'
 
 (setq-default dired-omit-files-p t) ; Buffer-local variable
 (after! dired+
@@ -413,8 +414,9 @@
   :init
   (setq howm-directory (expand-file-name "howm" my/org-directory))
   (setq howm-home-directory howm-directory)
+  (setq howm-task-file (expand-file-name my/howm-task-file howm-home-directory))
   (setq howm-keyword-file (expand-file-name ".howm-keys" howm-home-directory))
-  (setq howm-history-file (expand-file-name ".howm-history" howm-home-directory))
+    (setq howm-history-file (expand-file-name ".howm-history" howm-home-directory))
   (setq howm-file-name-format "%Y-%m-%d-%H%M%S.org")
   (setq howm-view-title-header "*")
   (setq action-lock-switch-default '("{ }" "{○}" "{◔}" "{◑}" "{◕}" "{●}"))
@@ -535,7 +537,7 @@
   (corfu-auto-prefix 2)
   ;;(corfu-preselect 'prompt)
   ;;(corfu-on-exact-match nil)
-    :init
+  :init
   (global-corfu-mode)
   (corfu-history-mode)
   (corfu-popupinfo-mode))
