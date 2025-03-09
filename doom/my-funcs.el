@@ -182,7 +182,7 @@ If ARG is provided, it sets the counter."
 
 (defconst my/howm-task-file
   (if (my/is-wsl)
-      "tasks.org"
+      "2024-12-23-091518.org"
     "2024-12-13-135935.org"))
 
 (defun my/kill-all-dired-buffers ()
