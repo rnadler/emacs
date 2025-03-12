@@ -452,7 +452,7 @@
 (use-package! cider
   :after clojure-mode
   :config
-  (Setq cider-ns-refresh-show-log-buffer t
+  (setq cider-ns-refresh-show-log-buffer t
         cider-show-error-buffer t;'only-in-repl
         cider-font-lock-dynamically '(macro core function var deprecated)
         cider-prompt-for-symbol nil)
