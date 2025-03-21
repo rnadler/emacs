@@ -42,6 +42,7 @@
 (after! whitespace
   (set-face-attribute 'whitespace-tab nil :background "black"))
 
+
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
@@ -214,9 +215,15 @@
 (fset 'file-up-dir (kmacro [?\C-x ?d return ] 0 "%d"))
 (global-set-key (kbd "M-u") 'file-up-dir)
 
+(add-hook 'dired-mode-hook
+          (lambda ()
+            (face-remap-add-relative 'default :background "black")))
+(set-face-attribute 'fringe nil :background "black")
+
 ;; Execute from the *elfeed-search* buffer
 (defalias 'elfeed-backup
-   (kmacro "C-x k RET C-c b C-x d / h o m e / b o b n / P r o j e c t s / c o n t e n t - o f - i n t e r e s t RET M-< C-s g e t _ RET ! RET g"))
+   (kmacro "C-x k RET C-c b C-x d / h o m e / b o b n / P r o j e c t s / c o n t e n t - o f - i n t e r e s t RET M-< C-s g e t _ RET ! RET g")
+   "Backup the elfeed database")
 
 ;; vterm
 (setq vterm-buffer-name-string "vterm: %s")
