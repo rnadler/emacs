@@ -63,7 +63,7 @@
 (package! org-fancy-priorities :disable t)
 (package! elfeed-goodies :disable t)
 (package! code-review :disable t)
-(package! org-modern)
+;;(package! org-modern)
 (package! deadgrep)
 (package! org-modern-indent :recipe (:host github :repo "jdtsmith/org-modern-indent"))
 (package! dired-du)

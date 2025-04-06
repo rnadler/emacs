@@ -313,7 +313,6 @@
               ("WAITING" :foreground "orange" :weight bold)
               ("HOLD" :foreground "magenta" :weight bold)
               ("CANCELLED" :foreground "forest green" :weight bold)))))
-(global-org-modern-mode)
 (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
 ;; https://discord.com/channels/406534637242810369/1019657860361224202/threads/1085222477904498719
 ;; Enable compact on search buffer delete
