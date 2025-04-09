@@ -207,53 +207,19 @@ If ARG is provided, it sets the counter."
   (message "elfeed-curate-org-export-backend is now '%s."
            (symbol-name elfeed-curate-org-export-backend)))
 
-;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=76596
-(defun my/dired--move-to-next-line (arg jumpfun)
-  (let ((wrapped nil)
-        (old-arg arg)
-        (old-position (progn
-                        ;; It's always true that we should move
-                        ;; to the filename when possible.
-                        (dired-move-to-filename)
-                        (point)))
-        ;; Up/Down indicates the direction.
-        (moving-down (if (cl-plusp arg)
-                         1              ; means Down.
-                       -1)))            ; means Up.
-    ;; Line by line in case we forget to skip empty lines.
-    (while (not (zerop arg))
-      (funcall jumpfun moving-down)
-      (when (= old-position (point))
-        ;; Now point is at beginning/end of movable area,
-        ;; but it still wants to move farther.
-        (cond
-         ;; `cycle': go to the other end.
-         ((eq dired-movement-style 'cycle)
-          ;; Argument not changing on the second wrap
-          ;; means infinite loop with no files found.
-          (if (and wrapped (eq old-arg arg))
-              (setq arg 0)
-            (goto-char (if (cl-plusp moving-down)
-                           (point-min)
-                         (point-max))))
-          (setq wrapped t))
-         ;; `bounded': go back to the last non-empty line.
-         (dired-movement-style ; Either 'bounded or anything else non-nil.
-          (while (and (dired-between-files)
-                      (not (dired-get-subdir))
-                      (not (zerop arg)))
-            (funcall jumpfun (- moving-down))
-            ;; Point not moving means infinite loop.
-            (if (= old-position (point))
-                (setq arg 0)
-              (setq old-position (point))))
-          ;; Encountered a boundary, so let's stop movement.
-          (setq arg (if (and (dired-between-files)
-                             (not (dired-get-subdir)))
-                        0 moving-down)))))
-      (unless (and (dired-between-files) (not (dired-get-subdir)))
-        ;; Has moved to a non-empty line.  This movement does
-        ;; make sense.
-        (cl-decf arg moving-down))
-      (setq old-position (point)))))
-(advice-add #'dired--move-to-next-line :override #'my/dired--move-to-next-line)
+(defun my/open-projects-in-vterm ()
+  (interactive)
+  (let ((dirs '("~"
+                "~/Projects/dhp-migration"
+                "~/Projects/avw-patient-migration-worker"
+                "~/Projects/airview-migration-service")))
+    (dolist (dir dirs)
+      (let* ((expanded-dir (file-name-as-directory (expand-file-name dir)))
+             (dir-name (file-name-nondirectory (directory-file-name expanded-dir)))
+             (buffer-exists
+              (seq-some (lambda (buf)
+                          (string-match-p dir (buffer-name buf))) (buffer-list))))
+        (unless buffer-exists
+          (let ((default-directory expanded-dir)
+                (buffer-name (format "vterm: %s" dir-name)))
+            (vterm (generate-new-buffer-name buffer-name))))))))
