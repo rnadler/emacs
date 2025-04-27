@@ -23,13 +23,10 @@
 ;;
 ;;(setq doom-font (font-spec :family "monospace" :size 14))
 ;;
-(if (my/is-wsl)
-    (setq font-size [16 16 24])
-    (setq font-size [14 14 20]))
-
- (setq doom-font (font-spec :family "Ubuntu Mono" :size (aref font-size 0))
-       doom-variable-pitch-font (font-spec :family "Ubuntu" :size (aref font-size 1))
-       doom-big-font (font-spec :family "Ubuntu Mono" :size (aref font-size 2)))
+(setq font-size [14 14 20])
+(setq doom-font (font-spec :family "Ubuntu Mono" :size (aref font-size 0))
+      doom-variable-pitch-font (font-spec :family "Ubuntu" :size (aref font-size 1))
+      doom-big-font (font-spec :family "Ubuntu Mono" :size (aref font-size 2)))
 
 (after! doom-themes
   (setq doom-themes-enable-bold t
@@ -389,28 +386,6 @@
 (global-set-key (kbd "C-x J") 'password-menu-completing-read)
 
 (setq auth-sources '("~/.authinfo.gpg"))
-
-;; WSL specific stuff
-;; https://emacsredux.com/blog/2021/12/19/wsl-specific-emacs-configuration/
-;;
-
-(when (my/is-wsl)
-  ;; Teach Emacs how to open links in your default Windows browser
-  (let ((cmd-exe "/mnt/c/Windows/System32/cmd.exe")
-        (cmd-args '("/c" "start")))
-    (when (file-exists-p cmd-exe)
-      (setq browse-url-generic-program  cmd-exe
-            browse-url-generic-args     cmd-args
-            browse-url-browser-function 'browse-url-generic
-            search-web-default-browser 'browse-url-generic)))
-  (defun my/wsl-copy-to-clipboard (text &optional push)
-    "Copy TEXT to the Windows clipboard using clip.exe."
-    (let ((process-connection-type nil))
-      (let ((proc (start-process "clip" "*Messages*" "clip.exe")))
-        (process-send-string proc text)
-        (process-send-eof proc))))
-  (setq interprogram-cut-function 'my/wsl-copy-to-clipboard)
-)
 
 (org-link-set-parameters "dired" :follow 'my/org-open-file-with-dired)
 
