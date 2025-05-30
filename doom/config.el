@@ -131,8 +131,10 @@
       (setf (elfeed-entry-title entry)
             (my/elfeed-clean-title title))))
 
+(defconst my/elfeed-default-search-filter "+unread")
+
 (after! elfeed
-  (setq-default elfeed-search-filter "+unread")
+  (setq-default elfeed-search-filter my/elfeed-default-search-filter)
   (setq elfeed-sort-order 'ascending)
   (advice-add #'elfeed-insert-html
               :around
@@ -163,6 +165,11 @@
   (add-hook 'elfeed-new-entry-hook #'my/elfeed-clean-entry)
   ;;(setq elfeed-curate-org-export-backend 'md)
   (setq elfeed-curate-hugo-base-dir "~/Projects/content-of-interest/")
+  (map!
+   (:map (elfeed-search-mode-map elfeed-show-mode-map)
+         (:prefix ("f" . "Filter")
+          :desc "Default" "d" (cmd! (elfeed-search-set-filter my/elfeed-default-search-filter))
+          :desc "Star"    "s" (cmd! (elfeed-search-set-filter "+star")))))
 )
 
 ;; elfeed-curate
