@@ -146,18 +146,13 @@
     (elfeed-expose #'elfeed-search-toggle-all 'star))
   ;; (eval-after-load 'elfeed-search
   ;;   '(define-key elfeed-search-mode-map (kbd "m") 'elfeed-toggle-star))
-  (define-key elfeed-search-mode-map "m" #'elfeed-toggle-star)
   ;; face for starred articles
   (defface elfeed-search-star-title-face '((t :foreground "#f77")) "Marks a starred Elfeed entry.")
   (push '(star elfeed-search-star-title-face) elfeed-search-face-alist)
   (defun elfeed-search-format-date (date)
     (format-time-string "%Y-%m-%d %H:%M" (seconds-to-time date)))
   ;; elfeed-curate key bindings
-  (define-key elfeed-search-mode-map "a" #'elfeed-curate-edit-entry-annoation)
   (define-key elfeed-search-mode-map "x" #'elfeed-curate-export-entries)
-  ;;(define-key elfeed-search-mode-map "m" #'elfeed-curate-toggle-star)  ;; like the toggle-all better
-  (define-key elfeed-show-mode-map "a" #'elfeed-curate-edit-entry-annoation)
-  (define-key elfeed-show-mode-map "m" #'elfeed-curate-toggle-star)
   (define-key elfeed-show-mode-map "q" #'kill-buffer-and-window)
   ;;(add-hook 'elfeed-tag-hooks (lambda (entry tag) (elfeed-curate--show-entry "Add tag" (car entry) tag)))
   ;;(add-hook 'elfeed-untag-hooks  (lambda (entry tag) (elfeed-curate--show-entry   "Remove tag" (car entry) tag)))
@@ -167,9 +162,11 @@
   (setq elfeed-curate-hugo-base-dir "~/Projects/content-of-interest/")
   (map!
    (:map (elfeed-search-mode-map elfeed-show-mode-map)
-         (:prefix ("f" . "Filter")
-          :desc "Default" "d" (cmd! (elfeed-search-set-filter my/elfeed-default-search-filter))
-          :desc "Star"    "s" (cmd! (elfeed-search-set-filter "+star")))))
+    :g "a" #'elfeed-curate-edit-entry-annoation
+    :g "m" #'elfeed-curate-toggle-star
+    (:prefix ("f" . "Filter")
+     :desc "Default" "d" (cmd! (elfeed-search-set-filter my/elfeed-default-search-filter))
+     :desc "Star"    "s" (cmd! (elfeed-search-set-filter "+star")))))
 )
 
 ;; elfeed-curate
