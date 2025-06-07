@@ -160,10 +160,11 @@
   (add-hook 'elfeed-new-entry-hook #'my/elfeed-clean-entry)
   ;;(setq elfeed-curate-org-export-backend 'md)
   (setq elfeed-curate-hugo-base-dir "~/Projects/content-of-interest/")
+  (define-key elfeed-search-mode-map "m" #'elfeed-toggle-star)
+  (define-key elfeed-show-mode-map   "m" #'elfeed-curate-toggle-star)
   (map!
    (:map (elfeed-search-mode-map elfeed-show-mode-map)
     :g "a" #'elfeed-curate-edit-entry-annoation
-    :g "m" #'elfeed-curate-toggle-star
     (:prefix ("f" . "Filter")
      :desc "Default" "d" (cmd! (elfeed-search-set-filter my/elfeed-default-search-filter))
      :desc "Star"    "s" (cmd! (elfeed-search-set-filter "+star")))))
