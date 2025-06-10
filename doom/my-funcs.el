@@ -247,3 +247,11 @@ The DWIM behaviour of this command is as follows:
    (t
     (keyboard-quit))))
 (global-set-key [remap keyboard-quit] #'my/keyboard-quit-dwim)
+
+(defun my/decode-base64-region (start end)
+  "Decode base64 of a selected region"
+  (interactive "r")
+  (let* ((raw (buffer-substring-no-properties start end))
+         (clean (replace-regexp-in-string "^['\"]\\|['\"]$" "" raw))
+         (decoded (base64-decode-string clean)))
+    (message decoded)))
