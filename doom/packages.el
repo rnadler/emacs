@@ -82,9 +82,8 @@
 (package! android-mode :disable t)
 (package! typespec-ts-mode)
 (load! "./my-funcs.el")
-(if (my/is-k8s-machine)
-    (package! kubernetes)
-  (unpin! (:tools magit)))
+(when (my/is-k8s-machine)
+  (package! kubernetes))
 (unpin! (:tools magit))
 (package! dirvish :disable t)
 ;; https://github.com/doomemacs/doomemacs/issues/8286
