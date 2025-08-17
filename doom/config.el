@@ -593,6 +593,8 @@
             (local-set-key (kbd "C-S-x") #'rebl-eval-defun-at-point)
             ;;(local-set-key (kbd "C-x C-r") #'rebl-eval-last-sexp)
             ))
+;; Gptel
+(gptel-make-gh-copilot "Copilot")
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;

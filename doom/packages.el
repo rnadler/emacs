@@ -88,3 +88,4 @@
 (package! dirvish :disable t)
 ;; https://github.com/doomemacs/doomemacs/issues/8286
 (package! package-lint :pin "21edc6d0d0eadd2d0a537f422fb9b7b8a3ae6991")
+(package! gptel :recipe (:nonrecursive t))
