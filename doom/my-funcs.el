@@ -255,3 +255,12 @@ The DWIM behaviour of this command is as follows:
          (clean (replace-regexp-in-string "^['\"]\\|['\"]$" "" raw))
          (decoded (base64-decode-string clean)))
     (message decoded)))
+
+(defun my/gptel-use-key (user)
+  "Switch gptel API key based on USER (string in authinfo)."
+  (interactive
+   (list (completing-read "Use API key for user: " '("apikey" "work"))))
+  (setq gptel-api-key
+        (auth-source-pick-first-password
+         :host "api.openai.com" :user user))
+  (message "Switched gptel API key to %s" user))

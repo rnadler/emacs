@@ -594,7 +594,13 @@
             ;;(local-set-key (kbd "C-x C-r") #'rebl-eval-last-sexp)
             ))
 ;; Gptel
-(gptel-make-gh-copilot "Copilot")
+(use-package! gptel
+ :config
+ (setq! gptel-default-mode 'org-mode
+        gptel-model 'gpt-4o
+        gptel-backend (gptel-make-gh-copilot "Copilot")))
+
+(global-set-key (kbd "C-c RET") 'gptel-send)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
