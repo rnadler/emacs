@@ -601,6 +601,8 @@
         gptel-backend (gptel-make-gh-copilot "Copilot")))
 
 (global-set-key (kbd "C-c RET") 'gptel-send)
+(global-set-key (kbd "C-c m") 'gptel-menu)
+(global-set-key (kbd "C-c g") 'gptel-mode)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
