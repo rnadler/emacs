@@ -3,6 +3,9 @@
 (defun my/is-wsl ()
   (string= (system-name) "ubuntu-bobn"))
 
+(defun my/is-archlinux ()
+  (string= (system-name) "archlinux"))
+
 (defun my/is-k8s-machine ()
   (or
    (string= (system-name) "bobn-ubuntu-2404")
