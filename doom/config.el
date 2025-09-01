@@ -234,6 +234,7 @@
 
 ;; vterm
 (setq vterm-buffer-name-string "vterm: %s")
+(setq vterm-shell "/bin/zsh")
 
 ;; https://github.com/kickingvegas/casual-dired
 (setq casual-lib-use-unicode t)

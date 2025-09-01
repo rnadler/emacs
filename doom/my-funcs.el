@@ -168,7 +168,7 @@ If ARG is provided, it sets the counter."
          (oldbuff (current-buffer))
          (result ""))
        (org-save-all-org-buffers)
-       (find-file (if (my/is-wsl) todo-org-file scripts-org-file))
+       (find-file (if (or (my/is-archlinux) (my/is-wsl)) todo-org-file scripts-org-file))
        (setq result (ignore-errors (org-sbe ,sbe)))
        (unless (eq (current-buffer) oldbuff) (switch-to-buffer oldbuff))
        (goto-char oldp)
