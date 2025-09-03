@@ -6,6 +6,9 @@
 (defun my/is-archlinux ()
   (string= (system-name) "archlinux"))
 
+(defun my/is-archlinux-dev ()
+  (string= (system-name) "archlinux-dev"))
+
 (defun my/is-k8s-machine ()
   (or
    (string= (system-name) "bobn-ubuntu-2404")

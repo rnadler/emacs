@@ -23,7 +23,7 @@
 ;;
 ;;(setq doom-font (font-spec :family "monospace" :size 14))
 ;;
-(setq font-size (if (my/is-archlinux) [18 18 24] [14 14 20]))
+(setq font-size (if (or (my/is-archlinux) (my/is-archlinux-dev)) [18 18 24] [14 14 20]))
 (setq doom-font (font-spec :family "Ubuntu Mono" :size (aref font-size 0))
       doom-variable-pitch-font (font-spec :family "Ubuntu" :size (aref font-size 1))
       doom-big-font (font-spec :family "Ubuntu Mono" :size (aref font-size 2)))
