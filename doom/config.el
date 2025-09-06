@@ -23,13 +23,13 @@
 ;;
 ;;(setq doom-font (font-spec :family "monospace" :size 14))
 ;;
-(setq font-size (if (or (my/is-archlinux) (my/is-archlinux-dev)) [18 18 24] [14 14 20]))
+(setq font-size (if (my/is-arch) [18 18 24] [14 14 20]))
 (setq doom-font (font-spec :family "Ubuntu Mono" :size (aref font-size 0))
       doom-variable-pitch-font (font-spec :family "Ubuntu" :size (aref font-size 1))
       doom-big-font (font-spec :family "Ubuntu Mono" :size (aref font-size 2)))
 
 ;; arch linux: sudo pacman -S ttf-jetbrains-mono-nerd
-(when (my/is-archlinux)
+(when (my/is-arch)
   (set-fontset-font t 'unicode "JetBrainsMono Nerd Font" nil 'append))
 
 (after! doom-themes
@@ -295,7 +295,7 @@
 
 
 (setq frame-resize-pixelwise t)
-(when (not (my/is-archlinux))
+(when (not (my/is-arch))
   (my/set-initial-frame))
 (setq confirm-kill-emacs nil)
 (grep-apply-setting 'grep-find-command '("find . -name '*.java' -exec grep -nH --null -e   \\{\\} +" . 48))
