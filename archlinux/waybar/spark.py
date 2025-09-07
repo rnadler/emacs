@@ -9,12 +9,17 @@ def get_len():
     return 10
 SPARK_LEN = get_len()
 SLEEP_SECONDS = 2
+BAR_FONT = os.getenv("BAR_FONT", "Iosevka Term Condensed")
 BARS = "▁▂▃▄▅▆▇█"
+
 def spark(vals):
     if not vals: return ""
     hi = max(vals) or 1.0
     n = len(BARS) - 1
     return "".join(BARS[min(n, max(0, int(round((v/hi) * n))))] for v in vals)
+
+def wrap_bar(s):
+    return f'<span font="{BAR_FONT} 6">{s}</span>'
 
 # Optional (fixed 0–100% scale, good for CPU/Mem):
 
@@ -41,8 +46,9 @@ def cpu_loop():
         prev_t, prev_i = t, i
         usage = 0.0 if dt <= 0 else (dt - di) / dt
         hist.append(usage*100.0)
+        bar = wrap_bar(spark_pct(hist))
         out = {
-            "text": f"{spark_pct(hist)} {int(usage*100)}% 󰍛 ",
+            "text": f"{bar} {int(usage*100)}% 󰍛 ",
             "tooltip": f"CPU {usage*100:.1f}%",
             "class": "cpu-graph",
             "percentage": int(usage*100)
@@ -58,8 +64,9 @@ def mem_loop():
         avail = m.get("MemAvailable", 0)
         used_pct = 100.0 * (1 - avail/total)
         hist.append(used_pct)
+        bar = wrap_bar(spark(hist))
         out = {
-            "text": f"{spark(hist)} {int(used_pct)}%",
+            "text": f"{bar} {int(used_pct)}%",
             "tooltip": f"Mem {used_pct:.1f}%",
             "class": "mem-graph",
             "percentage": int(used_pct)
@@ -96,7 +103,9 @@ def net_loop():
         rx0, tx0 = rx1, tx1
         h_down.append(down)
         h_up.append(up)
-        text = f"↓{spark(h_down)} ↑{spark(h_up)} 󰀂 "
+        bar_down = wrap_bar(spark(h_down))
+        bar_up = wrap_bar(spark(h_up))
+        text = f"↓{bar_down} ↑{bar_up} 󰀂 "
         def fmt(bps):
             units = ["b/s","Kb/s","Mb/s","Gb/s"]
             val = float(bps)

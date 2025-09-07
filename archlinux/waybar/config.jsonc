@@ -55,12 +55,12 @@
     "on-click-right": "omarchy-cmd-tzupdate"
   },
   "custom/cpu_graph": {
-    "exec": "~/.config/waybar/spark.py cpu 20",
+    "exec": "~/.config/waybar/spark.py cpu 30",
     "return-type": "json",
     "tail": true
   },
   "custom/net_graph": {
-    "exec": "~/.config/waybar/spark.py net",
+    "exec": "~/.config/waybar/spark.py net 20",
     "return-type": "json",
     "tail": true,
     "env": {
