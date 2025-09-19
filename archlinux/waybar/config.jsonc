@@ -45,11 +45,12 @@
     "exec": "omarchy-update-available",
     "on-click": "alacritty --class Omarchy --title Omarchy -e omarchy-update",
     "tooltip-format": "Omarchy update available",
+    "signal": 7,
     "interval": 3600
   },
   "clock": {
     "format": "{:%a %b %d, %I:%M:%S %p}",
-    "format-alt": "{:%d %B W%V %Y}",
+    "format-alt": "{:L%d %B W%V %Y}",
     "interval": 1,
     "tooltip": false,
     "on-click-right": "omarchy-cmd-tzupdate"
