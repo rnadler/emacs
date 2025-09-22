@@ -215,7 +215,6 @@
 (after! dired-x
   (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$")))
 
-
 ;; https://www.emacs.dyerdwelling.family/emacs/emacs--dired-going-up-directories__emacs_linux/
 (define-key dired-mode-map (kbd "M-u") 'dired-up-directory)
 (define-key dired-mode-map (kbd "C-c m") 'my/dired-meld-diff-all-dwim)
@@ -225,6 +224,11 @@
 (add-hook 'dired-mode-hook
           (lambda ()
             (face-remap-add-relative 'default :background "black")))
+
+(use-package! nerd-icons-dired
+  :after (dired nerd-icons)
+  :hook (dired-mode . nerd-icons-dired-mode))
+
 (set-face-attribute 'fringe nil :background "black")
 
 ;; Execute from the *elfeed-search* buffer

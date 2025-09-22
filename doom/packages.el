@@ -87,3 +87,5 @@
 (unpin! (:tools magit))
 (package! dirvish :disable t)
 (package! gptel :recipe (:nonrecursive t))
+(package! nerd-icons)
+(package! nerd-icons-dired)
