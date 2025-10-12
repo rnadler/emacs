@@ -92,7 +92,6 @@
     "return-type": "text",
     "interval": 1,
     "tooltip": false,
-    "format": " {}",
-    "on-click": "hyprctl dispatch focuswindow"
+    "format": "  {}"
   }
 }

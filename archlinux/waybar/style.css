@@ -54,6 +54,11 @@ tooltip {
   font-size: 10px;
 }
 
+#custom-focused_window {
+  font-size: 13px;
+  color: lightgreen;
+}
+
 #clock {
   margin-left: 8.75px;
 }
@@ -62,10 +67,10 @@ tooltip {
   opacity: 0;
 }
 #custom-cpu_graph {
-    color: #88c0d0;
+    color: lightblue;
 }
 #custom-net_graph {
-    color: #a3be8c;
+    color: lightgray;
 }
 #custom-cpu_graph, #custom-mem_graph, #custom-net_graph {
   font-family: monospace;
