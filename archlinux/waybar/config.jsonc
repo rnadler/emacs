@@ -4,7 +4,7 @@
   "position": "top",
   "spacing": 0,
   "height": 30,
-  "modules-left": ["custom/omarchy", "hyprland/workspaces"],
+  "modules-left": ["custom/omarchy", "hyprland/workspaces", "custom/focused_window"],
   "modules-center": ["clock", "custom/update"],
   "modules-right": [
     "custom/cpu_graph",
@@ -86,5 +86,13 @@
   "tray": {
     "icon-size": 12,
     "spacing": 12
+  },
+  "custom/focused_window": {
+    "exec": "hyprctl clients -j | jq -r '.[] | select(.focusHistoryID == 0) | .title'",
+    "return-type": "text",
+    "interval": 1,
+    "tooltip": false,
+    "format": " {}",
+    "on-click": "hyprctl dispatch focuswindow"
   }
 }
