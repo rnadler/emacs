@@ -166,7 +166,9 @@
   ;;(setq elfeed-curate-org-export-backend 'md)
   (setq elfeed-curate-hugo-base-dir "~/Projects/content-of-interest/")
   (define-key elfeed-search-mode-map "m" #'elfeed-toggle-star)
+  (define-key elfeed-search-mode-map "i" #'elfeed-curate-ask-gptel)
   (define-key elfeed-show-mode-map   "m" #'elfeed-curate-toggle-star)
+  (define-key elfeed-show-mode-map   "i" #'elfeed-curate-ask-gptel)
   (map!
    (:map (elfeed-search-mode-map elfeed-show-mode-map)
     :g "a" #'elfeed-curate-edit-entry-annoation
