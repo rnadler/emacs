@@ -53,7 +53,7 @@
     "format-alt": "{:L%d %B W%V %Y}",
     "interval": 1,
     "tooltip": false,
-    "on-click-right": "omarchy-cmd-tzupdate"
+    "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select"
   },
   "custom/cpu_graph": {
     "exec": "~/.config/waybar/spark.py cpu 30",
