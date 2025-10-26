@@ -169,6 +169,7 @@
   (define-key elfeed-search-mode-map "i" #'elfeed-curate-ask-gptel)
   (define-key elfeed-show-mode-map   "m" #'elfeed-curate-toggle-star)
   (define-key elfeed-show-mode-map   "i" #'elfeed-curate-ask-gptel)
+  (define-key elfeed-show-mode-map   "j" #'elfeed-curate-get-link)
   (map!
    (:map (elfeed-search-mode-map elfeed-show-mode-map)
     :g "a" #'elfeed-curate-edit-entry-annoation
