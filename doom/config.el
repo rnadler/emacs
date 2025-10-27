@@ -392,6 +392,11 @@
    (css-mode . css-ts-mode)
    (python-mode . python-ts-mode)))
 
+;; Ispell
+;; sudo pacman -S aspell aspell-en
+(setq ispell-program-name "aspell")
+(setq ispell-dictionary "en_US")
+
 ;; Python scons support
 (add-to-list 'auto-mode-alist '("SConstruct" . python-mode))
 (add-to-list 'auto-mode-alist '("SConscript" . python-mode))
