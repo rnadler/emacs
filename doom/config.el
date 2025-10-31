@@ -257,6 +257,13 @@
 (use-package! casual-editkit
   :bind (("C-o" . casual-editkit-main-tmenu)))
 
+;; https://kickingvegas.github.io/casual/Ediff-Install.html
+(casual-ediff-install)
+(add-hook 'ediff-keymap-setup-hook
+          (lambda ()
+            (keymap-set ediff-mode-map "C-o" #'casual-ediff-tmenu)))
+(setq ediff-keep-variants nil) ;; Don't keep temp files
+
 ;; [2024-11-26 Tue] -- Doesn't work with =C-c !=
 ;; https://github.com/kickingvegas/casual/blob/main/docs/calendar.org
 (keymap-set  calendar-mode-map "C-o" #'casual-calendar)
