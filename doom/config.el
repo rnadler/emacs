@@ -523,6 +523,11 @@
   (add-to-list 'eglot-server-programs `((clojure-mode clojurescript-ts-mode) . ("clojure-lsp")))
   (add-to-list 'eglot-server-programs
                `(java-mode . ("jdtls" ,(concat "--jvm-arg=-javaagent:" lombok-jar-path))))
+  ;; sudo npm install -g typescript typescript-language-server
+  (add-to-list 'eglot-server-programs
+               '(typescript-mode . ("typescript-language-server" "--stdio")))
+  (add-to-list 'eglot-server-programs
+               '(typescript-tsx-mode . ("typescript-language-server" "--stdio")))
   :hook ((js-mode . eglot-ensure)
          (js-ts-mode . eglot-ensure)
          (typescript-mode . eglot-ensure)
