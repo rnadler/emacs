@@ -64,7 +64,7 @@
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
     "format": "{icon}",
     "format-wifi": "{icon}",
-    "format-ethernet": "⇣{bandwidthDownBytes} ⇡{bandwidthUpBytes} 󰀂",
+    "format-ethernet": "{bandwidthDownBytes:>6}⇣ {bandwidthUpBytes:>6}⇡ 󰀂 ",
     "format-disconnected": "󰤮",
     "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
     "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
@@ -73,7 +73,7 @@
     "spacing": 1
   },
   "memory": {
-     "format": "{}% "
+     "format": "{}%"
   },
   "group/tray-expander": {
     "orientation": "inherit",
