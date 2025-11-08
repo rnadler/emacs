@@ -8,7 +8,7 @@
   "modules-center": ["clock", "custom/update"],
   "modules-right": [
     "custom/cpu_graph",
-    "custom/net_graph",
+    "network",
     "memory"
   ],
   "hyprland/workspaces": {
@@ -60,13 +60,17 @@
     "return-type": "json",
     "tail": true
   },
-  "custom/net_graph": {
-    "exec": "~/.config/waybar/spark.py net 20",
-    "return-type": "json",
-    "tail": true,
-    "env": {
-      "WAYBAR_NET_IFACE": "enp0s3"
-    }
+  "network": {
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "format": "{icon}",
+    "format-wifi": "{icon}",
+    "format-ethernet": "⇣{bandwidthDownBytes} ⇡{bandwidthUpBytes} 󰀂",
+    "format-disconnected": "󰤮",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3,
+    "spacing": 1
   },
   "memory": {
      "format": "{}% "

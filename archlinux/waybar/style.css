@@ -69,6 +69,7 @@ tooltip {
 #custom-cpu_graph {
     color: lightblue;
 }
+#network,
 #custom-net_graph {
     color: lightgray;
 }
