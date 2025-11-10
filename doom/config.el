@@ -403,6 +403,8 @@
 ;; sudo pacman -S aspell aspell-en
 (setq ispell-program-name "aspell")
 (setq ispell-dictionary "en_US")
+;; touch "~/.emacs.d/words.txt"
+(setq ispell-alternate-dictionary "~/.emacs.d/words.txt")
 
 ;; Python scons support
 (add-to-list 'auto-mode-alist '("SConstruct" . python-mode))
