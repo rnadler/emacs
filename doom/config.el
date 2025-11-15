@@ -52,7 +52,6 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
-(setq display-time-default-load-average nil)
 (global-visual-line-mode +1)
 (setq visible-bell t)
 (global-unset-key (kbd "C-z"))
@@ -193,9 +192,21 @@
 (add-to-list 'auto-mode-alist '("Dockerfile.*\\'" . dockerfile-mode))
 (add-to-list 'auto-mode-alist '("\\.tsp\\'" . typespec-ts-mode))
 
-
-(when (not (my/is-k8s-machine))
-  (display-time))
+;; ------------------------------
+;; Doom modeline clock (SVG-safe)
+;; ------------------------------
+(after! doom-modeline
+  ;; Disable icons to avoid SVG issues
+  (setq doom-modeline-time-analogue-clock nil
+        doom-modeline-time t) ;; enable clock
+  ;; Keep display-time-mode running for doom-modeline updates
+  ;; but hide Emacs's default clock
+  (setq display-time-format nil
+        display-time-default-load-average nil
+        display-time-day-and-date nil
+        display-time-24hr-format nil)
+  ;; Enable display-time-mode after doom-modeline has loaded
+  (display-time-mode t))
 
 ;; Kubernetes
 (when (my/is-k8s-machine)
@@ -325,6 +336,7 @@
                             :export (lambda (_ desc &rest _) desc)))
 (after! org-modern
   (setq org-modern-star 'replace)
+  (setq org-modern--table-overline '(:strike-through t))
   (setq org-modern-checkbox
         '((?X . "✅")    ;; Completed checkbox
           (?- . "🔆")    ;; Pending checkbox
