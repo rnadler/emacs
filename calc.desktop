@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Calc (Emacs)
+GenericName=Calculator
+Comment=Emacs Calculator
+Exec=emacs -Q --eval "(full-calc)" -l "~/.emacs.d/early-init.el"
+Icon=emacs
+Type=Application
+Terminal=false
+Categories=Utility;
