@@ -4,7 +4,11 @@
   "position": "top",
   "spacing": 0,
   "height": 30,
-  "modules-left": ["custom/omarchy", "hyprland/workspaces", "custom/focused_window"],
+  "modules-left": [
+    "custom/omarchy",
+    "hyprland/workspaces",
+    "hyprland/window"
+  ],
   "modules-center": ["clock", "custom/update"],
   "modules-right": [
     "custom/cpu_graph",
@@ -25,6 +29,7 @@
       "7": "7",
       "8": "8",
       "9": "9",
+      "10": "0",
       "active": "󱓻"
     },
     "persistent-workspaces": {
@@ -91,11 +96,9 @@
     "icon-size": 12,
     "spacing": 12
   },
-  "custom/focused_window": {
-    "exec": "hyprctl clients -j | jq -r --argjson wsid $(hyprctl activeworkspace -j | jq '.id') '.[] | select(.focusHistoryID == 0 and .workspace.id == $wsid) | .title'",
-    "return-type": "text",
-    "interval": 1,
-    "tooltip": false,
-    "format": "  {}"
+  "hyprland/window": {
+    "format": "{}",
+    "icon": true,
+    "icon-size": 16
   }
 }
