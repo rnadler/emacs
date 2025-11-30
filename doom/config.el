@@ -643,8 +643,7 @@
  :config
  (setq! gptel-default-mode 'org-mode
         gptel-temperature 0.2
-        gptel-model 'gpt-4o
-        gptel-backend (gptel-make-gh-copilot "Copilot")))
+        gptel-model 'gpt-5.1))
 
 (global-set-key (kbd "C-c RET") 'gptel-send)
 (global-set-key (kbd "C-c m") 'gptel-menu)
