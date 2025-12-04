@@ -57,8 +57,24 @@
     "format": "{:%a %b %d, %I:%M:%S %p}",
     "format-alt": "{:L%d %B W%V %Y}",
     "interval": 1,
-    "tooltip": false,
-    "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select"
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+	"calendar": {
+		"mode"          : "month",
+		"mode-mon-col"  : 3,
+		"on-scroll"     : 1,
+		"on-click-right": "mode",
+		"format": {
+			"months":     "<span color='#ffead3'><b>{}</b></span>",
+			"days":       "<span color='#ecc6d9'><b>{}</b></span>",
+			"weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+			"today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+		}
+	},
+	"actions": {
+		"on-click-right": "mode",
+		"on-scroll-up": "shift_up",
+		"on-scroll-down": "shift_down"
+	}
   },
   "custom/cpu_graph": {
     "exec": "~/.config/waybar/spark.py cpu 30",

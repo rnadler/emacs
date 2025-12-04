@@ -529,14 +529,20 @@
 
 ;; Lombok support
 (setq lombok-version "1.18.34")
-(setq lombok-jar-path (expand-file-name (format "~/.m2/repository/org/projectlombok/lombok/%s/lombok-%s.jar"
-                                                lombok-version lombok-version)))
+(setq lombok-jar-path
+      (expand-file-name
+       (format "~/.m2/repository/org/projectlombok/lombok/%s/lombok-%s.jar"
+               lombok-version lombok-version)))
+
 (use-package! eglot
   :commands (eglot eglot-ensure)
   :config
   (add-to-list 'eglot-server-programs `((clojure-mode clojurescript-ts-mode) . ("clojure-lsp")))
-  (add-to-list 'eglot-server-programs
-               `(java-mode . ("jdtls" ,(concat "--jvm-arg=-javaagent:" lombok-jar-path))))
+  (add-to-list
+   'eglot-server-programs `(java-mode .
+                            ,(append '("jdtls")
+                                     (when (file-exists-p lombok-jar-path)
+                                       (list (concat "--jvm-arg=-javaagent:" lombok-jar-path))))))
   ;; sudo npm install -g typescript typescript-language-server
   (add-to-list 'eglot-server-programs
                '(typescript-mode . ("typescript-language-server" "--stdio")))
