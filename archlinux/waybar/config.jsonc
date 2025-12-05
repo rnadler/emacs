@@ -115,6 +115,10 @@
   "hyprland/window": {
     "format": "{}",
     "icon": true,
-    "icon-size": 16
+    "icon-size": 16,
+    "rewrite": {
+        "(.*) – Doom Emacs": "$1",
+        "(.*) - Chromium": "$1"
+    }
   }
 }
