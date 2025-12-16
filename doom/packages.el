@@ -89,7 +89,3 @@
 (package! gptel :recipe (:nonrecursive t))
 (package! nerd-icons)
 (package! nerd-icons-dired)
-(package! reader
-  :recipe (:type git :host codeberg :repo "divyaranjan/emacs-reader"
-           :files ("*.el" "render-core.so")
-           :pre-build ("make" "all")))

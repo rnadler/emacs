@@ -473,12 +473,6 @@
     ;;   %here%(calfw-howm-schedule-inline)
     (define-key howm-mode-map (kbd "M-C") 'calfw-howm-open-calendar))
 
-;; emacs-reader -- requires mupdf
-(use-package! reader
-  :commands (reader-open)
-  :config
-  (setq reader-default-width 80))
-
 ;; Clojure
 ;; https://github.com/ericdallo/dotfiles/blob/master/.doom.d/config.el#L99-L134
 (use-package! cider
