@@ -139,6 +139,7 @@
 
 (after! elfeed
   (setq-default elfeed-search-filter my/elfeed-default-search-filter)
+  (setq elfeed-db-directory "/home/bobn/.emacs.d/.local/elfeed/db/")
   (setq elfeed-sort-order 'ascending)
   (advice-add #'elfeed-insert-html
               :around
