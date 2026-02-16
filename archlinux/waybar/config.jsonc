@@ -9,7 +9,10 @@
     "hyprland/workspaces",
     "hyprland/window"
   ],
-  "modules-center": ["clock", "custom/update"],
+  "modules-center": ["clock",
+  "custom/weather",
+  "custom/update"
+  ],
   "modules-right": [
     "custom/cpu_graph",
     "network",
@@ -120,5 +123,12 @@
         "(.*) – Doom Emacs": "$1",
         "(.*) - Chromium": "$1"
     }
+  },
+  "custom/weather": {
+    "format": "{}",
+    "tooltip": true,
+    "interval": 900,
+    "exec": "~/.config/waybar/weather.py",
+    "return-type": "json"
   }
 }
