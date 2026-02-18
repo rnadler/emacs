@@ -14,6 +14,7 @@ import pathlib
 import time
 import pickle
 import html
+import time
 
 try:
     import tomllib
@@ -243,12 +244,13 @@ def temp_to_color_f(temp_f):
 
 def get_weather_data():
     CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    now = time.time()
     if CACHE_FILE.exists():
         try:
             with open(CACHE_FILE, "rb") as f:
                 cached = pickle.load(f)
-                if time.time() - cached["timestamp"] < CACHE_TIMEOUT:
-                    return cached["data"]
+                if now - cached["timestamp"] < CACHE_TIMEOUT:
+                    return cached["data"], now
         except Exception:
             pass
 
@@ -265,14 +267,14 @@ def get_weather_data():
         r.raise_for_status()
         data = r.json()
         with open(CACHE_FILE, "wb") as f:
-            pickle.dump({"timestamp": time.time(), "data": data}, f)
-        return data
+            pickle.dump({"timestamp": now, "data": data}, f)
+        return data, now
     except Exception:
         return None
 
 
 def main():
-    data = get_weather_data()
+    data, now = get_weather_data()
     if not data:
         print(json.dumps({"text": "N/A", "tooltip": "Weather unavailable"}))
         sys.exit(0)
@@ -294,8 +296,10 @@ def main():
         icon, desc = WEATHER_MAP.get(curr["weather_code"], ("❓", "Unknown"))
 
         now_iso = datetime.now().isoformat()
+        clocks = ["󱑊", "󱐿", "󱑀", "󱑁", "󱑂", "󱑃", "󱑄", "󱑅", "󱑆", "󱑇", "󱑈", "󱑉"]
 
         lines = [f"<span size='large'> {DISPLAY_NAME} - {icon} {desc}</span>"]
+        lines.append(f"<span foreground='{COLORS['cyan']}'><b>{clocks[0]} Last Update: {time.strftime("%H:%M:%S", time.localtime(now))}</b></span>")
         lines.append(
             f" <span foreground='{temp_to_color_f(temp_f)}'><b>{temp_f:.0f}°F</b></span> "
             f"(Feels <span foreground='{temp_to_color_f(feels_like_f)}'>{feels_like_f:.0f}°F</span>)"
@@ -318,7 +322,6 @@ def main():
         lines.append("")
 
         lines.append(f"<span foreground='{COLORS['yellow']}'><b> Today</b></span>")
-        clocks = ["󱑊", "󱐿", "󱑀", "󱑁", "󱑂", "󱑃", "󱑄", "󱑅", "󱑆", "󱑇", "󱑈", "󱑉"]
 
         for i in range(24):
             if hourly["time"][i] >= now_iso[:13]:
