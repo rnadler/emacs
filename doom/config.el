@@ -280,6 +280,10 @@
 ;; https://github.com/kickingvegas/casual/blob/main/docs/calendar.org
 (keymap-set  calendar-mode-map "C-o" #'casual-calendar)
 
+;; https://github.com/kickingvegas/casual/blob/main/docs/org.org
+(keymap-set org-mode-map "C-o" #'casual-org-tmenu)
+(keymap-set org-table-fedit-map "C-o" #'casual-org-table-fedit-tmenu)
+
 (defun my/org-minibuffer-keymap-setup ()
   (let ((map (current-local-map)))
     (when map
@@ -556,6 +560,10 @@
          (clojure-mode . eglot-ensure)
          (clojurescript-ts--mode . eglot-ensure)
          (java-mode . eglot-ensure)))
+
+(use-package! flycheck-eglot
+  :config
+  (global-flycheck-eglot-mode 1))
 
 ;; Smartparens
 (after! smartparens

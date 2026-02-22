@@ -89,3 +89,5 @@
 (package! gptel :recipe (:nonrecursive t))
 (package! nerd-icons)
 (package! nerd-icons-dired)
+(unpin! flycheck)
+(unpin! org)
