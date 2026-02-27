@@ -202,9 +202,29 @@ If ARG is provided, it sets the counter."
                  (eq (buffer-local-value 'major-mode buffer) 'dired-mode))
         (kill-buffer buffer)
         (setq kill-count (1+ kill-count))))
-    (message "Killed %d Dired buffer(s)" kill-count)))
+    kill-count))
 
-(global-set-key (kbd "C-c x") 'my/kill-all-dired-buffers)
+(defun my/kill-all-log-buffers ()
+  "Kill all buffers whose names end with \"-log\" optionally followed by \"*\"."
+  (interactive)
+  (let ((kill-count 0))
+    (dolist (buffer (buffer-list))
+      (when (buffer-live-p buffer)
+        (let ((name (buffer-name buffer)))
+          (when (and name (string-match-p "-log\\*?$" name))
+            (kill-buffer buffer)
+            (setq kill-count (1+ kill-count))))))
+    kill-count))
+
+(global-set-key
+ (kbd "C-c x")
+ (lambda ()
+   (interactive)
+   (let
+       ((logs-killed (my/kill-all-log-buffers))
+        (dired-killed (my/kill-all-dired-buffers)))
+     (message "Killed %d log and %d dired buffers." logs-killed dired-killed))))
+
 
 (defun my/toggle-elfeed-curate-export-backend ()
   "Toggle the elfeed-curate-org-export-backend between 'html and 'md"
