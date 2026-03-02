@@ -62,6 +62,7 @@
 (setq recentf-max-menu-items 25)
 (setq confirm-kill-processes nil)
 (setq pixel-scroll-precision-mode t)  ;; New Emacs 29 feature
+(setq completion-styles '(partial-completion basic))
 
 (global-set-key (kbd "C-x C-r") 'recentf-open-files)
 (global-set-key (kbd "C-x g") 'magit-status)
@@ -658,6 +659,7 @@
  :config
  (setq! gptel-default-mode 'org-mode
         gptel-temperature 0.2
+        gptel-backend (gptel-make-openai "ChatGPT" :key 'gptel-api-key :stream t)
         gptel-model 'gpt-5.2))
 
 (global-set-key (kbd "C-c RET") 'gptel-send)
