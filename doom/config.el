@@ -63,6 +63,8 @@
 (setq confirm-kill-processes nil)
 (setq pixel-scroll-precision-mode t)  ;; New Emacs 29 feature
 (setq completion-styles '(partial-completion basic))
+(global-visual-line-mode 1)
+(global-visual-wrap-prefix-mode 1)
 
 (global-set-key (kbd "C-x C-r") 'recentf-open-files)
 (global-set-key (kbd "C-x g") 'magit-status)
