@@ -204,14 +204,14 @@ If ARG is provided, it sets the counter."
         (setq kill-count (1+ kill-count))))
     kill-count))
 
-(defun my/kill-all-log-buffers ()
-  "Kill all buffers whose names end with \"-log\" optionally followed by \"*\"."
+(defun my/kill-all-log-buffers (pattern)
+  "Kill all buffers whose name match PATTERN"
   (interactive)
   (let ((kill-count 0))
     (dolist (buffer (buffer-list))
       (when (buffer-live-p buffer)
         (let ((name (buffer-name buffer)))
-          (when (and name (string-match-p "-log\\*?$" name))
+          (when (and name (string-match-p (concat pattern "\\*?$") name))
             (kill-buffer buffer)
             (setq kill-count (1+ kill-count))))))
     kill-count))
@@ -221,9 +221,11 @@ If ARG is provided, it sets the counter."
  (lambda ()
    (interactive)
    (let
-       ((logs-killed (my/kill-all-log-buffers))
+       ((logs-killed (my/kill-all-log-buffers "-log"))
+        (events-killed (my/kill-all-log-buffers "events"))
         (dired-killed (my/kill-all-dired-buffers)))
-     (message "Killed %d log and %d dired buffers." logs-killed dired-killed))))
+     (message "Killed %d log, %d events, and %d dired buffers."
+              logs-killed events-killed dired-killed))))
 
 
 (defun my/toggle-elfeed-curate-export-backend ()
