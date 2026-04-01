@@ -220,14 +220,16 @@ If ARG is provided, it sets the counter."
  (kbd "C-c x")
  (lambda ()
    (interactive)
-   (let
-       ((logs-killed (my/kill-all-log-buffers "-log"))
-        (events-killed (my/kill-all-log-buffers "events"))
-        (output-killed (my/kill-all-log-buffers "Output"))
-        (warn-killed (my/kill-all-log-buffers "Warnings"))
-        (dired-killed (my/kill-all-dired-buffers)))
-     (message "Killed %d log, %d events, %d output, %d warn, and %d dired buffers."
-              logs-killed events-killed output-killed warn-killed dired-killed))))
+   (let ((logs-killed (my/kill-all-log-buffers "-log"))
+         (output-killed (my/kill-all-log-buffers "Output"))
+         (warn-killed (my/kill-all-log-buffers "Warnings"))
+         (cal-killed (my/kill-all-log-buffers "Calendar"))
+         (dired-killed (my/kill-all-dired-buffers)))
+     (run-at-time 2 nil
+                  (lambda ()
+                    (let ((events-killed (my/kill-all-log-buffers "events")))
+                      (message "Killed %d log, %d events, %d output, %d warn, %d cal, and %d dired buffers."
+                               logs-killed events-killed output-killed warn-killed cal-killed dired-killed)))))))
 
 (defun my/toggle-elfeed-curate-export-backend ()
   "Toggle the elfeed-curate-org-export-backend between 'html and 'md"
