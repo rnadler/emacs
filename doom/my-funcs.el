@@ -223,10 +223,11 @@ If ARG is provided, it sets the counter."
    (let
        ((logs-killed (my/kill-all-log-buffers "-log"))
         (events-killed (my/kill-all-log-buffers "events"))
+        (output-killed (my/kill-all-log-buffers "Output"))
+        (warn-killed (my/kill-all-log-buffers "Warnings"))
         (dired-killed (my/kill-all-dired-buffers)))
-     (message "Killed %d log, %d events, and %d dired buffers."
-              logs-killed events-killed dired-killed))))
-
+     (message "Killed %d log, %d events, %d output, %d warn, and %d dired buffers."
+              logs-killed events-killed output-killed warn-killed dired-killed))))
 
 (defun my/toggle-elfeed-curate-export-backend ()
   "Toggle the elfeed-curate-org-export-backend between 'html and 'md"
