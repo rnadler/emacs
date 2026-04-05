@@ -6,12 +6,15 @@
 (defun my/is-archlinux ()
   (string= (system-name) "archlinux"))
 
+(defun my/is-orarchy ()
+  (string= (system-name) "omarchy-x1-carbon"))
+
 (defun my/is-archlinux-dev ()
   (string= (system-name) "archlinux-dev"))
 
 (defun my/is-arch ()
   "Is an Arch Linux system"
-  (or (my/is-archlinux) (my/is-archlinux-dev)))
+  (or (my/is-archlinux) (my/is-archlinux-dev) (my/is-orarchy)))
 
 (defun my/is-k8s-machine ()
   (or
