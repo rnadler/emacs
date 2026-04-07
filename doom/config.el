@@ -67,6 +67,17 @@
 (setq completion-styles '(partial-completion basic))
 (global-visual-line-mode 1)
 (global-visual-wrap-prefix-mode 1)
+(setq-default bidi-display-reordering 'left-to-right
+              bidi-paragraph-direction 'left-to-right)
+(setq bidi-inhibit-bpa t)
+(setq redisplay-skip-fontification-on-input t)
+(setq read-process-output-max (* 4 1024 1024)) ; 4MB
+(setq-default cursor-in-non-selected-windows nil)
+(setq highlight-nonselected-windows nil)
+(setq save-interprogram-paste-before-kill t) ;; Use M-y to access clipboard history
+(setq kill-do-not-save-duplicates t)
+(setq savehist-additional-variables
+      '(search-ring regexp-search-ring kill-ring))
 
 (global-set-key (kbd "C-x C-r") 'recentf-open-files)
 (global-set-key (kbd "C-x g") 'magit-status)
@@ -605,7 +616,9 @@
 (setq server-host "0.0.0.0")
 (setq server-port "8081")
 (setq server-use-tcp t)
-(server-start)
+(require 'server)
+(unless (server-running-p)
+  (server-start))
 
 ;; Make Script Files Executable Automatically
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
