@@ -186,8 +186,10 @@ If ARG is provided, it sets the counter."
        (message (concat ,what " complete: " result)))))
 
 (global-set-key (kbd "C-c b") (my/make-save-template 'backup "Backup"))
-(if (not (my/is-wsl))
-    (global-set-key (kbd "C-c d") (my/make-save-template 'save_git_diff "Save git diff")))
+(when (not (my/is-wsl))
+  (global-set-key (kbd "C-c d") (if (my/is-orarchy)
+                                    (my/make-save-template 'backup-elfeed "Backup elfeed db")
+                                  (my/make-save-template 'save_git_diff "Save git diff"))))
 
 (defconst my/org-directory "~/org")
 
