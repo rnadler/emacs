@@ -270,15 +270,16 @@ def get_weather_data():
             pickle.dump({"timestamp": now, "data": data}, f)
         return data, now
     except Exception:
-        return None
+        return None, now
 
 
 def main():
     data, now = get_weather_data()
+    last_update = f"Last Update: {time.strftime("%H:%M:%S", time.localtime(now))}"
     if not data:
-        print(json.dumps({"text": "N/A", "tooltip": "Weather unavailable"}))
+        print(json.dumps({"text": f"<span foreground='{COLORS['cyan']}'> N/A</span>",
+                          "tooltip": f"Weather unavailable<\b>{last_update}"}))
         sys.exit(0)
-
     try:
         curr, hourly, daily = data["current"], data["hourly"], data["daily"]
 
@@ -299,7 +300,7 @@ def main():
         clocks = ["󱑊", "󱐿", "󱑀", "󱑁", "󱑂", "󱑃", "󱑄", "󱑅", "󱑆", "󱑇", "󱑈", "󱑉"]
 
         lines = [f"<span size='large'> {DISPLAY_NAME} - {icon} {desc}</span>"]
-        lines.append(f"<span foreground='{COLORS['cyan']}'><b>{clocks[0]} Last Update: {time.strftime("%H:%M:%S", time.localtime(now))}</b></span>")
+        lines.append(f"<span foreground='{COLORS['cyan']}'><b>{clocks[0]} {last_update}</b></span>")
         lines.append(
             f" <span foreground='{temp_to_color_f(temp_f)}'><b>{temp_f:.0f}°F</b></span> "
             f"(Feels <span foreground='{temp_to_color_f(feels_like_f)}'>{feels_like_f:.0f}°F</span>)"
