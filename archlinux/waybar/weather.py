@@ -5,6 +5,7 @@
 # Prerequisite install: 
 #   sudo pacman -S python-requests
 
+import argparse
 import requests
 import json
 import sys
@@ -273,13 +274,13 @@ def get_weather_data():
         return None, now
 
 
-def main():
+def fetch_weather():
     data, now = get_weather_data()
     last_update = f"Last Update: {time.strftime("%H:%M:%S", time.localtime(now))}"
     if not data:
         print(json.dumps({"text": f"<span foreground='{COLORS['cyan']}'> N/A</span>",
-                          "tooltip": f"Weather unavailable<\b>{last_update}"}))
-        sys.exit(0)
+                          "tooltip": f"<span foreground='{COLORS['yellow']}'>Weather unavailable!</span>\n{last_update}"}))
+        return 0
     try:
         curr, hourly, daily = data["current"], data["hourly"], data["daily"]
 
@@ -399,6 +400,24 @@ def main():
     except Exception as e:
         print(json.dumps({"text": "Error", "tooltip": str(e)}))
 
+def invalidate_cache() -> None:
+    try:
+        CACHE_FILE.unlink(missing_ok=True)
+    except Exception:
+        pass
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Waybar Weather widget.",
+        formatter_class=argparse.RawTextHelpFormatter,
+    )
+    parser.add_argument("--refresh", action="store_true", help="Force-refresh cached weather and air-quality data")
+    args = parser.parse_args()
+    if args.refresh:
+        invalidate_cache()
+    fetch_weather()
+    return 0
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
+

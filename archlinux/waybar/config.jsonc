@@ -90,8 +90,8 @@
     "format-wifi": "{icon}",
     "format-ethernet": "{bandwidthDownBytes:>6}⇣ {bandwidthUpBytes:>6}⇡ 󰀂 ",
     "format-disconnected": "󰤮",
-    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
-    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)",
+    "tooltip-format-ethernet": "Connected",
     "tooltip-format-disconnected": "Disconnected",
     "interval": 3,
     "spacing": 1
@@ -129,6 +129,7 @@
     "tooltip": true,
     "interval": 900,
     "exec": "~/.config/waybar/weather.py",
-    "return-type": "json"
+    "return-type": "json",
+    "on-click-middle": "~/.config/waybar/weather.py --refresh"
   }
 }
