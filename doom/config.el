@@ -675,7 +675,6 @@
 (use-package! gptel
  :config
  (setq! gptel-default-mode 'org-mode
-        gptel-temperature 0.2
         gptel-backend (gptel-make-openai "ChatGPT" :key 'gptel-api-key :stream t)
         gptel-model 'gpt-5.5))
 
