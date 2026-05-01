@@ -73,7 +73,7 @@
 (package! copilot :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
 ;;(package! password-menu)
 (package! casual)
-(unpin! elfeed elfeed-org)
+(unpin! elfeed-org)
 (package! jinx)
 (package! literate-calc-mode)
 (package! howm)
