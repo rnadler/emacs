@@ -75,6 +75,7 @@
 (package! casual)
 (unpin! elfeed-org)
 (package! jinx)
+(unpin! compat)
 (package! literate-calc-mode)
 (package! howm)
 (package! calfw)
