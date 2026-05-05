@@ -247,8 +247,9 @@
   (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$")))
 
 ;; https://www.emacs.dyerdwelling.family/emacs/emacs--dired-going-up-directories__emacs_linux/
-(define-key dired-mode-map (kbd "M-u") 'dired-up-directory)
-(define-key dired-mode-map (kbd "C-c m") 'my/dired-meld-diff-all-dwim)
+(after! dired-plus
+  (define-key dired-mode-map (kbd "M-u") 'dired-up-directory)
+  (define-key dired-mode-map (kbd "C-c m") 'my/dired-meld-diff-all-dwim))
 (fset 'file-up-dir (kmacro [?\C-x ?d return ] 0 "%d"))
 (global-set-key (kbd "M-u") 'file-up-dir)
 
