@@ -74,6 +74,7 @@
 ;;(package! password-menu)
 (package! casual)
 (unpin! elfeed-org)
+(package! elfeed :pin "eeb2d6a8033099683b19b1f8c8e616710514acc8")
 (package! jinx)
 (unpin! compat)
 (package! literate-calc-mode)
