@@ -704,7 +704,7 @@
   (setq purr-terminal "kitty")
   ;; where projects are stored
   (setq purr-data-file (expand-file-name "purr-projects.el" user-emacs-directory)))
-(global-set-key (kbd "C-c p SPC") 'purr-dashboard)
+(global-set-key (kbd "C-x C-g") 'purr-dashboard)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
