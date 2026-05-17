@@ -695,6 +695,16 @@
 (global-set-key (kbd "C-c g") 'gptel-mode)
 (global-set-key (kbd "C-c r") 'gptel-rewrite)
 
+;; Purr
+(purr-mode 1)
+(after! purr
+  ;; how often purr refreshes in the background (seconds)
+  (setq purr-interval 600) ;; 10 minutes
+  ;; terminal emulator for `t'
+  (setq purr-terminal "kitty")
+  ;; where projects are stored
+  (setq purr-data-file (expand-file-name "purr-projects.el" user-emacs-directory)))
+(global-set-key (kbd "C-c p SPC") 'purr-dashboard)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
