@@ -73,9 +73,8 @@
 (package! copilot :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
 ;;(package! password-menu)
 (package! casual)
-(unpin! elfeed-org)
+(unpin! elfeed elfeed-org)
 ;; (package! elfeed :pin "eeb2d6a8033099683b19b1f8c8e616710514acc8") ;; 23-Feb-2026
-(package! elfeed :pin "b89a014") ;; https://github.com/emacs-elfeed/elfeed/issues/602 
 (package! jinx)
 (unpin! compat)
 (package! literate-calc-mode)

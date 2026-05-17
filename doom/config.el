@@ -203,6 +203,7 @@
     (:prefix ("f" . "Filter")
      :desc "Default" "d" (cmd! (elfeed-search-set-filter my/elfeed-default-search-filter))
      :desc "Star"    "s" (cmd! (elfeed-search-set-filter "+star")))))
+  (remove-hook 'elfeed-search-update-hook #'elfeed-search-add-separators)
 )
 
 ;; elfeed-curate
