@@ -76,7 +76,6 @@
 (unpin! elfeed elfeed-org)
 ;; (package! elfeed :pin "eeb2d6a8033099683b19b1f8c8e616710514acc8") ;; 23-Feb-2026
 (package! jinx)
-(unpin! compat)
 (package! literate-calc-mode)
 (package! howm)
 (package! calfw)
