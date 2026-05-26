@@ -16,6 +16,7 @@ import time
 import pickle
 import html
 import time
+import html
 
 try:
     import tomllib
@@ -135,7 +136,9 @@ def get_wind_description(speed_mph):
 
 
 def get_uv_info(uv_index):
-    if uv_index < 3:
+    if uv_index is None:
+        return ("N/A", "bright_black")
+    elif uv_index < 3:
         return ("Low", "green")
     elif uv_index < 6:
         return ("Moderate", "yellow")
@@ -398,7 +401,8 @@ def fetch_weather():
         )
 
     except Exception as e:
-        print(json.dumps({"text": "Error", "tooltip": str(e)}))
+        print(json.dumps({"text": f"<span foreground='{COLORS['red']}'> Error</span>",
+                          "tooltip": f"<span foreground='{COLORS['red']}'>{html.escape(str(e))}!</span>\n{last_update}"}))
 
 def invalidate_cache() -> None:
     try:
