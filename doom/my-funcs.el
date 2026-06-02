@@ -229,7 +229,7 @@ If ARG is provided, it sets the counter."
          (output-killed (my/kill-all-log-buffers "Output"))
          (warn-killed (my/kill-all-log-buffers "Warnings"))
          (cal-killed (my/kill-all-log-buffers "Calendar"))
-         (purr-killed (+ (my/kill-all-log-buffers "purr") (my/kill-all-log-buffers "purr-detail")))
+         (purr-killed (my/kill-all-log-buffers "purr"))
          (dired-killed (my/kill-all-dired-buffers)))
      (run-at-time 2 nil
                   (lambda ()
