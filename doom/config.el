@@ -154,13 +154,16 @@
 (defconst my/elfeed-default-search-filter "+unread")
 
 ;; See https://github.com/emacs-elfeed/elfeed/issues/570
+;; https://github.com/emacs-elfeed/elfeed/blob/main/elfeed-show.el#L273
 (defun my/elfeed-show-next-doom-override (&optional n)
   "Run `elfeed-show-next' without changing selected window."
   (interactive "p" elfeed-show-mode)
   (funcall elfeed-show-entry-delete)
   (with-current-buffer (elfeed-search-buffer)
-      (forward-line (- (or n 1) (if (elfeed-search--remain-on-entry-p 'show) 0 1)))
-      (call-interactively #'elfeed-search-show-entry)))
+    (forward-line
+     (- (or n 1) (if (elfeed-search--remain-on-entry-p 'show) 0 1)))
+    (let (current-prefix-arg)
+      (call-interactively #'elfeed-search-show-entry))))
 
 (advice-add 'elfeed-show-next :override #'my/elfeed-show-next-doom-override)
 
