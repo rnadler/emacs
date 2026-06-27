@@ -90,3 +90,4 @@
 (package! nerd-icons)
 (package! nerd-icons-dired)
 (package! purr :recipe (:host sourcehut :repo "zelda/purr.el"))
+(package! ghostel)
