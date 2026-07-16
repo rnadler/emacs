@@ -697,7 +697,7 @@
  :config
  (setq! gptel-default-mode 'org-mode
         gptel-backend (gptel-make-openai "ChatGPT" :key 'gptel-api-key :stream t)
-        gptel-model 'gpt-5.5))
+        gptel-model 'gpt-5.6-terra))
 
 (global-set-key (kbd "C-c RET") 'gptel-send)
 (global-set-key (kbd "C-c m") 'gptel-menu)
