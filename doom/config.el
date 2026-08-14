@@ -430,7 +430,8 @@
      (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
      (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
      (yaml "https://github.com/ikatyang/tree-sitter-yaml")
-     (typespec "https://github.com/happenslol/tree-sitter-typespec")))
+     (typespec "https://github.com/happenslol/tree-sitter-typespec")
+     (qml "https://github.com/yuja/tree-sitter-qmljs" "master" "src"))) ;; Quickshell config
 
 ;; (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
 
@@ -714,6 +715,20 @@
   ;; where projects are stored
   (setq purr-data-file (expand-file-name "purr-projects.el" user-emacs-directory)))
 (global-set-key (kbd "C-x C-g") 'purr-dashboard)
+
+;; Quickshell
+;; https://quickshell.org/docs/v0.1.0/guide/install-setup/
+;; (use-package! qml-ts-mode
+;;   :after lsp-mode
+;;   :config
+;;   (add-to-list 'lsp-language-id-configuration '(qml-ts-mode . "qml-ts"))
+;;   (lsp-register-client
+;;    (make-lsp-client :new-connection (lsp-stdio-connection '("qmlls", "-E"))
+;;                     :activation-fn (lsp-activate-on "qml-ts")
+;;                     :server-id 'qmlls))
+;;   (add-hook 'qml-ts-mode-hook (lambda ()
+;;                                 (setq-local electric-indent-chars '(?\n ?\( ?\) ?{ ?} ?\[ ?\] ?\; ?,))
+;;                                 (lsp-deferred))))
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
