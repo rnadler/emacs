@@ -301,7 +301,7 @@ The DWIM behaviour of this command is as follows:
   "Switch gptel API key based on USER (string in authinfo)."
   (interactive
    (list (completing-read "Use API key for user: " '("apikey" "work"))))
-  (setq gptel-api-key
-        (auth-source-pick-first-password
-         :host "api.openai.com" :user user))
+  (let ((apikey (auth-source-pick-first-password :host "api.openai.com" :user user)))
+       (setq gptel-api-key apikey)
+       (setq agent-shell-openai-authentication (agent-shell-openai-make-authentication :api-key apikey)))
   (message "Switched gptel API key to %s" user))

@@ -91,3 +91,6 @@
 (package! nerd-icons-dired)
 (package! purr :recipe (:host sourcehut :repo "zelda/purr.el"))
 (package! ghostel)
+(package! shell-maker)
+(package! acp)
+(package! agent-shell)

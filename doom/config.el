@@ -705,6 +705,15 @@
 (global-set-key (kbd "C-c g") 'gptel-mode)
 (global-set-key (kbd "C-c r") 'gptel-rewrite)
 
+;; agent-shell
+;; Omarchy: install codex-acp AUR.
+(require 'acp)
+(require 'agent-shell)
+(setq agent-shell-openai-authentication
+      (agent-shell-openai-make-authentication
+       :api-key (lambda () (auth-source-pick-first-password :host "api.openai.com" :user "apikey"))))
+(global-set-key (kbd "C-x a") 'agent-shell)
+
 ;; Purr
 (purr-mode 1)
 (after! purr
