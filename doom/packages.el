@@ -82,6 +82,8 @@
 (package! calfw-howm)
 (package! android-mode :disable t)
 (package! typespec-ts-mode)
+(package! qml-ts-mode
+  :recipe (:host github :repo "xhcoding/qml-ts-mode"))
 (load! "./my-funcs.el")
 (when (my/is-k8s-machine)
   (package! kubernetes))

@@ -223,6 +223,8 @@
 
 (add-to-list 'auto-mode-alist '("Dockerfile.*\\'" . dockerfile-mode))
 (add-to-list 'auto-mode-alist '("\\.tsp\\'" . typespec-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.qml\\'" . qml-ts-mode))
 
 ;; ------------------------------
 ;; Doom modeline clock (SVG-safe)
@@ -423,15 +425,16 @@
      (html "https://github.com/tree-sitter/tree-sitter-html")
      (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
      (json "https://github.com/tree-sitter/tree-sitter-json")
+     (lua "https://github.com/tree-sitter-grammars/tree-sitter-lua")
      (make "https://github.com/alemuller/tree-sitter-make")
      (markdown "https://github.com/ikatyang/tree-sitter-markdown")
      (python "https://github.com/tree-sitter/tree-sitter-python")
+     (qmljs "https://github.com/yuja/tree-sitter-qmljs" "master" "src")
      (toml "https://github.com/tree-sitter/tree-sitter-toml")
      (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
      (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
      (yaml "https://github.com/ikatyang/tree-sitter-yaml")
-     (typespec "https://github.com/happenslol/tree-sitter-typespec")
-     (qml "https://github.com/yuja/tree-sitter-qmljs" "master" "src"))) ;; Quickshell config
+     (typespec "https://github.com/happenslol/tree-sitter-typespec")))
 
 ;; (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
 
@@ -724,20 +727,6 @@
   ;; where projects are stored
   (setq purr-data-file (expand-file-name "purr-projects.el" user-emacs-directory)))
 (global-set-key (kbd "C-x C-g") 'purr-dashboard)
-
-;; Quickshell
-;; https://quickshell.org/docs/v0.1.0/guide/install-setup/
-;; (use-package! qml-ts-mode
-;;   :after lsp-mode
-;;   :config
-;;   (add-to-list 'lsp-language-id-configuration '(qml-ts-mode . "qml-ts"))
-;;   (lsp-register-client
-;;    (make-lsp-client :new-connection (lsp-stdio-connection '("qmlls", "-E"))
-;;                     :activation-fn (lsp-activate-on "qml-ts")
-;;                     :server-id 'qmlls))
-;;   (add-hook 'qml-ts-mode-hook (lambda ()
-;;                                 (setq-local electric-indent-chars '(?\n ?\( ?\) ?{ ?} ?\[ ?\] ?\; ?,))
-;;                                 (lsp-deferred))))
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
