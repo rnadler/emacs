@@ -715,6 +715,15 @@
 (setq agent-shell-openai-authentication
       (agent-shell-openai-make-authentication
        :api-key (lambda () (auth-source-pick-first-password :host "api.openai.com" :user "apikey"))))
+(when (my/is-archlinux-dev)
+  (after! agent-shell
+    (add-to-list
+     'agent-shell-mcp-servers
+     '((name . "airview-device-metadata")
+       (command . "node")
+       (args . ("/home/bobn/Projects/airview-metadata-server/mcp-server/dist/index.js"))
+       (env . (((name . "METADATA_BASE_URL")
+                (value . "http://localhost:5050/metadata/v1"))))))))
 (global-set-key (kbd "C-x a") 'agent-shell)
 
 ;; Purr
