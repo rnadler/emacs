@@ -602,9 +602,8 @@
          (clojurescript-ts--mode . eglot-ensure)
          (java-mode . eglot-ensure)))
 
-(use-package! flycheck-eglot
-  :config
-  (global-flycheck-eglot-mode 1))
+;; Flycheck 38 has built in eglot support
+(global-flycheck-eglot-mode 1)
 
 ;; Smartparens
 (after! smartparens
