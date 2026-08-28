@@ -427,7 +427,6 @@
      (json "https://github.com/tree-sitter/tree-sitter-json")
      (lua "https://github.com/tree-sitter-grammars/tree-sitter-lua")
      (make "https://github.com/alemuller/tree-sitter-make")
-     (markdown "https://github.com/ikatyang/tree-sitter-markdown")
      (python "https://github.com/tree-sitter/tree-sitter-python")
      (qmljs "https://github.com/yuja/tree-sitter-qmljs" "master" "src")
      (toml "https://github.com/tree-sitter/tree-sitter-toml")
@@ -456,6 +455,13 @@
    (json-mode . json-ts-mode)
    (css-mode . css-ts-mode)
    (python-mode . python-ts-mode)))
+
+;; 31.1+ has built-in support for treesitter, so no need for tree-sitter-langs package
+;; (use-package! markdown-ts-mode
+;;   :ensure nil
+;;   :mode (("\\.md\\'"       . markdown-ts-mode)
+;;          ("\\.mdx\\'"      . markdown-ts-mode)
+;;          ("\\.markdown\\'" . markdown-ts-mode)))
 
 ;; Ispell
 ;; sudo pacman -S aspell aspell-en
@@ -700,7 +706,7 @@
  :config
  (setq! gptel-default-mode 'org-mode
         gptel-backend (gptel-make-openai "ChatGPT" :key 'gptel-api-key :stream t)
-        gptel-model 'gpt-5.6-terra))
+        gptel-model 'gpt-5.6-sol))
 
 (global-set-key (kbd "C-c RET") 'gptel-send)
 (global-set-key (kbd "C-c m") 'gptel-menu)
