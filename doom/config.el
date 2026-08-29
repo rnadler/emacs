@@ -171,6 +171,7 @@
   (setq-default elfeed-search-filter my/elfeed-default-search-filter)
   (setq elfeed-db-directory "/home/bobn/.emacs.d/.local/elfeed/db/")
   (setq elfeed-sort-order 'ascending)
+  (setq elfeed-db-save-idle nil)
   (advice-add #'elfeed-insert-html
               :around
               (lambda (fun &rest r)
