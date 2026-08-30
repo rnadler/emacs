@@ -102,6 +102,7 @@
   :hook (prog-mode . copilot-mode)
   :config
   (setq warning-suppress-types '((copilot)))
+  (add-to-list 'copilot-indentation-alist '(markdown-ts-mode . 2))
   :bind (:map copilot-completion-map
               ("<tab>" . 'copilot-accept-completion)
               ("TAB" . 'copilot-accept-completion)
@@ -428,6 +429,12 @@
      (json "https://github.com/tree-sitter/tree-sitter-json")
      (lua "https://github.com/tree-sitter-grammars/tree-sitter-lua")
      (make "https://github.com/alemuller/tree-sitter-make")
+     (markdown "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+               :commit "413285231ce8fa8b11e7074bbe265b48aa7277f9"
+               :source-dir "tree-sitter-markdown/src")
+     (markdown-inline "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+                      :commit "413285231ce8fa8b11e7074bbe265b48aa7277f9"
+                      :source-dir "tree-sitter-markdown-inline/src")
      (python "https://github.com/tree-sitter/tree-sitter-python")
      (qmljs "https://github.com/yuja/tree-sitter-qmljs" "master" "src")
      (toml "https://github.com/tree-sitter/tree-sitter-toml")
@@ -457,12 +464,12 @@
    (css-mode . css-ts-mode)
    (python-mode . python-ts-mode)))
 
-;; 31.1+ has built-in support for treesitter, so no need for tree-sitter-langs package
-;; (use-package! markdown-ts-mode
-;;   :ensure nil
-;;   :mode (("\\.md\\'"       . markdown-ts-mode)
-;;          ("\\.mdx\\'"      . markdown-ts-mode)
-;;          ("\\.markdown\\'" . markdown-ts-mode)))
+;; Built into Emacs 31; the compatible grammar revisions are pinned above.
+;; Register these directly so they take precedence over Doom's markdown-mode
+;; associations (including its special README.md -> gfm-mode rule).
+(autoload #'markdown-ts-mode "markdown-ts-mode" nil t)
+(dolist (regexp '("\\.md\\'" "\\.mdx\\'" "\\.markdown\\'"))
+  (add-to-list 'auto-mode-alist (cons regexp #'markdown-ts-mode)))
 
 ;; Ispell
 ;; sudo pacman -S aspell aspell-en
@@ -611,6 +618,9 @@
 
 ;; Flycheck 38 has built in eglot support
 (global-flycheck-eglot-mode 1)
+;; Install markdownlint-cli
+(after! flycheck
+  (flycheck-add-mode 'markdown-markdownlint-cli 'markdown-ts-mode))
 
 ;; Smartparens
 (after! smartparens
