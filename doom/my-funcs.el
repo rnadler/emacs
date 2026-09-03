@@ -297,6 +297,14 @@ The DWIM behaviour of this command is as follows:
          (decoded (base64-decode-string clean)))
     (message decoded)))
 
+(defun my/encode-base64-region (start end)
+  "Encode base64 of a selected region"
+  (interactive "r")
+  (let* ((raw (buffer-substring-no-properties start end))
+         (clean (replace-regexp-in-string "^['\"]\\|['\"]$" "" raw))
+         (encoded (base64-encode-string clean)))
+    (message encoded)))
+
 (defun my/gptel-use-key (user)
   "Switch gptel API key based on USER (string in authinfo)."
   (interactive
