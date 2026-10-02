@@ -295,6 +295,7 @@ The DWIM behaviour of this command is as follows:
   (let* ((raw (buffer-substring-no-properties start end))
          (clean (replace-regexp-in-string "^['\"]\\|['\"]$" "" raw))
          (decoded (base64-decode-string clean)))
+    (kill-new decoded)
     (message decoded)))
 
 (defun my/encode-base64-region (start end)
@@ -303,6 +304,7 @@ The DWIM behaviour of this command is as follows:
   (let* ((raw (buffer-substring-no-properties start end))
          (clean (replace-regexp-in-string "^['\"]\\|['\"]$" "" raw))
          (encoded (base64-encode-string clean)))
+    (kill-new encoded)
     (message encoded)))
 
 (defun my/gptel-use-key (user)
