@@ -620,7 +620,8 @@
 (global-flycheck-eglot-mode 1)
 ;; Install markdownlint-cli
 (after! flycheck
-  (flycheck-add-mode 'markdown-markdownlint-cli 'markdown-ts-mode))
+  (flycheck-add-mode 'markdown-markdownlint-cli 'markdown-ts-mode)
+  (setq flycheck-global-modes '(not org-mode)))
 
 ;; Smartparens
 (after! smartparens
@@ -725,7 +726,7 @@
 (global-set-key (kbd "C-c r") 'gptel-rewrite)
 
 ;; agent-shell
-;; Omarchy: install codex-acp AUR.
+;; Omarchy: sudo npm install -g @agentclientprotocol/codex-acp
 (require 'acp)
 (require 'agent-shell)
 (setq agent-shell-openai-authentication
