@@ -236,7 +236,7 @@ If ARG is provided, it sets the counter."
                     (let ((events-killed (my/kill-all-log-buffers "events")))
                       (message "Killed %d log, %d events, %d output, %d warn, %d cal, %d purr, and %d dired buffers. %d buffers remaining."
                                logs-killed events-killed output-killed warn-killed cal-killed purr-killed dired-killed
-                               (length (consult--buffer-query)))))))))
+                               (if (fboundp 'consult--buffer-query) (length (consult--buffer-query)) 2))))))))
 
 (defun my/toggle-elfeed-curate-export-backend ()
   "Toggle the elfeed-curate-org-export-backend between 'html and 'md"
